@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     public Timer gameLoop = new Timer();
     private Bundle bundle;
     private DialogFragment purchaseDialog;
+    private DialogFragment upgradeDialog;
 
     // View variables
     TextView txtResources;
@@ -139,16 +140,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         bundle = new Bundle();
         purchaseDialog = new PurchaseDialogFragment();
+        upgradeDialog = new UpgradeDialogFragment();
 
         switch (id){
             case R.id.nav_left_no_upgrades:
-                //Toast.makeText(this, "You clicked top item", Toast.LENGTH_SHORT).show();
                 bundle.putString("Title", "You clicked top item");
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "No upgrades" );
+                upgradeDialog.setArguments(bundle);
+                upgradeDialog.show(getFragmentManager(), "No upgrades" );
                 break;
             case R.id.nav_left_none_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_right_no_generators:
+                bundle.putString("Title", "You clicked top item");
+                purchaseDialog.setArguments(bundle);
+                purchaseDialog.show(getFragmentManager(), "No purchases" );
                 break;
             default:
                 throw new RuntimeException("How did you even do this?");
