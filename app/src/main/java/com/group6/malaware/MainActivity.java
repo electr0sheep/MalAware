@@ -26,9 +26,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final int FPS = 30;
-    public double RESOURCES_PER_SEC;
+    public double RESOURCES_PER_SEC = 0;
     public ResourceManager rManager = new ResourceManager();
     public VirusManager vManager = new VirusManager();
+    public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
     public Timer gameLoop = new Timer();
     private Bundle bundle;
@@ -50,9 +51,9 @@ public class MainActivity extends AppCompatActivity
         txtResources = (TextView) findViewById(R.id.txt_resource);
 
         // load previous game
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        /*sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         vManager.loadViruses(sharedPref);
-        rManager.loadResources(sharedPref);
+        rManager.loadResources(sharedPref);*/
 
         // reset resources
         //rManager.resetResources(sharedPref);
@@ -75,12 +76,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (sharedPref != null) {
-                    rManager.addResources(RESOURCES_PER_SEC);
+                    //rManager.addResources(RESOURCES_PER_SEC);
                 }
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        txtResources.setText(rManager.getResourcesString());
+                        txtResources.setText(gameManager.getResourcesString());
                         /*
                         txtThousandsModifier.setText(rManager.getThousandsModifier());
                         if (rManager.getResourcesDouble() > 9 && imgMalware != null) {
@@ -166,6 +167,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void imgTerminalOnClick(View view) {
-        rManager.addResources(1);
+        gameManager.addVirus(6, 1);
     }
 }

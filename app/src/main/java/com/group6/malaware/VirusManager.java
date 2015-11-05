@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 
 // THIS CLASS NEEDS TO BE OVERHAULED
 public class VirusManager {
-    private int malware;
+    /*private int malware;
     private int worms;
     private int adware;
     private int rootkits;
@@ -111,7 +111,7 @@ public class VirusManager {
         return getTotalResourceGenerationPerSec() / FPS;
     }
 
-    public void loadViruses(SharedPreferences sharedPref){
+   /* public void loadViruses(SharedPreferences sharedPref){
         malware = sharedPref.getInt("num_malware", 0);
         worms = sharedPref.getInt("num_worms", 0);
         adware = sharedPref.getInt("num_adware", 0);
@@ -132,5 +132,5 @@ public class VirusManager {
         editor.putInt("num_hijackers", hijackers);
         editor.putInt("num_polymorphic", polymorphic);
         editor.apply();
-    }
+    }*/
 }

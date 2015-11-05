@@ -9,8 +9,7 @@ import java.text.DecimalFormat;
  */
 
 public class ResourceManager {
-    private final int MAX_ARRAY_SIZE = 15;
-    private double resources;
+   /* private double resources;
 
     public static final int MALWARE = 0x00000000;
     public static final int WORM = 0x00000001;
@@ -120,7 +119,7 @@ public class ResourceManager {
         }
     }
 
-    public void storeResoures(SharedPreferences sharedPref){
+    /*public void storeResoures(SharedPreferences sharedPref){
         // set up editor
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -152,5 +151,5 @@ public class ResourceManager {
 
     private double getDouble(final SharedPreferences prefs, final String key, final double defaultValue){
         return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
-    }
+    }*/
 }

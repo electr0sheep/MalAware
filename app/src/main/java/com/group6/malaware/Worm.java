@@ -6,25 +6,22 @@ package com.group6.malaware;
 public class Worm
 {
     private int costOEach = 10;
-    private int resourceTotal = 0;
-    private int numOfUpgrades= 0;
+    private int numOfGenerators = 0;
     private double baseGen = 1.0;
     private double calc = 0;
 
-    void addVirus()
+    public int getNumOfGenerators(){return numOfGenerators;}
+    public int getCost(){return costOEach;}
+
+    public void addVirus(int amount)
     {
-        resourceTotal++;
-        costOEach += 10;
+        numOfGenerators+= amount;
+        costOEach += 10*amount;
     }
 
-    void addUpgrade()
+    public double calcVirusGenPerSec()
     {
-        numOfUpgrades++;
-    }
-
-    double calcVirusGenPerSec()
-    {
-        calc = baseGen*resourceTotal;
+        calc = baseGen* numOfGenerators;
 
         return calc;
     }
