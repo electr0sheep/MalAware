@@ -1,14 +1,20 @@
 package com.group6.malaware;
 
 /**
- * Created by Cyril on 11/1/2015.
+ * Created by Elior on 11/5/15.
  */
-public class Worm
+public class Generator
 {
     private int costOEach = 10;
     private int numOfGenerators = 0;
-    private double baseGen = 1.0;
-    private double calc = 0;
+    private double baseGenRate = 1.0;
+    private double calculatedAmount = 0;
+
+    public Generator(int initialCost, double baseGen)
+    {
+        costOEach = initialCost;
+        baseGenRate = baseGen;
+    }
 
     public int getNumOfGenerators(){return numOfGenerators;}
     public int getCost(){return costOEach;}
@@ -21,8 +27,9 @@ public class Worm
 
     public double calcVirusGenPerSec()
     {
-        calc = baseGen* numOfGenerators;
+        calculatedAmount = baseGenRate*numOfGenerators;
 
-        return calc;
+        return calculatedAmount;
     }
+
 }

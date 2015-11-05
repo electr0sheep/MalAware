@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final int FPS = 30;
-    public double RESOURCES_PER_FRAME = 0;
-    public ResourceManager rManager = new ResourceManager();
-    public VirusManager vManager = new VirusManager();
+    //public double RESOURCES_PER_FRAME = 0;
+    //public ResourceManager rManager = new ResourceManager();
+    //public VirusManager vManager = new VirusManager();
     public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
     public Timer gameLoop = new Timer();

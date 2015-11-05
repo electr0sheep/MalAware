@@ -12,12 +12,12 @@ import java.text.DecimalFormat;
 public class GameManager
 {
     private double totalResources = 0;
-    Adware coreAdware = new Adware();
-    Malware coreMalware = new Malware();
-    Worm coreWorm = new Worm();
-    Trojan coreTrojan = new Trojan();
-    Rootkit coreRootkit = new Rootkit();
-    Hijacker coreHijacker = new Hijacker();
+    Generator coreAdware = new Generator(10, 1.0);
+    Generator coreMalware = new Generator(10, 1.0);
+    Generator coreWorm = new Generator(10, 1.0);
+    Generator coreTrojan = new Generator(10, 1.0);
+    Generator coreRootkit = new Generator(10, 1.0);
+    Generator coreHijacker = new Generator(10, 1.0);
 
     public double getTotalResources(){
         return totalResources;
