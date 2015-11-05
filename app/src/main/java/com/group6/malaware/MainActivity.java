@@ -1,19 +1,13 @@
 package com.group6.malaware;
 
-import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -38,6 +32,11 @@ public class MainActivity extends AppCompatActivity
 
     // View variables
     TextView txtResources;
+    NavigationView navLeft;
+    NavigationView navRight;
+    MenuItem navLeftNoUpgradesPurchased;
+    MenuItem navLeftNoUpgradesAvailable;
+    MenuItem navRightNoGeneratorsAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,11 @@ public class MainActivity extends AppCompatActivity
 
         // set view variables
         txtResources = (TextView) findViewById(R.id.txt_resource);
+        navLeft = (NavigationView) findViewById(R.id.nav_view_left);
+        navRight = (NavigationView) findViewById(R.id.nav_view_right);
+        navLeftNoUpgradesPurchased = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_purchased);
+        navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
+        navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
 
         // load previous game
         /*sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -82,6 +86,17 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void run() {
                         txtResources.setText(gameManager.getResourcesString());
+                        if (gameManager.getTotalResources() > 9){
+                            //navLeftNoUpgradesAvailable.setVisible(false);
+                        }
+                        if (gameManager.getTotalResources() > 19){
+                            //navLeftNoUpgradesPurchased.setVisible(false);
+                            //navLeftNoUpgradesAvailable.setVisible(true);
+                            //navLeftNoUpgradesAvailable.setVisible(false);
+                        }
+                        if (gameManager.getTotalResources() > 29){
+                            //navRightNoGeneratorsAvailable.setVisible(false);
+                        }
                         /*
                         txtThousandsModifier.setText(rManager.getThousandsModifier());
                         if (rManager.getResourcesDouble() > 9 && imgMalware != null) {
@@ -144,15 +159,15 @@ public class MainActivity extends AppCompatActivity
         upgradeDialog = new UpgradeDialogFragment();
 
         switch (id){
-            case R.id.nav_left_no_upgrades:
+            case R.id.nav_left_no_upgrades_available:
                 bundle.putString("Title", "You clicked top item");
                 upgradeDialog.setArguments(bundle);
                 upgradeDialog.show(getFragmentManager(), "No upgrades" );
                 break;
-            case R.id.nav_left_none_purchased:
+            case R.id.nav_left_no_upgrades_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_right_no_generators:
+            case R.id.nav_right_no_generators_available:
                 /*bundle.putString("Title", "You clicked top item");
                 purchaseDialog.setArguments(bundle);
                 purchaseDialog.show(getFragmentManager(), "No purchases" );*/

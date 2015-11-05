@@ -3,7 +3,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_right_no_generators"
+            android:id="@+id/nav_right_no_generators_available"
             android:title="No Generators Available" />
     </group>
 

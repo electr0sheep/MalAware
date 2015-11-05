@@ -3,14 +3,14 @@
 
     <group>
         <item
-            android:id="@+id/nav_left_no_upgrades"
+            android:id="@+id/nav_left_no_upgrades_available"
             android:title="No Upgrades Available" />
     </group>
 
     <item android:title="Purchased">
         <menu>
             <item
-                android:id="@+id/nav_left_none_purchased"
+                android:id="@+id/nav_left_no_upgrades_purchased"
                 android:title="No Upgrades Purchased" />
         </menu>
     </item>

@@ -19,6 +19,10 @@ public class GameManager
     Rootkit coreRootkit = new Rootkit();
     Hijacker coreHijacker = new Hijacker();
 
+    public double getTotalResources(){
+        return totalResources;
+    }
+
     public void addVirus(int type, int amount)
     {
         switch(type)

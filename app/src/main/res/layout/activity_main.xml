@@ -29,6 +29,6 @@
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_right"
-        app:menu="@menu/activity_left_drawer" />
+        app:menu="@menu/activity_right_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
