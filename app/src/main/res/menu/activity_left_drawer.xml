@@ -4,14 +4,34 @@
     <group>
         <item
             android:id="@+id/nav_left_no_upgrades_available"
-            android:title="No Upgrades Available" />
+            android:title="No Upgrades Available"
+            android:enabled="false"/>
+        <item
+            android:id="@+id/nav_left_auto_click_upgrade"
+            android:title="Auto Click"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_left_resource_generation_increase"
+            android:title="Increase Resource Generation"
+            android:visible="false"/>
     </group>
 
     <item android:title="Purchased">
         <menu>
             <item
                 android:id="@+id/nav_left_no_upgrades_purchased"
-                android:title="No Upgrades Purchased" />
+                android:title="No Upgrades Purchased"
+                android:enabled="false"/>
+            <item
+                android:id="@+id/nav_left_auto_click_upgrade_purchased"
+                android:title="Auto Click"
+                android:visible="false"
+                android:enabled="false"/>
+            <item
+                android:id="@+id/nav_left_resource_generation_increase_purchased"
+                android:title="Increase Resource Generation"
+                android:visible="false"
+                android:enabled="false"/>
         </menu>
     </item>
 

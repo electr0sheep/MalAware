@@ -24,13 +24,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_map" />
+                android:src="@android:drawable/ic_dialog_map"
+                android:visibility="gone"/>
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_info" />
+                android:src="@android:drawable/ic_dialog_info"
+                android:visibility="gone"/>
         </LinearLayout>
         <LinearLayout
             android:layout_alignParentBottom="true"
@@ -43,19 +45,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_dialer" />
+                android:src="@android:drawable/ic_dialog_dialer"
+                android:visibility="gone"
+                android:onClick="fabAutoTapOnClick"/>
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_action_skill_increase_generation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_alert" />
+                android:src="@android:drawable/ic_dialog_alert"
+                android:visibility="gone"
+                android:onClick="fabResourceGenerationIncrease"/>
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_email" />
+                android:src="@android:drawable/ic_dialog_email"
+                android:visibility="gone"/>
         </LinearLayout>
     </RelativeLayout>
 

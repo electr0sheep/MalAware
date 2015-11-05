@@ -39,12 +39,14 @@ public class PurchaseDialogFragment extends DialogFragment
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                         Log.i("Info", "You clicked x10");
+                        callingActivity.addVirus(getArguments().getInt("Type"), 10);
+
                     }
                 })
                 .setNeutralButton("x1", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Log.i("Info", "You clicked x1");
-
+                        callingActivity.addVirus(getArguments().getInt("Type"), 1);
                     }
                 });
                     // Create the AlertDialog object and return it

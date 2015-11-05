@@ -3,6 +3,8 @@ package com.group6.malaware;
 import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final int FPS = 30;
-    public double RESOURCES_PER_SEC = 0;
+    public double RESOURCES_PER_FRAME = 0;
     public ResourceManager rManager = new ResourceManager();
     public VirusManager vManager = new VirusManager();
     public GameManager gameManager = new GameManager();
@@ -36,7 +38,13 @@ public class MainActivity extends AppCompatActivity
     NavigationView navRight;
     MenuItem navLeftNoUpgradesPurchased;
     MenuItem navLeftNoUpgradesAvailable;
+    MenuItem navLeftAutoClickUpgrade;
+    MenuItem navLeftResourceGenerationUpgrade;
+    MenuItem navLeftAutoClickUpgradePurchased;
+    MenuItem navLeftResourceGenerationUpgradePurchased;
     MenuItem navRightNoGeneratorsAvailable;
+    FloatingActionButton fabAutoClick;
+    FloatingActionButton fabIncreaseResourceGeneration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +60,13 @@ public class MainActivity extends AppCompatActivity
         navRight = (NavigationView) findViewById(R.id.nav_view_right);
         navLeftNoUpgradesPurchased = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_purchased);
         navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
+        navLeftAutoClickUpgrade = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade);
+        navLeftAutoClickUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade_purchased);
+        navLeftResourceGenerationUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase);
+        navLeftResourceGenerationUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_purchased);
         navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
+        fabAutoClick = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
+        fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
 
         // load previous game
         /*sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -85,18 +99,28 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //gameManager.getTotalResourcesPerFrame(FPS);
+                        gameManager.calcTotalResourcesPerSec();
                         txtResources.setText(gameManager.getResourcesString());
-                        if (gameManager.getTotalResources() > 9){
-                            //navLeftNoUpgradesAvailable.setVisible(false);
+                        if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()){
+                            if (navLeftNoUpgradesAvailable.isVisible()){
+                                navLeftNoUpgradesAvailable.setVisible(false);
+                            }
+                            navLeftAutoClickUpgrade.setVisible(true);
                         }
-                        if (gameManager.getTotalResources() > 19){
+                        if (gameManager.getTotalResources() > 19  && !navLeftResourceGenerationUpgradePurchased.isVisible()){
+                            if (navLeftNoUpgradesAvailable.isVisible()){
+                                navLeftNoUpgradesAvailable.setVisible(false);
+                            }
+                            navLeftResourceGenerationUpgrade.setVisible(true);
+                            //navLeftNoUpgradesAvailable.setVisible(true);
                             //navLeftNoUpgradesPurchased.setVisible(false);
                             //navLeftNoUpgradesAvailable.setVisible(true);
                             //navLeftNoUpgradesAvailable.setVisible(false);
                         }
-                        if (gameManager.getTotalResources() > 29){
+                        //if (gameManager.getTotalResources() > 29){
                             //navRightNoGeneratorsAvailable.setVisible(false);
-                        }
+                        //}
                         /*
                         txtThousandsModifier.setText(rManager.getThousandsModifier());
                         if (rManager.getResourcesDouble() > 9 && imgMalware != null) {
@@ -122,31 +146,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (drawer.isDrawerOpen(GravityCompat.END)){
+            drawer.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -178,6 +182,31 @@ public class MainActivity extends AppCompatActivity
                 purchaseDialog.setArguments(bundle);
                 purchaseDialog.show(getFragmentManager(), "Adware");
                 break;
+            case R.id.nav_left_auto_click_upgrade:
+                if (gameManager.subtractResources(10)){
+                    navLeftAutoClickUpgradePurchased.setVisible(true);
+                    navLeftNoUpgradesPurchased.setVisible(false);
+                    navLeftAutoClickUpgrade.setVisible(false);
+                    fabAutoClick.setVisibility(FloatingActionButton.VISIBLE);
+                    if (!navLeftResourceGenerationUpgrade.isVisible()){
+                        navLeftNoUpgradesAvailable.setVisible(true);
+                    }
+                } else {
+                    Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.nav_left_resource_generation_increase:
+                if (gameManager.subtractResources(10)){
+                    navLeftResourceGenerationUpgradePurchased.setVisible(true);
+                    navLeftResourceGenerationUpgrade.setVisible(false);
+                    fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
+                    if (!navLeftAutoClickUpgrade.isVisible()){
+                        navLeftNoUpgradesAvailable.setVisible(true);
+                    }
+                } else {
+                    Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
                 throw new RuntimeException("How did you even do this?");
         }
@@ -194,5 +223,13 @@ public class MainActivity extends AppCompatActivity
     public void addVirus(int type, int amount)
     {
         gameManager.attemptBuy(type, amount);
+    }
+
+    public void fabAutoTapOnClick(View view) {
+        Toast.makeText(this, "Auto tap engage!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void fabResourceGenerationIncrease(View view) {
+        Toast.makeText(this, "Go go resource generation increase!", Toast.LENGTH_SHORT).show();
     }
 }

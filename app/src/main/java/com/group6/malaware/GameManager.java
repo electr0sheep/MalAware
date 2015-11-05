@@ -23,6 +23,17 @@ public class GameManager
         return totalResources;
     }
 
+    public boolean subtractResources(double amount){
+        double temp = totalResources;
+        temp -= amount;
+        if (temp >= 0){
+            totalResources = temp;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void addVirus(int type, int amount)
     {
         switch(type)
@@ -69,14 +80,18 @@ public class GameManager
 
     public double calcTotalResourcesPerSec()
     {
-        totalResources = coreAdware.calcVirusGenPerSec()+
+        totalResources += (coreAdware.calcVirusGenPerSec()+
                         coreMalware.calcVirusGenPerSec()+
                         coreWorm.calcVirusGenPerSec()+
                         coreTrojan.calcVirusGenPerSec()+
                         coreRootkit.calcVirusGenPerSec()+
-                        coreHijacker.calcVirusGenPerSec();
+                        coreHijacker.calcVirusGenPerSec()) / 30;
 
         return totalResources;
+    }
+
+    public void addResources(double amount){
+        totalResources += amount;
     }
 
     public double getTotalResourcesPerFrame(int FPS){
@@ -87,7 +102,7 @@ public class GameManager
     {
         switch(type)
         {
-            case 0: if ((amount*coreAdware.getCost()) < totalResources)
+            case 0: if ((amount*coreAdware.getCost()) <= totalResources)
                     {
                         totalResources -= (amount*coreAdware.getCost());
                         coreAdware.addVirus(amount);
@@ -95,7 +110,7 @@ public class GameManager
                     else
                         Log.i("Error", "Can't buy that many");
                 break;
-            case 1: if ((amount*coreMalware.getCost()) < totalResources)
+            case 1: if ((amount*coreMalware.getCost()) <= totalResources)
                     {
                         totalResources -= (amount*coreMalware.getCost());
                         coreMalware.addVirus(amount);
@@ -103,7 +118,7 @@ public class GameManager
                     else
                         Log.i("Error", "Can't buy that many");
                 break;
-            case 2:if ((amount*coreWorm.getCost()) < totalResources)
+            case 2:if ((amount*coreWorm.getCost()) <= totalResources)
                     {
                         totalResources -= (amount*coreWorm.getCost());
                         coreWorm.addVirus(amount);
@@ -111,7 +126,7 @@ public class GameManager
                     else
                         Log.i("Error", "Can't buy that many");
                 break;
-            case 3:if ((amount*coreTrojan.getCost()) < totalResources)
+            case 3:if ((amount*coreTrojan.getCost()) <= totalResources)
                     {
                         totalResources -= (amount*coreTrojan.getCost());
                         coreTrojan.addVirus(amount);
@@ -119,7 +134,7 @@ public class GameManager
                     else
                         Log.i("Error", "Can't buy that many");
                 break;
-            case 4:if ((amount*coreRootkit.getCost()) < totalResources)
+            case 4:if ((amount*coreRootkit.getCost()) <= totalResources)
                     {
                         totalResources -= (amount*coreRootkit.getCost());
                         coreRootkit.addVirus(amount);
@@ -127,7 +142,7 @@ public class GameManager
                     else
                         Log.i("Error", "Can't buy that many");
                 break;
-            case 5:if ((amount*coreHijacker.getCost()) < totalResources)
+            case 5:if ((amount*coreHijacker.getCost()) <= totalResources)
                     {
                         totalResources -= (amount*coreHijacker.getCost());
                         coreHijacker.addVirus(amount);
