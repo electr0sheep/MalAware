@@ -1,5 +1,7 @@
 package com.group6.malaware;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity
     public VirusManager vManager = new VirusManager();
     public SharedPreferences sharedPref;
     public Timer gameLoop = new Timer();
+    private Bundle bundle;
+    private DialogFragment purchaseDialog;
 
     // View variables
     TextView txtResources;
@@ -133,10 +137,15 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        bundle = new Bundle();
+        purchaseDialog = new PurchaseDialogFragment();
 
         switch (id){
             case R.id.nav_left_no_upgrades:
-                Toast.makeText(this, "You clicked top item", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "You clicked top item", Toast.LENGTH_SHORT).show();
+                bundle.putString("Title", "You clicked top item");
+                purchaseDialog.setArguments(bundle);
+                purchaseDialog.show(getFragmentManager(), "No upgrades" );
                 break;
             case R.id.nav_left_none_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
