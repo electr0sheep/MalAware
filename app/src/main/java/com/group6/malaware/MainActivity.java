@@ -153,9 +153,15 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_right_no_generators:
-                bundle.putString("Title", "You clicked top item");
+                /*bundle.putString("Title", "You clicked top item");
                 purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "No purchases" );
+                purchaseDialog.show(getFragmentManager(), "No purchases" );*/
+                bundle.putString("Title", "Buying Adware");
+                bundle.putString("Cost", Integer.toString(gameManager.coreAdware.getCost()));
+                bundle.putString("Count", Integer.toString(gameManager.coreAdware.getNumOfGenerators()));
+                bundle.putInt("Type", 0);
+                purchaseDialog.setArguments(bundle);
+                purchaseDialog.show(getFragmentManager(), "Adware");
                 break;
             default:
                 throw new RuntimeException("How did you even do this?");
@@ -168,5 +174,10 @@ public class MainActivity extends AppCompatActivity
 
     public void imgTerminalOnClick(View view) {
         gameManager.addVirus(6, 1);
+    }
+
+    public void addVirus(int type, int amount)
+    {
+        gameManager.attemptBuy(type, amount);
     }
 }

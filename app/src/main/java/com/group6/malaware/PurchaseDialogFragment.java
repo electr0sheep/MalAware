@@ -14,16 +14,25 @@ import android.widget.Toast;
  */
 public class PurchaseDialogFragment extends DialogFragment
 {
+    MainActivity callingActivity;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+        callingActivity = (MainActivity) getActivity();
+        final CharSequence count = getArguments().getString("Count");
+        final CharSequence cost = getArguments().getString("Cost");
+
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString("Title"));
-        builder.setMessage("Count of Generator:\nCost per Generator:\nBuy?")
+        builder.setMessage("Count of Generator:");
+        builder.setMessage(count)
                 .setPositiveButton("x25", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         Log.i("Info", "You clicked x25");
+                        //Log.i("Stuff", count.toString());
+                        callingActivity.addVirus(getArguments().getInt("Type"), 25);
                     }
                 })
                 .setNegativeButton("x10", new DialogInterface.OnClickListener() {
@@ -33,11 +42,11 @@ public class PurchaseDialogFragment extends DialogFragment
                     }
                 })
                 .setNeutralButton("x1", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id)
-                {
-                    Log.i("Info", "You clicked x1");
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.i("Info", "You clicked x1");
 
-                }});
+                    }
+                });
                     // Create the AlertDialog object and return it
         return builder.create();
 
