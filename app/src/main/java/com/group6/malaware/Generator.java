@@ -1,7 +1,8 @@
 package com.group6.malaware;
 
 /**
- * Created by Elior on 11/5/15.
+ * Created by Cyril Mathew on 11/5/15.
+ * Has definition for each resource generator object
  */
 public class Generator
 {
@@ -21,6 +22,7 @@ public class Generator
 
     public void addVirus(int amount)
     {
+        //Rudimentary method for adding a certain amount of viruses
         numOfGenerators+= amount;
         costOEach += 10*amount;
     }
