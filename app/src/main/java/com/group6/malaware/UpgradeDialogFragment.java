@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 /**
- * Created by Cyril on 11/4/15.
+ * Created by Cyril Mathew on 11/4/15.
  */
 public class UpgradeDialogFragment extends DialogFragment
 {
@@ -18,7 +18,7 @@ public class UpgradeDialogFragment extends DialogFragment
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString("Title"));
-        builder.setMessage("Count of Generator:\nCost per Generator:\nBuy?")
+        builder.setMessage("Count of Upgrade: " + "\n")
                 .setPositiveButton("x25", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Log.i("Info", "You clicked x25");

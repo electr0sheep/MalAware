@@ -19,13 +19,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener
+{
 
-    public final int FPS = 30;
+    public final int FPS = 30;                                          //FPS constant
     public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
     public Timer gameLoop = new Timer();
-    private Bundle bundle;
+    private Bundle bundle;                                              //Bundle used to pass data between dialogs
     private DialogFragment purchaseDialog;
     private DialogFragment upgradeDialog;
 
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fabIncreaseResourceGeneration;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity
         //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         //drawer.setDrawerListener(toggle);
         //toggle.syncState();
+
+
+        //Initialize Navigation Views
 
         NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
         NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
@@ -139,7 +144,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
+        //Closes the drawer when the Android back button is pressed
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -152,12 +159,15 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         bundle = new Bundle();
         purchaseDialog = new PurchaseDialogFragment();
         upgradeDialog = new UpgradeDialogFragment();
+
+        //Currently rudimentary, needs reworking
 
         switch (id){
             case R.id.nav_left_no_upgrades_available:
@@ -211,20 +221,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void imgTerminalOnClick(View view) {
-        gameManager.addVirus(6, 1);
-    }
+    public void imgTerminalOnClick(View view) {gameManager.addVirus(6, 1);}                 //Click listener for the Terminal image
 
-    public void addVirus(int type, int amount)
-    {
-        gameManager.attemptBuy(type, amount);
-    }
+    public void addVirus(int type, int amount) {gameManager.attemptBuy(type, amount);}
 
-    public void fabAutoTapOnClick(View view) {
-        Toast.makeText(this, "Auto tap engage!", Toast.LENGTH_SHORT).show();
-    }
+    public void fabAutoTapOnClick(View view) {Toast.makeText(this, "Auto tap engage!", Toast.LENGTH_SHORT).show();}
 
-    public void fabResourceGenerationIncrease(View view) {
-        Toast.makeText(this, "Go go resource generation increase!", Toast.LENGTH_SHORT).show();
-    }
+    public void fabResourceGenerationIncrease(View view) {Toast.makeText(this, "Go go resource generation increase!", Toast.LENGTH_SHORT).show();}
 }

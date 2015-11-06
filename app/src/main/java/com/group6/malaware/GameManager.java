@@ -7,7 +7,8 @@ import java.text.DecimalFormat;
 
 /**
  * Created by michaeldegraw on 9/22/15.
- * Edited by Michael and Cyril Mathew on 11/4/2015.
+ * Edited by Michael DeGraw and Cyril Mathew on 11/4/2015.
+ * Has most of the game's logic and functional methods
  */
 public class GameManager
 {

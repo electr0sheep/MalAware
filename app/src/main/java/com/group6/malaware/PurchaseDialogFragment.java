@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * Created by Cyril on 11/4/15.
+ * Created by Cyril Mathew on 11/4/15.
  */
 public class PurchaseDialogFragment extends DialogFragment
 {
@@ -25,8 +25,8 @@ public class PurchaseDialogFragment extends DialogFragment
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString("Title"));
-        builder.setMessage("Count of Generator:");
-        builder.setMessage(count)
+        builder.setMessage("Count of Generators: "+ count + "\n" +
+                            "Cost of Each: " + cost + "\n")
                 .setPositiveButton("x25", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
