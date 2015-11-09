@@ -1,5 +1,6 @@
 package com.group6.malaware;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -196,4 +197,49 @@ public class GameManager
         return text;
     }
 
+    public void storeData(SharedPreferences sharedPref){
+        // set up editor
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        // store data for resources
+        editor = putDouble(editor, "resources", totalResources);
+
+        // store data for viruses
+        editor.putInt("num_malware", coreMalware.getNumOfGenerators());
+        editor.putInt("num_worms", coreWorm.getNumOfGenerators());
+        editor.putInt("num_adware", coreAdware.getNumOfGenerators());
+        editor.putInt("num_rootkits", coreRootkit.getNumOfGenerators());
+        editor.putInt("num_trojans", coreTrojan.getNumOfGenerators());
+        editor.putInt("num_hijackers", coreHijacker.getNumOfGenerators());
+
+        // apply changes
+        editor.apply();
+    }
+
+    public void loadData(SharedPreferences sharedPref){
+        if (sharedPref == null){
+            throw new RuntimeException("Attempted to load resources from a null SharedPreferences pointer");
+        } else {
+            // load resources
+            totalResources = getDouble(sharedPref, "resources", 0.0);
+
+            // load viruses
+            coreMalware.setNumOfGenerators(sharedPref.getInt("num_malware", 0));
+            coreWorm.setNumOfGenerators(sharedPref.getInt("num_worms", 0));
+            coreAdware.setNumOfGenerators(sharedPref.getInt("num_adware", 0));
+            coreRootkit.setNumOfGenerators(sharedPref.getInt("num_rootkits", 0));
+            coreTrojan.setNumOfGenerators(sharedPref.getInt("num_trojans", 0));
+            coreHijacker.setNumOfGenerators(sharedPref.getInt("num_hijackers", 0));
+        }
+    }
+
+    // Some SharedPreferences wizardy since SharedPreferences can't store doubles natively
+    // CODE TAKEN FROM http://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
+    private SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value){
+        return edit.putLong(key, Double.doubleToRawLongBits(value));
+    }
+
+    private double getDouble(final SharedPreferences prefs, final String key, final double defaultValue){
+        return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
+    }
 }
