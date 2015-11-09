@@ -3,6 +3,7 @@ package com.group6.malaware;
 import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Gravity;
 import android.view.View;
@@ -68,12 +69,8 @@ public class MainActivity extends AppCompatActivity
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
 
         // load previous game
-        /*sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        vManager.loadViruses(sharedPref);
-        rManager.loadResources(sharedPref);*/
-
-        // reset resources
-        //rManager.resetResources(sharedPref);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        gameManager.loadData(sharedPref);
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -219,6 +216,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // save game data
+        gameManager.storeData(sharedPref);
     }
 
     public void imgTerminalOnClick(View view) {gameManager.addVirus(6, 1);}                 //Click listener for the Terminal image

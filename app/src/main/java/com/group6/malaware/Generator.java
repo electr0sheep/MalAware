@@ -34,4 +34,11 @@ public class Generator
         return calculatedAmount;
     }
 
+    public void setNumOfGenerators(int number){
+        if (number < 0){
+            throw new RuntimeException("Cannot set number of generators to less than 0");
+        } else {
+            numOfGenerators = number;
+        }
+    }
 }
