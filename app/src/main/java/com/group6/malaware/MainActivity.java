@@ -71,6 +71,18 @@ public class MainActivity extends AppCompatActivity
         // load previous game
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gameManager.loadData(sharedPref);
+        gameManager.calcTotalResourcesPerSec();
+
+        // add appropriate resources if applicable
+        if (gameManager.getResourcesPerSec() > 0) {
+            double passiveResources = (System.currentTimeMillis()
+                    - gameManager.getStoredTime(sharedPref))    // milliseconds that have elapsed
+                    / 1000                                      // number of milliseconds per sec
+                    * gameManager.getResourcesPerSec();   // number of resources per sec
+            gameManager.addResources(passiveResources);         // add that amount to resource pool
+            Toast.makeText(this, "You have generated " + gameManager.convertNumToString(passiveResources)
+                    + " resources while you were away!", Toast.LENGTH_SHORT).show();
+        }
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -98,8 +110,7 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //gameManager.getTotalResourcesPerFrame(FPS);
-                        gameManager.calcTotalResourcesPerSec();
+                        gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
                         if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()){
                             if (navLeftNoUpgradesAvailable.isVisible()){
@@ -226,8 +237,9 @@ public class MainActivity extends AppCompatActivity
         gameManager.storeData(sharedPref);
     }
 
-    public void imgTerminalOnClick(View view) {gameManager.addVirus(6, 1);}                 //Click listener for the Terminal image
+    public void imgTerminalOnClick(View view) {gameManager.addResources(1d);}                 //Click listener for the Terminal image
 
+    // THIS NEEDS TO BE REWORKED!!!!!!!!
     public void addVirus(int type, int amount) {gameManager.attemptBuy(type, amount);}
 
     public void fabAutoTapOnClick(View view) {Toast.makeText(this, "Auto tap engage!", Toast.LENGTH_SHORT).show();}
