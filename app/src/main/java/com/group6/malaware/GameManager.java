@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 public class GameManager
 {
     private double totalResources = 0;
+    private double resourcesPerSec = 0;
     Generator coreAdware = new Generator(10, 1.0);
     Generator coreMalware = new Generator(10, 1.0);
     Generator coreWorm = new Generator(10, 1.0);
@@ -36,7 +37,7 @@ public class GameManager
         }
     }
 
-    public void addVirus(int type, int amount)
+    public void addGenerator(int type, int amount)
     {
         switch(type)
         {
@@ -52,10 +53,10 @@ public class GameManager
                 break;
             case 5:coreHijacker.addVirus(amount);
                 break;
-            case 6: totalResources++;
             default:
-                break;
+                throw new RuntimeException("GameManager.addGenerator attempted to add unknown generator");
         }
+        calcTotalResourcesPerSec();
     }
 
     public void getNumOfGenerators(int type)
@@ -80,16 +81,19 @@ public class GameManager
         }
     }
 
-    public double calcTotalResourcesPerSec()
+    // reworked some faulty logic
+    public void calcTotalResourcesPerSec()
     {
-        totalResources += (coreAdware.calcVirusGenPerSec()+
-                        coreMalware.calcVirusGenPerSec()+
-                        coreWorm.calcVirusGenPerSec()+
-                        coreTrojan.calcVirusGenPerSec()+
-                        coreRootkit.calcVirusGenPerSec()+
-                        coreHijacker.calcVirusGenPerSec()) / 30;
+        resourcesPerSec = (coreAdware.calcVirusGenPerSec()+
+                coreMalware.calcVirusGenPerSec()+
+                coreWorm.calcVirusGenPerSec()+
+                coreTrojan.calcVirusGenPerSec()+
+                coreRootkit.calcVirusGenPerSec()+
+                coreHijacker.calcVirusGenPerSec());
+    }
 
-        return totalResources;
+    public double getResourcesPerSec(){
+        return resourcesPerSec;
     }
 
     public void addResources(double amount){
@@ -97,7 +101,7 @@ public class GameManager
     }
 
     public double getTotalResourcesPerFrame(int FPS){
-        return calcTotalResourcesPerSec() / FPS;
+        return resourcesPerSec / FPS;
     }
 
     public void attemptBuy(int type, int amount)
@@ -155,6 +159,7 @@ public class GameManager
             default:
                 break;
         }
+        calcTotalResourcesPerSec();
     }
 
     public String getResourcesString() {
@@ -212,6 +217,9 @@ public class GameManager
         editor.putInt("num_trojans", coreTrojan.getNumOfGenerators());
         editor.putInt("num_hijackers", coreHijacker.getNumOfGenerators());
 
+        // store data for time
+        editor.putLong("time", System.currentTimeMillis());
+
         // apply changes
         editor.apply();
     }
@@ -233,6 +241,10 @@ public class GameManager
         }
     }
 
+    public long getStoredTime(SharedPreferences sharedPref){
+        return sharedPref.getLong("time", 0);
+    }
+
     // Some SharedPreferences wizardy since SharedPreferences can't store doubles natively
     // CODE TAKEN FROM http://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
     private SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value){
@@ -241,5 +253,44 @@ public class GameManager
 
     private double getDouble(final SharedPreferences prefs, final String key, final double defaultValue){
         return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
+    }
+
+    public String convertNumToString(double number){
+        DecimalFormat df = new DecimalFormat("###.000");
+        String text = "";
+        int thousandsModifier = 0;
+
+        while (number >= 1d){
+            number /= 1000d;
+            thousandsModifier ++;
+        }
+
+        if (thousandsModifier > 0){
+            number *= 1000d;
+            thousandsModifier --;
+        }
+
+        text = df.format(number).replaceAll(".000", "");
+
+        switch (thousandsModifier){
+            case 0:
+                break;
+            case 1:
+                text += " K";
+                break;
+            case 2:
+                text += " M";
+                break;
+            case 3:
+                text += " B";
+                break;
+            case 4:
+                text += " T";
+                break;
+            default:
+                throw new RuntimeException("ResourceManager.convertNumToString cannot handle numbers this large");
+        }
+
+        return text;
     }
 }
