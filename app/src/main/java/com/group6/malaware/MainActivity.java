@@ -2,16 +2,16 @@ package com.group6.malaware;
 
 import android.app.DialogFragment;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.view.Gravity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,15 +24,19 @@ public class MainActivity extends AppCompatActivity
 {
 
     public final int FPS = 30;                                          //FPS constant
+    private int autoTapCooldown = 0;
+    private int increaseResourceGenerationCooldown = 0;
     public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
-    public Timer gameLoop = new Timer();
+    public Timer gameLoop;
     private Bundle bundle;                                              //Bundle used to pass data between dialogs
     private DialogFragment purchaseDialog;
     private DialogFragment upgradeDialog;
 
     // View variables
     TextView txtResources;
+    TextView txtAutoTap;
+    TextView txtIncreaseResourceGeneration;
     NavigationView navLeft;
     NavigationView navRight;
     MenuItem navLeftNoUpgradesPurchased;
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     MenuItem navLeftAutoClickUpgradePurchased;
     MenuItem navLeftResourceGenerationUpgradePurchased;
     MenuItem navRightNoGeneratorsAvailable;
-    FloatingActionButton fabAutoClick;
+    FloatingActionButton fabAutoTap;
     FloatingActionButton fabIncreaseResourceGeneration;
 
     @Override
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity
 
         // set view variables
         txtResources = (TextView) findViewById(R.id.txt_resource);
+        txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
+        txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
         navLeft = (NavigationView) findViewById(R.id.nav_view_left);
         navRight = (NavigationView) findViewById(R.id.nav_view_right);
         navLeftNoUpgradesPurchased = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_purchased);
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         navLeftResourceGenerationUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase);
         navLeftResourceGenerationUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_purchased);
         navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
-        fabAutoClick = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
+        fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
 
         // load previous game
@@ -80,8 +86,11 @@ public class MainActivity extends AppCompatActivity
                     / 1000                                      // number of milliseconds per sec
                     * gameManager.getResourcesPerSec();   // number of resources per sec
             gameManager.addResources(passiveResources);         // add that amount to resource pool
-            Toast.makeText(this, "You have generated " + gameManager.convertNumToString(passiveResources)
-                    + " resources while you were away!", Toast.LENGTH_SHORT).show();
+            // only show this number if it is significant
+            if (passiveResources > 1) {
+                Toast.makeText(this, "You have generated " + gameManager.convertNumToString(passiveResources)
+                        + " resources while you were away!", Toast.LENGTH_SHORT).show();
+            }
         }
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -202,7 +211,7 @@ public class MainActivity extends AppCompatActivity
                     navLeftAutoClickUpgradePurchased.setVisible(true);
                     navLeftNoUpgradesPurchased.setVisible(false);
                     navLeftAutoClickUpgrade.setVisible(false);
-                    fabAutoClick.setVisibility(FloatingActionButton.VISIBLE);
+                    fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
                     if (!navLeftResourceGenerationUpgrade.isVisible()){
                         navLeftNoUpgradesAvailable.setVisible(true);
                     }
@@ -242,7 +251,117 @@ public class MainActivity extends AppCompatActivity
     // THIS NEEDS TO BE REWORKED!!!!!!!!
     public void addVirus(int type, int amount) {gameManager.attemptBuy(type, amount);}
 
-    public void fabAutoTapOnClick(View view) {Toast.makeText(this, "Auto tap engage!", Toast.LENGTH_SHORT).show();}
+    public void fabAutoTapOnClick(View view) {
+        autoTapCooldown = 11;
+        fabAutoTap.setImageResource(android.R.color.transparent);
+        fabAutoTap.setEnabled(false);
+        txtAutoTap.setVisibility(TextView.VISIBLE);
+        final Timer fabAutoTapActiveTimer = new Timer();
+        // begin active timer
+        fabAutoTapActiveTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (autoTapCooldown == 1) {
+                    autoTapCooldown = 61;
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
+                        }
+                    });
+                    fabAutoTapActiveTimer.cancel();
+                    // begin cooldown timer
+                    final Timer fabAutoTapCooldownTimer = new Timer();
+                    fabAutoTapCooldownTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (autoTapCooldown == 1) {
+                                MainActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        fabAutoTap.setImageResource(R.drawable.tap);
+                                        txtAutoTap.setVisibility(TextView.GONE);
+                                        fabAutoTap.setEnabled(true);
+                                        fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
+                                    }
+                                });
+                                fabAutoTapCooldownTimer.cancel();
+                            }
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtAutoTap.setText(Integer.toString(autoTapCooldown));
+                                }
+                            });
+                            autoTapCooldown--;
+                        }
+                    }, 0, 1000);
+                }
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtAutoTap.setText(Integer.toString(autoTapCooldown));
+                    }
+                });
+                autoTapCooldown--;
+            }
+        }, 0, 1000);
+    }
 
-    public void fabResourceGenerationIncrease(View view) {Toast.makeText(this, "Go go resource generation increase!", Toast.LENGTH_SHORT).show();}
+    public void fabResourceGenerationIncrease(View view) {
+        increaseResourceGenerationCooldown = 11;
+        fabIncreaseResourceGeneration.setImageResource(android.R.color.transparent);
+        fabIncreaseResourceGeneration.setEnabled(false);
+        txtIncreaseResourceGeneration.setVisibility(TextView.VISIBLE);
+        final Timer fabIncreaseResourceGenerationActiveTimer = new Timer();
+        // begin active timer
+        fabIncreaseResourceGenerationActiveTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (increaseResourceGenerationCooldown == 1) {
+                    increaseResourceGenerationCooldown = 61;
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
+                        }
+                    });
+                    fabIncreaseResourceGenerationActiveTimer.cancel();
+                    // begin cooldown timer
+                    final Timer fabIncreaseResourceGenerationCooldownTimer = new Timer();
+                    fabIncreaseResourceGenerationCooldownTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (increaseResourceGenerationCooldown == 1) {
+                                MainActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        fabIncreaseResourceGeneration.setImageResource(android.R.drawable.ic_dialog_alert);
+                                        txtIncreaseResourceGeneration.setVisibility(TextView.GONE);
+                                        fabIncreaseResourceGeneration.setEnabled(true);
+                                        fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_light)));
+                                    }
+                                });
+                                fabIncreaseResourceGenerationCooldownTimer.cancel();
+                            }
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtIncreaseResourceGeneration.setText(Integer.toString(increaseResourceGenerationCooldown));
+                                }
+                            });
+                            increaseResourceGenerationCooldown--;
+                        }
+                    }, 0, 1000);
+                }
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtIncreaseResourceGeneration.setText(Integer.toString(increaseResourceGenerationCooldown));
+                    }
+                });
+                increaseResourceGenerationCooldown--;
+            }
+        }, 0, 1000);
+    }
 }
