@@ -86,8 +86,11 @@ public class MainActivity extends AppCompatActivity
                     / 1000                                      // number of milliseconds per sec
                     * gameManager.getResourcesPerSec();   // number of resources per sec
             gameManager.addResources(passiveResources);         // add that amount to resource pool
-            Toast.makeText(this, "You have generated " + gameManager.convertNumToString(passiveResources)
-                    + " resources while you were away!", Toast.LENGTH_SHORT).show();
+            // only show this number if it is significant
+            if (passiveResources > 1) {
+                Toast.makeText(this, "You have generated " + gameManager.convertNumToString(passiveResources)
+                        + " resources while you were away!", Toast.LENGTH_SHORT).show();
+            }
         }
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -263,7 +266,7 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
+                            fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
                         }
                     });
                     fabAutoTapActiveTimer.cancel();
@@ -276,10 +279,10 @@ public class MainActivity extends AppCompatActivity
                                 MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        fabAutoTap.setImageResource(android.R.drawable.ic_dialog_dialer);
+                                        fabAutoTap.setImageResource(R.drawable.tap);
                                         txtAutoTap.setVisibility(TextView.GONE);
                                         fabAutoTap.setEnabled(true);
-                                        fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_light)));
+                                        fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
                                     }
                                 });
                                 fabAutoTapCooldownTimer.cancel();
@@ -333,7 +336,7 @@ public class MainActivity extends AppCompatActivity
                                 MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        fabIncreaseResourceGeneration.setImageResource(android.R.drawable.ic_dialog_dialer);
+                                        fabIncreaseResourceGeneration.setImageResource(android.R.drawable.ic_dialog_alert);
                                         txtIncreaseResourceGeneration.setVisibility(TextView.GONE);
                                         fabIncreaseResourceGeneration.setEnabled(true);
                                         fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_light)));
