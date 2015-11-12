@@ -207,28 +207,30 @@ public class MainActivity extends AppCompatActivity
                 purchaseDialog.show(getFragmentManager(), "Adware");
                 break;
             case R.id.nav_left_auto_click_upgrade:
-                if (gameManager.subtractResources(10)){
-                    navLeftAutoClickUpgradePurchased.setVisible(true);
-                    navLeftNoUpgradesPurchased.setVisible(false);
-                    navLeftAutoClickUpgrade.setVisible(false);
-                    fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
-                    if (!navLeftResourceGenerationUpgrade.isVisible()){
-                        navLeftNoUpgradesAvailable.setVisible(true);
-                    }
-                } else {
+                try {
+                    gameManager.subtractResources(10d);
+                } catch (RuntimeException e) {
                     Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
+                }
+                navLeftAutoClickUpgradePurchased.setVisible(true);
+                navLeftNoUpgradesPurchased.setVisible(false);
+                navLeftAutoClickUpgrade.setVisible(false);
+                fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
+                if (!navLeftResourceGenerationUpgrade.isVisible()){
+                    navLeftNoUpgradesAvailable.setVisible(true);
                 }
                 break;
             case R.id.nav_left_resource_generation_increase:
-                if (gameManager.subtractResources(10)){
-                    navLeftResourceGenerationUpgradePurchased.setVisible(true);
-                    navLeftResourceGenerationUpgrade.setVisible(false);
-                    fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
-                    if (!navLeftAutoClickUpgrade.isVisible()){
-                        navLeftNoUpgradesAvailable.setVisible(true);
-                    }
-                } else {
+                try {
+                    gameManager.subtractResources(10d);
+                } catch (RuntimeException e){
                     Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
+                }
+                navLeftResourceGenerationUpgradePurchased.setVisible(true);
+                navLeftResourceGenerationUpgrade.setVisible(false);
+                fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
+                if (!navLeftAutoClickUpgrade.isVisible()) {
+                    navLeftNoUpgradesAvailable.setVisible(true);
                 }
                 break;
             default:
@@ -262,7 +264,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (autoTapCooldown == 1) {
-                    autoTapCooldown = 61;
+                    autoTapCooldown = 62;
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -319,7 +321,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (increaseResourceGenerationCooldown == 1) {
-                    increaseResourceGenerationCooldown = 61;
+                    increaseResourceGenerationCooldown = 62;
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
