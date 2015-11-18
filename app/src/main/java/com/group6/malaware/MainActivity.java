@@ -17,10 +17,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,22 +48,23 @@ public class MainActivity extends AppCompatActivity
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
     NavigationView navLeft;
-    NavigationView navRight;
+    //NavigationView navRight;
     MenuItem navLeftNoUpgradesPurchased;
     MenuItem navLeftNoUpgradesAvailable;
     MenuItem navLeftAutoClickUpgrade;
     MenuItem navLeftResourceGenerationUpgrade;
     MenuItem navLeftAutoClickUpgradePurchased;
     MenuItem navLeftResourceGenerationUpgradePurchased;
-    MenuItem navRightNoGeneratorsAvailable;
+    //MenuItem navRightNoGeneratorsAvailable;
     FloatingActionButton fabAutoTap;
     FloatingActionButton fabIncreaseResourceGeneration;
 
 
-    String[] menu;
     DrawerLayout dLayout;
-    ListView dList;
-    ArrayAdapter< String > adapter;
+    List<String> groupList;
+    List<String> childList;
+    Map<String, List<String>> laptopCollection;
+    ExpandableListView expListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -163,34 +169,71 @@ public class MainActivity extends AppCompatActivity
             }
         }, 0, 1000 / FPS);
 
-
-        menu = new String[] {"Adware", "Worm", "Trojan", "Hijacker",
-                            "Malware", "Rootkit"};
-
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        dList = (ListView) findViewById(R.id.right_drawer);
-        adapter = new ArrayAdapter < String > (this, android.R.layout.simple_list_item_1, menu);
-        dList.setAdapter(adapter);
-        dList.setSelector(android.R.color.holo_blue_dark);
+        createGroupList();
+        createCollection();
 
-        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        expListView = (ExpandableListView) findViewById(R.id.right_drawer);
+        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, laptopCollection);
+        expListView.setAdapter(expListAdapter);
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+            {
+                //final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
+                //Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
                 dLayout.closeDrawers();
-                /*
-                Bundle args = new Bundle();
-                args.putString("Menu", menu[position]);
 
-                Fragment detail = new DetailFragment();
-                detail.setArguments(args);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, detail).commit();
-                 */
+                return true;
             }
-
         });
+
+
+    }
+
+    private void createGroupList() {
+        groupList = new ArrayList<String>();
+        groupList.add("Adware");
+        groupList.add("Malware");
+        groupList.add("Trojan");
+        groupList.add("Worm");
+        groupList.add("Rootkit");
+        groupList.add("Hijacker");
+    }
+
+    private void createCollection() {
+        // preparing laptops collection(child)
+        String[] hpModels = { "HP Pavilion G6-2014TX"};
+        String[] hclModels = { "HCL S2101"};
+        String[] lenovoModels = { "IdeaPad Z Series"};
+        String[] sonyModels = { "VAIO E Series"};
+        String[] dellModels = { "Inspiron"};
+        String[] samsungModels = { "NP Series"};
+
+        laptopCollection = new LinkedHashMap<String, List<String>>();
+
+        for (String laptop : groupList) {
+            if (laptop.equals("HP")) {
+                loadChild(hpModels);
+            } else if (laptop.equals("Dell"))
+                loadChild(dellModels);
+            else if (laptop.equals("Sony"))
+                loadChild(sonyModels);
+            else if (laptop.equals("HCL"))
+                loadChild(hclModels);
+            else if (laptop.equals("Samsung"))
+                loadChild(samsungModels);
+            else
+                loadChild(lenovoModels);
+
+            laptopCollection.put(laptop, childList);
+        }
+    }
+
+    private void loadChild(String[] laptopModels) {
+        childList = new ArrayList<String>();
+        for (String model : laptopModels)
+            childList.add(model);
     }
 
     @Override

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_genNum"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="25dp"
+        android:text="# of Generators:"/>
+
+    <TextView
+        android:id="@+id/txt_GenRate"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="25dp"
+        android:text="Generation Rate:"/>
+
+    <TextView
+        android:id="@+id/txt_genCost"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="25dp"
+        android:text="Cost Per Generator:"/>
+
+    <LinearLayout
+        android:layout_alignBottom="@id/txt_genCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="25dp">
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:textSize="10sp"
+            android:text="x1" />
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:textSize="10sp"
+            android:text="x10" />
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:textSize="10sp"
+            android:text="x25"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
