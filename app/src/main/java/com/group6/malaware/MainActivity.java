@@ -188,6 +188,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right,null);
+        expListView.addHeaderView(header);
+
 
     }
 
