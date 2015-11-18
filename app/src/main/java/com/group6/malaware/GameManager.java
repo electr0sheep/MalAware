@@ -29,9 +29,7 @@ public class GameManager {
     public static final int ROOTKIT = 0x00000100;
     public static final int HIJACKER = 0x00000101;
 
-    public double getTotalResources() {
-        return totalResources;
-    }
+    public double getTotalResources() {return totalResources;}
 
     public void subtractResources(double amount) {
         if (amount > totalResources){
