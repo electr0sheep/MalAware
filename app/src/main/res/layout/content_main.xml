@@ -25,6 +25,14 @@
         android:layout_height="wrap_content"
         android:text="ERROR"
         android:textSize="50sp" />
+    <TextView
+        android:id="@+id/txt_totalGenRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Viruses Per Second"
+        android:textSize="10sp"
+        android:layout_below="@+id/img_resources"
+        android:layout_alignEnd="@+id/img_terminal" />
     <ImageView
         android:layout_width="250dp"
         android:layout_height="250dp"

@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 public class GameManager {
     private double totalResources = 0;
     private double resourcesPerSec = 0;
+    private double totalGenRate = 0.0;
     Generator coreAdware = new Generator(10, 1.0);
     Generator coreMalware = new Generator(10, 1.0);
     Generator coreWorm = new Generator(10, 1.0);
@@ -22,17 +23,15 @@ public class GameManager {
     Generator coreHijacker = new Generator(10, 1.0);
 
     // Generator constants
-    public static final int ADWARE = 0x00000000;
-    public static final int MALWARE = 0x00000001;
-    public static final int WORM = 0x00000010;
-    public static final int TROJAN = 0x00000011;
-    public static final int ROOTKIT = 0x00000100;
-    public static final int HIJACKER = 0x00000101;
+    public static final int ADWARE = 0;
+    public static final int MALWARE = 1;
+    public static final int WORM = 2;
+    public static final int TROJAN = 3;
+    public static final int ROOTKIT = 4;
+    public static final int HIJACKER = 5;
 
-    public double getTotalResources() {
-        return totalResources;
-    }
 
+<<<<<<< HEAD
     public void subtractResources(double amount) {
         if (amount > totalResources) {
             throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
@@ -40,6 +39,8 @@ public class GameManager {
             totalResources -= amount;
         }
     }
+=======
+>>>>>>> origin/master
 
     public void addGenerator(int type, int amount) {
         if (amount < 0) {
@@ -71,45 +72,16 @@ public class GameManager {
         calcTotalResourcesPerSec();
     }
 
-    public int getNumOfGenerators(int type) {
-        switch (type) {
-            case ADWARE:
-                return coreAdware.getNumOfGenerators();
-            case MALWARE:
-                return coreMalware.getNumOfGenerators();
-            case WORM:
-                return coreWorm.getNumOfGenerators();
-            case TROJAN:
-                return coreTrojan.getNumOfGenerators();
-            case ROOTKIT:
-                return coreRootkit.getNumOfGenerators();
-            case HIJACKER:
-                return coreHijacker.getNumOfGenerators();
-            default:
-                throw new RuntimeException("GameManager.getNumOfGenerators cannot lookup unknown generator type");
-        }
-    }
-
-    // reworked some faulty logic
-    public void calcTotalResourcesPerSec() {
-        resourcesPerSec = (coreAdware.calcVirusGenPerSec() +
-                coreMalware.calcVirusGenPerSec() +
-                coreWorm.calcVirusGenPerSec() +
-                coreTrojan.calcVirusGenPerSec() +
-                coreRootkit.calcVirusGenPerSec() +
-                coreHijacker.calcVirusGenPerSec());
-    }
-
-    public double getResourcesPerSec() {
-        return resourcesPerSec;
-    }
-
     public void addResources(double amount) {
         totalResources += amount;
     }
 
-    public double getTotalResourcesPerFrame(int FPS) {
-        return resourcesPerSec / FPS;
+    public void subtractResources(double amount) {
+        if (amount > totalResources){
+            throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
+        } else {
+            totalResources -= amount;
+        }
     }
 
     public boolean attemptBuy(int type, int amount) {
@@ -161,6 +133,101 @@ public class GameManager {
         }
         calcTotalResourcesPerSec();
         return true;
+    }
+
+    public int getNumOfGenerators(int type) {
+        switch (type) {
+            case ADWARE:
+                return coreAdware.getNumOfGenerators();
+            case MALWARE:
+                return coreMalware.getNumOfGenerators();
+            case WORM:
+                return coreWorm.getNumOfGenerators();
+            case TROJAN:
+                return coreTrojan.getNumOfGenerators();
+            case ROOTKIT:
+                return coreRootkit.getNumOfGenerators();
+            case HIJACKER:
+                return coreHijacker.getNumOfGenerators();
+            default:
+                throw new RuntimeException("GameManager.getNumOfGenerators cannot lookup unknown generator type");
+        }
+    }
+
+    public int getCostOfGenerators(int type)
+    {
+        switch (type) {
+            case ADWARE:
+                return coreAdware.getCost();
+            case MALWARE:
+                return coreMalware.getCost();
+            case WORM:
+                return coreWorm.getCost();
+            case TROJAN:
+                return coreTrojan.getCost();
+            case ROOTKIT:
+                return coreRootkit.getCost();
+            case HIJACKER:
+                return coreHijacker.getCost();
+            default:
+                throw new RuntimeException("GameManager.getNumOfGenerators cannot lookup unknown generator type");
+        }
+    }
+
+    public double getGenRate(int type)
+    {
+        switch (type) {
+            case ADWARE:
+                return coreAdware.calcVirusGenPerSec();
+            case MALWARE:
+                return coreMalware.calcVirusGenPerSec();
+            case WORM:
+                return coreWorm.calcVirusGenPerSec();
+            case TROJAN:
+                return coreTrojan.calcVirusGenPerSec();
+            case ROOTKIT:
+                return coreRootkit.calcVirusGenPerSec();
+            case HIJACKER:
+                return coreHijacker.calcVirusGenPerSec();
+            default:
+                throw new RuntimeException("GameManager.getNumOfGenerators cannot lookup unknown generator type");
+        }
+    }
+
+    public double getTotalGenRate()
+    {
+        totalGenRate = coreAdware.calcVirusGenPerSec()+
+                coreMalware.calcVirusGenPerSec()+
+                coreWorm.calcVirusGenPerSec()+
+                coreTrojan.calcVirusGenPerSec()+
+                coreRootkit.calcVirusGenPerSec()+
+                coreHijacker.calcVirusGenPerSec();
+
+        return totalGenRate;
+    }
+
+    public String totalGenRateString()
+    {
+        return Double.toString(getTotalGenRate()) + " Viruses Per Second";
+    }
+
+    public double getTotalResources() {return totalResources;}
+
+    public void calcTotalResourcesPerSec() {
+        resourcesPerSec = (coreAdware.calcVirusGenPerSec() +
+                coreMalware.calcVirusGenPerSec() +
+                coreWorm.calcVirusGenPerSec() +
+                coreTrojan.calcVirusGenPerSec() +
+                coreRootkit.calcVirusGenPerSec() +
+                coreHijacker.calcVirusGenPerSec());
+    }
+
+    public double getResourcesPerSec() {
+        return resourcesPerSec;
+    }
+
+    public double getTotalResourcesPerFrame(int FPS) {
+        return resourcesPerSec / FPS;
     }
 
     public String getResourcesString() {
