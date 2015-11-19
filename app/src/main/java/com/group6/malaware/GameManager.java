@@ -30,18 +30,6 @@ public class GameManager {
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
 
-
-<<<<<<< HEAD
-    public void subtractResources(double amount) {
-        if (amount > totalResources) {
-            throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
-        } else {
-            totalResources -= amount;
-        }
-    }
-=======
->>>>>>> origin/master
-
     public void addGenerator(int type, int amount) {
         if (amount < 0) {
             throw new RuntimeException("GameManager.addGenerator cannot add negative generators");

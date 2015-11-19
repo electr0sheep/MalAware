@@ -115,14 +115,14 @@ public class MainActivity extends AppCompatActivity
                     public void run() {
                         gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
-<<<<<<< HEAD
+
                         if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()) {
                             if (navLeftNoUpgradesAvailable.isVisible()) {
-=======
-                        txtGenRate.setText(gameManager.totalGenRateString());
+                                txtGenRate.setText(gameManager.totalGenRateString());
+                            }
+                        }
                         if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()){
                             if (navLeftNoUpgradesAvailable.isVisible()){
->>>>>>> origin/master
                                 navLeftNoUpgradesAvailable.setVisible(false);
                             }
                             navLeftAutoClickUpgrade.setVisible(true);
@@ -215,17 +215,14 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_left_no_upgrades_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
                 break;
-<<<<<<< HEAD
-            case R.id.nav_right_no_generators_available:
+            /*case R.id.nav_right_no_generators_available:
                 bundle.putString("Title", "Buying Adware");
                 bundle.putString("Cost", Integer.toString(gameManager.coreAdware.getCost()));
                 bundle.putString("Count", Integer.toString(gameManager.coreAdware.getNumOfGenerators()));
                 bundle.putInt("Type", 0);
                 purchaseDialog.setArguments(bundle);
                 purchaseDialog.show(getFragmentManager(), "Adware");
-                break;
-=======
->>>>>>> origin/master
+                break;*/
             case R.id.nav_left_auto_click_upgrade:
                 try {
                     gameManager.subtractResources(10d);
