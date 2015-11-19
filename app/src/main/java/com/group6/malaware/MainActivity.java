@@ -6,16 +6,20 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,16 +42,20 @@ public class MainActivity extends AppCompatActivity
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
     NavigationView navLeft;
-    NavigationView navRight;
     MenuItem navLeftNoUpgradesPurchased;
     MenuItem navLeftNoUpgradesAvailable;
     MenuItem navLeftAutoClickUpgrade;
     MenuItem navLeftResourceGenerationUpgrade;
     MenuItem navLeftAutoClickUpgradePurchased;
     MenuItem navLeftResourceGenerationUpgradePurchased;
-    MenuItem navRightNoGeneratorsAvailable;
     FloatingActionButton fabAutoTap;
     FloatingActionButton fabIncreaseResourceGeneration;
+
+    DrawerLayout dLayout;
+    List<String> groupList;
+    List<String> childList;
+    Map<String, List<String>> childCollection;
+    ExpandableListView expListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,14 +71,14 @@ public class MainActivity extends AppCompatActivity
         txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
         txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
         navLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        navRight = (NavigationView) findViewById(R.id.nav_view_right);
+        //navRight = (NavigationView) findViewById(R.id.nav_view_right);
         navLeftNoUpgradesPurchased = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_purchased);
         navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         navLeftAutoClickUpgrade = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade);
         navLeftAutoClickUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade_purchased);
         navLeftResourceGenerationUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase);
         navLeftResourceGenerationUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_purchased);
-        navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
+        //navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
 
@@ -93,19 +101,12 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-        //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.setDrawerListener(toggle);
-        //toggle.syncState();
-
-
         //Initialize Navigation Views
 
         NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
+        //NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
         navigationViewLeft.setNavigationItemSelectedListener(this);
-        navigationViewRight.setNavigationItemSelectedListener(this);
+        //navigationViewRight.setNavigationItemSelectedListener(this);
 
         // Initialize game loop
         gameLoop = new Timer();
@@ -158,6 +159,50 @@ public class MainActivity extends AppCompatActivity
                 });
             }
         }, 0, 1000 / FPS);
+
+        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        createGroupList();
+        createCollection();
+
+        expListView = (ExpandableListView) findViewById(R.id.right_drawer);
+        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, childCollection);
+        expListView.setAdapter(expListAdapter);
+
+        View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right, null);
+        expListView.addHeaderView(header);
+
+    }
+
+    private void createGroupList() {
+        groupList = new ArrayList<String>();
+        groupList.add("Adware");
+        groupList.add("Malware");
+        groupList.add("Worm");
+        groupList.add("Trojan");
+        groupList.add("Rootkit");
+        groupList.add("Hijacker");
+    }
+
+
+    //This definitely needs to go. Rework into working shape
+    private void createCollection() {
+        // Dummy data
+        String[] models = {"Something"};
+
+        childCollection = new LinkedHashMap<String, List<String>>();
+
+        for (String child : groupList) {
+
+                loadChild(models);
+
+            childCollection.put(child, childList);
+        }
+    }
+
+    private void loadChild(String[] models) {
+        childList = new ArrayList<String>();
+        for (String model : models)
+            childList.add(model);
     }
 
     @Override
@@ -194,17 +239,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_left_no_upgrades_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_right_no_generators_available:
-                /*bundle.putString("Title", "You clicked top item");
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "No purchases" );*/
-                bundle.putString("Title", "Buying Adware");
-                bundle.putString("Cost", Integer.toString(gameManager.coreAdware.getCost()));
-                bundle.putString("Count", Integer.toString(gameManager.coreAdware.getNumOfGenerators()));
-                bundle.putInt("Type", 0);
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "Adware");
                 break;
             case R.id.nav_left_auto_click_upgrade:
                 try {

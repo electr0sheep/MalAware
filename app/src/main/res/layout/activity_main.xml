@@ -22,13 +22,14 @@
         app:headerLayout="@layout/nav_header_left"
         app:menu="@menu/activity_left_drawer" />
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view_right"
-        android:layout_width="wrap_content"
+    <ExpandableListView android:id="@+id/right_drawer"
+        android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_right"
-        app:menu="@menu/activity_right_drawer" />
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="1dp"
+        android:background="#fff">
+    </ExpandableListView>
 
 </android.support.v4.widget.DrawerLayout>
