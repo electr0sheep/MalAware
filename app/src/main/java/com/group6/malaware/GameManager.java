@@ -34,7 +34,7 @@ public class GameManager {
     }
 
     public void subtractResources(double amount) {
-        if (amount > totalResources){
+        if (amount > totalResources) {
             throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
         } else {
             totalResources -= amount;

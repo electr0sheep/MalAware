@@ -20,8 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
-{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     public final int FPS = 30;                                          //FPS constant
     private int autoTapCooldown = 0;
@@ -50,13 +49,9 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fabIncreaseResourceGeneration;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
 
         // set view variables
         txtResources = (TextView) findViewById(R.id.txt_resource);
@@ -93,15 +88,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-        //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.setDrawerListener(toggle);
-        //toggle.syncState();
-
-
         //Initialize Navigation Views
-
         NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
         NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
         navigationViewLeft.setNavigationItemSelectedListener(this);
@@ -113,47 +100,23 @@ public class MainActivity extends AppCompatActivity
         gameLoop.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (sharedPref != null) {
-                    //rManager.addResources(RESOURCES_PER_SEC);
-                }
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
-                        if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()){
-                            if (navLeftNoUpgradesAvailable.isVisible()){
+                        if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()) {
+                            if (navLeftNoUpgradesAvailable.isVisible()) {
                                 navLeftNoUpgradesAvailable.setVisible(false);
                             }
                             navLeftAutoClickUpgrade.setVisible(true);
                         }
-                        if (gameManager.getTotalResources() > 19  && !navLeftResourceGenerationUpgradePurchased.isVisible()){
-                            if (navLeftNoUpgradesAvailable.isVisible()){
+                        if (gameManager.getTotalResources() > 19 && !navLeftResourceGenerationUpgradePurchased.isVisible()) {
+                            if (navLeftNoUpgradesAvailable.isVisible()) {
                                 navLeftNoUpgradesAvailable.setVisible(false);
                             }
                             navLeftResourceGenerationUpgrade.setVisible(true);
-                            //navLeftNoUpgradesAvailable.setVisible(true);
-                            //navLeftNoUpgradesPurchased.setVisible(false);
-                            //navLeftNoUpgradesAvailable.setVisible(true);
-                            //navLeftNoUpgradesAvailable.setVisible(false);
                         }
-                        //if (gameManager.getTotalResources() > 29){
-                            //navRightNoGeneratorsAvailable.setVisible(false);
-                        //}
-                        /*
-                        txtThousandsModifier.setText(rManager.getThousandsModifier());
-                        if (rManager.getResourcesDouble() > 9 && imgMalware != null) {
-                            imgMalware.setVisibility(ImageView.VISIBLE);
-                        }
-                        if (rManager.getResourcesDouble() > 19 && imgWorm != null) {
-                            imgWorm.setVisibility(ImageView.VISIBLE);
-                        }
-                        if (rManager.getResourcesDouble() > 29 && imgAdware != null) {
-                            imgAdware.setVisibility(ImageView.VISIBLE);
-                        }
-                        if (rManager.getResourcesDouble() > 39 && imgHijacker != null) {
-                            imgHijacker.setVisibility(ImageView.VISIBLE);
-                        }*/
                     }
                 });
             }
@@ -161,13 +124,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         //Closes the drawer when the Android back button is pressed
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (drawer.isDrawerOpen(GravityCompat.END)){
+        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
@@ -176,8 +138,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         bundle = new Bundle();
@@ -185,20 +146,16 @@ public class MainActivity extends AppCompatActivity
         upgradeDialog = new UpgradeDialogFragment();
 
         //Currently rudimentary, needs reworking
-
-        switch (id){
+        switch (id) {
             case R.id.nav_left_no_upgrades_available:
                 bundle.putString("Title", "You clicked top item");
                 upgradeDialog.setArguments(bundle);
-                upgradeDialog.show(getFragmentManager(), "No upgrades" );
+                upgradeDialog.show(getFragmentManager(), "No upgrades");
                 break;
             case R.id.nav_left_no_upgrades_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_right_no_generators_available:
-                /*bundle.putString("Title", "You clicked top item");
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "No purchases" );*/
                 bundle.putString("Title", "Buying Adware");
                 bundle.putString("Cost", Integer.toString(gameManager.coreAdware.getCost()));
                 bundle.putString("Count", Integer.toString(gameManager.coreAdware.getNumOfGenerators()));
@@ -216,14 +173,14 @@ public class MainActivity extends AppCompatActivity
                 navLeftNoUpgradesPurchased.setVisible(false);
                 navLeftAutoClickUpgrade.setVisible(false);
                 fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
-                if (!navLeftResourceGenerationUpgrade.isVisible()){
+                if (!navLeftResourceGenerationUpgrade.isVisible()) {
                     navLeftNoUpgradesAvailable.setVisible(true);
                 }
                 break;
             case R.id.nav_left_resource_generation_increase:
                 try {
                     gameManager.subtractResources(10d);
-                } catch (RuntimeException e){
+                } catch (RuntimeException e) {
                     Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
                 }
                 navLeftResourceGenerationUpgradePurchased.setVisible(true);
@@ -248,10 +205,9 @@ public class MainActivity extends AppCompatActivity
         gameManager.storeData(sharedPref);
     }
 
-    public void imgTerminalOnClick(View view) {gameManager.addResources(1d);}                 //Click listener for the Terminal image
-
-    // THIS NEEDS TO BE REWORKED!!!!!!!!
-    public void addVirus(int type, int amount) {gameManager.attemptBuy(type, amount);}
+    public void imgTerminalOnClick(View view) {
+        gameManager.addResources(1d);
+    }                 //Click listener for the Terminal image
 
     public void fabAutoTapOnClick(View view) {
         autoTapCooldown = 11;

@@ -10,11 +10,9 @@ import android.util.Log;
 /**
  * Created by Cyril Mathew on 11/4/15.
  */
-public class UpgradeDialogFragment extends DialogFragment
-{
+public class UpgradeDialogFragment extends DialogFragment {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
-    {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString("Title"));
@@ -36,7 +34,7 @@ public class UpgradeDialogFragment extends DialogFragment
 
                     }
                 });
-                    // Create the AlertDialog object and return it
+        // Create the AlertDialog object and return it
         return builder.create();
 
     }
