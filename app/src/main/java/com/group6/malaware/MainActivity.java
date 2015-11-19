@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
     // View variables
     TextView txtResources;
+    TextView txtGenRate;
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
     NavigationView navLeft;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         // set view variables
         txtResources = (TextView) findViewById(R.id.txt_resource);
+        txtGenRate = (TextView) findViewById(R.id.txt_totalGenRate);
         txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
         txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
         navLeft = (NavigationView) findViewById(R.id.nav_view_left);
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity
                     public void run() {
                         gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
+                        txtGenRate.setText(gameManager.totalGenRateString());
                         if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()){
                             if (navLeftNoUpgradesAvailable.isVisible()){
                                 navLeftNoUpgradesAvailable.setVisible(false);

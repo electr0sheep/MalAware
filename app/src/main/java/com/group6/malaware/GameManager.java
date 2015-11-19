@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 public class GameManager {
     private double totalResources = 0;
     private double resourcesPerSec = 0;
+    private double totalGenRate = 0.0;
     Generator coreAdware = new Generator(10, 1.0);
     Generator coreMalware = new Generator(10, 1.0);
     Generator coreWorm = new Generator(10, 1.0);
@@ -29,15 +30,7 @@ public class GameManager {
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
 
-    public double getTotalResources() {return totalResources;}
 
-    public void subtractResources(double amount) {
-        if (amount > totalResources){
-            throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
-        } else {
-            totalResources -= amount;
-        }
-    }
 
     public void addGenerator(int type, int amount) {
         if (amount < 0) {
@@ -67,6 +60,69 @@ public class GameManager {
                 throw new RuntimeException("GameManager.addGenerator attempted to add unknown generator");
         }
         calcTotalResourcesPerSec();
+    }
+
+    public void addResources(double amount) {
+        totalResources += amount;
+    }
+
+    public void subtractResources(double amount) {
+        if (amount > totalResources){
+            throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
+        } else {
+            totalResources -= amount;
+        }
+    }
+
+    public boolean attemptBuy(int type, int amount) {
+        switch (type) {
+            case ADWARE:
+                if ((amount * coreAdware.getCost()) <= totalResources) {
+                    totalResources -= (amount * coreAdware.getCost());
+                    coreAdware.addVirus(amount);
+                    break;
+                } else
+                    return false;
+            case MALWARE:
+                if ((amount * coreMalware.getCost()) <= totalResources) {
+                    totalResources -= (amount * coreMalware.getCost());
+                    coreMalware.addVirus(amount);
+                    break;
+                } else
+                    return false;
+            case WORM:
+                if ((amount * coreWorm.getCost()) <= totalResources) {
+                    totalResources -= (amount * coreWorm.getCost());
+                    coreWorm.addVirus(amount);
+                    break;
+                } else
+                    return false;
+            case TROJAN:
+                if ((amount * coreTrojan.getCost()) <= totalResources) {
+                    totalResources -= (amount * coreTrojan.getCost());
+                    coreTrojan.addVirus(amount);
+                    break;
+                } else
+                    return false;
+            case ROOTKIT:
+                if ((amount * coreRootkit.getCost()) <= totalResources) {
+                    totalResources -= (amount * coreRootkit.getCost());
+                    coreRootkit.addVirus(amount);
+                    break;
+                } else
+                    return false;
+            case HIJACKER:
+                if ((amount * coreHijacker.getCost()) <= totalResources) {
+                    totalResources -= (amount * coreHijacker.getCost());
+                    coreHijacker.addVirus(amount);
+                    break;
+                } else
+                    return false;
+            default:
+                throw new RuntimeException("GameManager.attemptBuy cannot buy unknown generators");
+        }
+        calcTotalResourcesPerSec();
+        return true;
     }
 
     public int getNumOfGenerators(int type) {
@@ -128,7 +184,25 @@ public class GameManager {
         }
     }
 
-    // reworked some faulty logic
+    public double getTotalGenRate()
+    {
+        totalGenRate = coreAdware.calcVirusGenPerSec()+
+                coreMalware.calcVirusGenPerSec()+
+                coreWorm.calcVirusGenPerSec()+
+                coreTrojan.calcVirusGenPerSec()+
+                coreRootkit.calcVirusGenPerSec()+
+                coreHijacker.calcVirusGenPerSec();
+
+        return totalGenRate;
+    }
+
+    public String totalGenRateString()
+    {
+        return Double.toString(getTotalGenRate()) + " Viruses Per Second";
+    }
+
+    public double getTotalResources() {return totalResources;}
+
     public void calcTotalResourcesPerSec() {
         resourcesPerSec = (coreAdware.calcVirusGenPerSec() +
                 coreMalware.calcVirusGenPerSec() +
@@ -142,63 +216,8 @@ public class GameManager {
         return resourcesPerSec;
     }
 
-    public void addResources(double amount) {
-        totalResources += amount;
-    }
-
     public double getTotalResourcesPerFrame(int FPS) {
         return resourcesPerSec / FPS;
-    }
-
-    public boolean attemptBuy(int type, int amount) {
-        switch (type) {
-            case ADWARE:
-                if ((amount * coreAdware.getCost()) <= totalResources) {
-                    totalResources -= (amount * coreAdware.getCost());
-                    coreAdware.addVirus(amount);
-                    break;
-                } else
-                    return false;
-            case MALWARE:
-                if ((amount * coreMalware.getCost()) <= totalResources) {
-                    totalResources -= (amount * coreMalware.getCost());
-                    coreMalware.addVirus(amount);
-                    break;
-                } else
-                    return false;
-            case WORM:
-                if ((amount * coreWorm.getCost()) <= totalResources) {
-                    totalResources -= (amount * coreWorm.getCost());
-                    coreWorm.addVirus(amount);
-                    break;
-                } else
-                    return false;
-            case TROJAN:
-                if ((amount * coreTrojan.getCost()) <= totalResources) {
-                    totalResources -= (amount * coreTrojan.getCost());
-                    coreTrojan.addVirus(amount);
-                    break;
-                } else
-                    return false;
-            case ROOTKIT:
-                if ((amount * coreRootkit.getCost()) <= totalResources) {
-                    totalResources -= (amount * coreRootkit.getCost());
-                    coreRootkit.addVirus(amount);
-                    break;
-                } else
-                    return false;
-            case HIJACKER:
-                if ((amount * coreHijacker.getCost()) <= totalResources) {
-                    totalResources -= (amount * coreHijacker.getCost());
-                    coreHijacker.addVirus(amount);
-                    break;
-                } else
-                    return false;
-            default:
-                throw new RuntimeException("GameManager.attemptBuy cannot buy unknown generators");
-        }
-        calcTotalResourcesPerSec();
-        return true;
     }
 
     public String getResourcesString() {
