@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 /**
  * Created by Cyril Mathew on 11/4/15.
+ * No longer used. To be deleted.
  */
 public class PurchaseDialogFragment extends DialogFragment
 {

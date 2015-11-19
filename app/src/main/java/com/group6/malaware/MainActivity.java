@@ -1,24 +1,18 @@
 package com.group6.malaware;
 
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout dLayout;
     List<String> groupList;
     List<String> childList;
-    Map<String, List<String>> laptopCollection;
+    Map<String, List<String>> childCollection;
     ExpandableListView expListView;
 
     @Override
@@ -171,7 +165,7 @@ public class MainActivity extends AppCompatActivity
         createCollection();
 
         expListView = (ExpandableListView) findViewById(R.id.right_drawer);
-        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, laptopCollection);
+        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, childCollection);
         expListView.setAdapter(expListAdapter);
 
         View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right, null);
@@ -189,38 +183,25 @@ public class MainActivity extends AppCompatActivity
         groupList.add("Hijacker");
     }
 
+
+    //This definitely needs to go. Rework into working shape
     private void createCollection() {
-        // preparing laptops collection(child)
-        String[] hpModels = { "HP Pavilion G6-2014TX"};
-        String[] hclModels = { "HCL S2101"};
-        String[] lenovoModels = { "IdeaPad Z Series"};
-        String[] sonyModels = { "VAIO E Series"};
-        String[] dellModels = { "Inspiron"};
-        String[] samsungModels = { "NP Series"};
+        // Dummy data
+        String[] models = {"Something"};
 
-        laptopCollection = new LinkedHashMap<String, List<String>>();
+        childCollection = new LinkedHashMap<String, List<String>>();
 
-        for (String laptop : groupList) {
-            if (laptop.equals("HP")) {
-                loadChild(hpModels);
-            } else if (laptop.equals("Dell"))
-                loadChild(dellModels);
-            else if (laptop.equals("Sony"))
-                loadChild(sonyModels);
-            else if (laptop.equals("HCL"))
-                loadChild(hclModels);
-            else if (laptop.equals("Samsung"))
-                loadChild(samsungModels);
-            else
-                loadChild(lenovoModels);
+        for (String child : groupList) {
 
-            laptopCollection.put(laptop, childList);
+                loadChild(models);
+
+            childCollection.put(child, childList);
         }
     }
 
-    private void loadChild(String[] laptopModels) {
+    private void loadChild(String[] models) {
         childList = new ArrayList<String>();
-        for (String model : laptopModels)
+        for (String model : models)
             childList.add(model);
     }
 

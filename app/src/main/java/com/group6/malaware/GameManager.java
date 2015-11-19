@@ -156,7 +156,6 @@ public class GameManager {
                 if ((amount * coreAdware.getCost()) <= totalResources) {
                     totalResources -= (amount * coreAdware.getCost());
                     coreAdware.addVirus(amount);
-                    Log.i("Info", "Adw:" + coreAdware.getNumOfGenerators());
                     break;
                 } else
                     return false;
@@ -164,7 +163,6 @@ public class GameManager {
                 if ((amount * coreMalware.getCost()) <= totalResources) {
                     totalResources -= (amount * coreMalware.getCost());
                     coreMalware.addVirus(amount);
-                    Log.i("Info", "Mal:" + coreMalware.getNumOfGenerators());
                     break;
                 } else
                     return false;
@@ -172,7 +170,6 @@ public class GameManager {
                 if ((amount * coreWorm.getCost()) <= totalResources) {
                     totalResources -= (amount * coreWorm.getCost());
                     coreWorm.addVirus(amount);
-                    Log.i("Info", "Wo:" + coreWorm.getNumOfGenerators());
                     break;
                 } else
                     return false;
@@ -180,7 +177,6 @@ public class GameManager {
                 if ((amount * coreTrojan.getCost()) <= totalResources) {
                     totalResources -= (amount * coreTrojan.getCost());
                     coreTrojan.addVirus(amount);
-                    Log.i("Info", "Tro:" + coreTrojan.getNumOfGenerators());
                     break;
                 } else
                     return false;
@@ -188,7 +184,6 @@ public class GameManager {
                 if ((amount * coreRootkit.getCost()) <= totalResources) {
                     totalResources -= (amount * coreRootkit.getCost());
                     coreRootkit.addVirus(amount);
-                    Log.i("Info", "Roo:" + coreRootkit.getNumOfGenerators());
                     break;
                 } else
                     return false;
@@ -196,7 +191,6 @@ public class GameManager {
                 if ((amount * coreHijacker.getCost()) <= totalResources) {
                     totalResources -= (amount * coreHijacker.getCost());
                     coreHijacker.addVirus(amount);
-                    Log.i("Info", "Hi:" + coreHijacker.getNumOfGenerators());
                     break;
                 } else
                     return false;
