@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -55,44 +53,5 @@ public class PurchaseDialogFragment extends DialogFragment
                     // Create the AlertDialog object and return it
         return builder.create();
 
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        final AlertDialog dialog = (AlertDialog) getDialog();
-        if(dialog != null)
-        {
-            Button positiveButton = (Button) dialog.getButton(Dialog.BUTTON_POSITIVE);
-            Button negativeButton = (Button) dialog.getButton(Dialog.BUTTON_NEGATIVE);
-            Button neutralButton = (Button) dialog.getButton(Dialog.BUTTON_NEUTRAL);
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Boolean wantToClose = false;
-                    if(wantToClose)
-                        dialog.dismiss();
-                }
-            });
-
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Boolean wantToClose = false;
-                    if(wantToClose)
-                        dialog.dismiss();
-                }
-            });
-
-            neutralButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Boolean wantToClose = false;
-                    if(wantToClose)
-                        dialog.dismiss();
-                }
-            });
-        }
     }
 }
