@@ -48,17 +48,14 @@ public class MainActivity extends AppCompatActivity
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
     NavigationView navLeft;
-    //NavigationView navRight;
     MenuItem navLeftNoUpgradesPurchased;
     MenuItem navLeftNoUpgradesAvailable;
     MenuItem navLeftAutoClickUpgrade;
     MenuItem navLeftResourceGenerationUpgrade;
     MenuItem navLeftAutoClickUpgradePurchased;
     MenuItem navLeftResourceGenerationUpgradePurchased;
-    //MenuItem navRightNoGeneratorsAvailable;
     FloatingActionButton fabAutoTap;
     FloatingActionButton fabIncreaseResourceGeneration;
-
 
     DrawerLayout dLayout;
     List<String> groupList;
@@ -176,21 +173,9 @@ public class MainActivity extends AppCompatActivity
         expListView = (ExpandableListView) findViewById(R.id.right_drawer);
         final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, laptopCollection);
         expListView.setAdapter(expListAdapter);
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
-            {
-                //final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
-                //Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
-                dLayout.closeDrawers();
-
-                return true;
-            }
-        });
-
-        View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right,null);
+        View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right, null);
         expListView.addHeaderView(header);
-
 
     }
 
@@ -198,8 +183,8 @@ public class MainActivity extends AppCompatActivity
         groupList = new ArrayList<String>();
         groupList.add("Adware");
         groupList.add("Malware");
-        groupList.add("Trojan");
         groupList.add("Worm");
+        groupList.add("Trojan");
         groupList.add("Rootkit");
         groupList.add("Hijacker");
     }
@@ -273,17 +258,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_left_no_upgrades_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_right_no_generators_available:
-                /*bundle.putString("Title", "You clicked top item");
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "No purchases" );*/
-                bundle.putString("Title", "Buying Adware");
-                bundle.putString("Cost", Integer.toString(gameManager.coreAdware.getCost()));
-                bundle.putString("Count", Integer.toString(gameManager.coreAdware.getNumOfGenerators()));
-                bundle.putInt("Type", 0);
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "Adware");
                 break;
             case R.id.nav_left_auto_click_upgrade:
                 try {
