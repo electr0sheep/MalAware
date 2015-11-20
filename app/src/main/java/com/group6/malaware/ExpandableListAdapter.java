@@ -21,6 +21,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -29,13 +30,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Map<String, List<String>> childCollections;
     private List<String> generatorList;
 
-    private ArrayList<TextView> tView_genNum = new ArrayList<TextView>(7);
-    private ArrayList<TextView> tView_genRate = new ArrayList<TextView>(7);
-    private ArrayList<TextView> tView_genCost = new ArrayList<TextView>(7);
+    private Vector<TextView> tView_genNum = new Vector<TextView>(6);
+    private Vector<TextView> tView_genRate = new Vector<TextView>(6);
+    private Vector<TextView> tView_genCost = new Vector<TextView>(6);
 
-    private ArrayList<Button> btn_timesOne = new ArrayList<Button>(7);
-    private ArrayList<Button> btn_timesTen = new ArrayList<Button>(7);
-    private ArrayList<Button> btn_timesTwoFive = new ArrayList<Button>(7);
+    private Vector<Button> btn_timesOne = new Vector<Button>(6);
+    private Vector<Button> btn_timesTen = new Vector<Button>(6);
+    private Vector<Button> btn_timesTwoFive = new Vector<Button>(6);
 
 
     public ExpandableListAdapter(Activity context, List<String> generatorList, Map<String, List<String>> laptopCollections) {
@@ -43,6 +44,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.childCollections = laptopCollections;
         this.generatorList = generatorList;
         this.callingActivity = (MainActivity) context;
+
+        tView_genNum.setSize(6);
+        tView_genRate.setSize(6);
+        tView_genCost.setSize(6);
+
+        btn_timesOne.setSize(6);
+        btn_timesTen.setSize(6);
+        btn_timesTwoFive.setSize(6);
     }
 
     public Object getChild(int groupPosition, int childPosition) {
