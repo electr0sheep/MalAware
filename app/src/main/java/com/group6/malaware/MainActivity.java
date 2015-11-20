@@ -258,10 +258,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
 
-        // save game data
         gameManager.storeData(sharedPref);
     }
 

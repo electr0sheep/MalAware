@@ -4,6 +4,7 @@ package com.group6.malaware;
  * Originally found at http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/
  * Edited by Cyril Mathew on 11/18/15.
  */
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -39,9 +40,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Vector<Button> btn_timesTwoFive = new Vector<Button>(6);
 
 
-    public ExpandableListAdapter(Activity context, List<String> generatorList, Map<String, List<String>> laptopCollections) {
+    public ExpandableListAdapter(Activity context, List<String> generatorList, Map<String, List<String>> generatorCollections) {
         this.context = context;
-        this.childCollections = laptopCollections;
+        this.childCollections = generatorCollections;
         this.generatorList = generatorList;
         this.callingActivity = (MainActivity) context;
 
@@ -63,8 +64,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
 
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
-    {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         //Log.i("Info", "gPosition: " + groupPosition);
 
@@ -124,16 +124,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    public int getChildrenCount(int groupPosition) {return childCollections.get(generatorList.get(groupPosition)).size();}
+    public int getChildrenCount(int groupPosition) {
+        return childCollections.get(generatorList.get(groupPosition)).size();
+    }
 
-    public Object getGroup(int groupPosition) {return generatorList.get(groupPosition);}
+    public Object getGroup(int groupPosition) {
+        return generatorList.get(groupPosition);
+    }
 
-    public int getGroupCount() {return generatorList.size();}
+    public int getGroupCount() {
+        return generatorList.size();
+    }
 
-    public long getGroupId(int groupPosition) {return groupPosition;}
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
 
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
-    {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String generatorName = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -145,12 +152,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    public boolean hasStableIds() {return true;}
+    public boolean hasStableIds() {
+        return true;
+    }
 
-    public boolean isChildSelectable(int groupPosition, int childPosition) {return true;}
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
 
-    public void updateGroup(int groupPosition)
-    {
+    public void updateGroup(int groupPosition) {
         Log.i("Info", "Update Position: " + groupPosition);
         tView_genNum.get(groupPosition).setText("# of Generators: " + callingActivity.gameManager.getNumOfGenerators(groupPosition));
         tView_genRate.get(groupPosition).setText("Generation Rate:  " + callingActivity.gameManager.getGenRate(groupPosition));

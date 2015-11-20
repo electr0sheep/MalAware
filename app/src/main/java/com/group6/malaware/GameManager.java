@@ -283,6 +283,28 @@ public class GameManager {
         editor.apply();
     }
 
+    public void resetData(SharedPreferences sharedPref){
+        // set up editor
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        // store data for resources
+        editor = putDouble(editor, "resources", 0);
+
+        // store data for viruses
+        editor.putInt("num_malware", 0);
+        editor.putInt("num_worms", 0);
+        editor.putInt("num_adware", 0);
+        editor.putInt("num_rootkits", 0);
+        editor.putInt("num_trojans", 0);
+        editor.putInt("num_hijackers", 0);
+
+        // store data for time
+        editor.putLong("time", System.currentTimeMillis());
+
+        // apply changes
+        editor.apply();
+    }
+
     public void loadData(SharedPreferences sharedPref) {
         if (sharedPref == null) {
             throw new RuntimeException("Attempted to load resources from a null SharedPreferences pointer");
