@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -30,14 +31,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private MainActivity callingActivity;
     private Map<String, List<String>> childCollections;
     private List<String> generatorList;
+    private final short SIZE = 6;
+    private int lastExpandedGroupPosition = -1;
 
-    private Vector<TextView> tView_genNum = new Vector<TextView>(6);
-    private Vector<TextView> tView_genRate = new Vector<TextView>(6);
-    private Vector<TextView> tView_genCost = new Vector<TextView>(6);
+    private Vector<TextView> tView_genNum = new Vector<TextView>(SIZE);
+    private Vector<TextView> tView_genRate = new Vector<TextView>(SIZE);
+    private Vector<TextView> tView_genCost = new Vector<TextView>(SIZE);
 
-    private Vector<Button> btn_timesOne = new Vector<Button>(6);
-    private Vector<Button> btn_timesTen = new Vector<Button>(6);
-    private Vector<Button> btn_timesTwoFive = new Vector<Button>(6);
+    private Vector<Button> btn_timesOne = new Vector<Button>(SIZE);
+    private Vector<Button> btn_timesTen = new Vector<Button>(SIZE);
+    private Vector<Button> btn_timesTwoFive = new Vector<Button>(SIZE);
+
+    ExpandableListView expListView;
 
 
     public ExpandableListAdapter(Activity context, List<String> generatorList, Map<String, List<String>> generatorCollections) {
@@ -45,14 +50,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.childCollections = generatorCollections;
         this.generatorList = generatorList;
         this.callingActivity = (MainActivity) context;
+        this.expListView = callingActivity.expListView;
 
-        tView_genNum.setSize(6);
-        tView_genRate.setSize(6);
-        tView_genCost.setSize(6);
+        tView_genNum.setSize(SIZE);
+        tView_genRate.setSize(SIZE);
+        tView_genCost.setSize(SIZE);
 
-        btn_timesOne.setSize(6);
-        btn_timesTen.setSize(6);
-        btn_timesTwoFive.setSize(6);
+        btn_timesOne.setSize(SIZE);
+        btn_timesTen.setSize(SIZE);
+        btn_timesTwoFive.setSize(SIZE);
     }
 
     public Object getChild(int groupPosition, int childPosition) {
@@ -165,5 +171,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         tView_genNum.get(groupPosition).setText("# of Generators: " + callingActivity.gameManager.getNumOfGenerators(groupPosition));
         tView_genRate.get(groupPosition).setText("Generation Rate:  " + callingActivity.gameManager.getGenRate(groupPosition));
         tView_genCost.get(groupPosition).setText("Cost Per Generator:  " + callingActivity.gameManager.getCostOfGenerators(groupPosition));
+    }
+
+    @Override
+    public void onGroupExpanded(int groupPosition){
+        //collapse the old expanded group, if not the same
+        //as new group to expand
+        if(groupPosition != lastExpandedGroupPosition){
+            expListView.collapseGroup(lastExpandedGroupPosition);
+        }
+
+        super.onGroupExpanded(groupPosition);
+        lastExpandedGroupPosition = groupPosition;
     }
 }
