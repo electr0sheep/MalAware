@@ -1,8 +1,6 @@
 package com.group6.malaware;
 
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
@@ -21,6 +19,10 @@ public class GameManager {
     Generator coreTrojan = new Generator(10, 1.0);
     Generator coreRootkit = new Generator(10, 1.0);
     Generator coreHijacker = new Generator(10, 1.0);
+    int ASautoTapUpgradeLevel;
+    int ASincreaseResourceGeneration;
+    int AStimeWarp;
+    int ASpowerUpNext;
 
     // Generator constants
     public static final int ADWARE = 0;
@@ -29,6 +31,22 @@ public class GameManager {
     public static final int TROJAN = 3;
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
+
+    public boolean autoTapPurchased(){
+        return ASautoTapUpgradeLevel > 0;
+    }
+
+    public boolean increaseResourceGenerationPurchased(){
+        return ASincreaseResourceGeneration > 0;
+    }
+
+    public boolean timeWarpPurchased(){
+        return AStimeWarp > 0;
+    }
+
+    public boolean powerUpNextASPurchased(){
+        return ASpowerUpNext > 0;
+    }
 
     public void addGenerator(int type, int amount) {
         if (amount < 0) {
@@ -276,6 +294,20 @@ public class GameManager {
         editor.putInt("num_trojans", coreTrojan.getNumOfGenerators());
         editor.putInt("num_hijackers", coreHijacker.getNumOfGenerators());
 
+        // store data for upgrade levels for action skills
+        editor.putInt("AS_auto_click_upgrade_level", ASautoTapUpgradeLevel);
+        editor.putInt("AS_increase_resource_generation_upgrade_level", ASincreaseResourceGeneration);
+        editor.putInt("AS_time_warp_upgrade_level", AStimeWarp);
+        editor.putInt("AS_power_up_next_AS_upgrade_level", ASpowerUpNext);
+
+        // store data for upgrade levels of generators
+        editor = putDouble(editor, "malware_upgrade_level", coreMalware.getUpgradeLevel());
+        editor = putDouble(editor, "worm_upgrade_level", coreWorm.getUpgradeLevel());
+        editor = putDouble(editor, "adware_upgrade_level", coreAdware.getUpgradeLevel());
+        editor = putDouble(editor, "rootkit_upgrade_level", coreRootkit.getUpgradeLevel());
+        editor = putDouble(editor, "trojan_upgrade_level", coreTrojan.getUpgradeLevel());
+        editor = putDouble(editor, "hijacker_upgrade_level", coreHijacker.getUpgradeLevel());
+
         // store data for time
         editor.putLong("time", System.currentTimeMillis());
 
@@ -287,10 +319,10 @@ public class GameManager {
         // set up editor
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        // store data for resources
+        // reset resources
         editor = putDouble(editor, "resources", 0);
 
-        // store data for viruses
+        // reset viruses
         editor.putInt("num_malware", 0);
         editor.putInt("num_worms", 0);
         editor.putInt("num_adware", 0);
@@ -298,7 +330,20 @@ public class GameManager {
         editor.putInt("num_trojans", 0);
         editor.putInt("num_hijackers", 0);
 
-        // store data for time
+        // reset upgrades
+        editor.putInt("current_upgrade_visibility_level", 0);
+        editor.putInt("AS_auto_click_upgrade_level", 0);
+        editor.putInt("AS_increase_resource_generation_upgrade_level", 0);
+        editor.putInt("AS_time_warp_upgrade_level", 0);
+        editor.putInt("AS_power_up_next_AS_upgrade_level", 0);
+        editor = putDouble(editor, "malware_upgrade_level", 0);
+        editor = putDouble(editor, "worm_upgrade_level", 0);
+        editor = putDouble(editor, "adware_upgrade_level", 0);
+        editor = putDouble(editor, "rootkit_upgrade_level", 0);
+        editor = putDouble(editor, "trojan_upgrade_level", 0);
+        editor = putDouble(editor, "hijacker_upgrade_level", 0);
+
+        // reset time
         editor.putLong("time", System.currentTimeMillis());
 
         // apply changes
@@ -319,6 +364,20 @@ public class GameManager {
             coreRootkit.addVirus(sharedPref.getInt("num_rootkits", 0));
             coreTrojan.addVirus(sharedPref.getInt("num_trojans", 0));
             coreHijacker.addVirus(sharedPref.getInt("num_hijackers", 0));
+
+            // load upgrade levels for action skills
+            ASautoTapUpgradeLevel = sharedPref.getInt("AS_auto_click_upgrade_level", 0);
+            ASincreaseResourceGeneration = sharedPref.getInt("AS_increase_resource_generation_upgrade_level", 0);
+            AStimeWarp = sharedPref.getInt("AS_time_warp_upgrade_level", 0);
+            ASpowerUpNext = sharedPref.getInt("AS_power_up_next_AS_upgrade_level", 0);
+
+            // load upgrade levels for generators
+            coreMalware.setUpgradeLevel(getDouble(sharedPref, "malware_upgrade_level", 0));
+            coreWorm.setUpgradeLevel(getDouble(sharedPref, "worm_upgrade_level", 0));
+            coreAdware.setUpgradeLevel(getDouble(sharedPref, "adware_upgrade_level", 0));
+            coreRootkit.setUpgradeLevel(getDouble(sharedPref, "rootkit_upgrade_level", 0));
+            coreTrojan.setUpgradeLevel(getDouble(sharedPref, "trojan_upgrade_level", 0));
+            coreHijacker.setUpgradeLevel(getDouble(sharedPref, "hijacker_upgrade_level", 0));
         }
     }
 

@@ -8,9 +8,8 @@ package com.group6.malaware;
 public class Generator {
     private int costOEach = 10;
     private int numOfGenerators = 0;
-    // I don't think we need to keep track of the original gen rate
-    //private double baseGenRate = 1.0;
     private double genRate = 1.0;
+    private double upgradeLevel = 1.0;
 
     public Generator(int initialCost, double baseGen) {
         costOEach = initialCost;
@@ -31,7 +30,23 @@ public class Generator {
         costOEach += 10 * amount;
     }
 
+    public double getUpgradeLevel() {
+        return upgradeLevel;
+    }
+
+    public void setUpgradeLevel(double level){
+        upgradeLevel = level;
+    }
+
+    public double getCostOfUpgrade(){
+        return (upgradeLevel - .5) * 1000;
+    }
+
+    public void upgrade(){
+        upgradeLevel += .1;
+    }
+
     public double calcVirusGenPerSec() {
-        return genRate * numOfGenerators;
+        return genRate * numOfGenerators * upgradeLevel;
     }
 }

@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     private Bundle bundle;                                              //Bundle used to pass data between dialogs
     private DialogFragment purchaseDialog;
     private DialogFragment upgradeDialog;
+    private double nextUpgradeDisplay;
+    private int currentUpgradeState;
 
     // View variables
     TextView txtResources;
@@ -45,11 +47,14 @@ public class MainActivity extends AppCompatActivity
     MenuItem navLeftNoUpgradesPurchased;
     MenuItem navLeftNoUpgradesAvailable;
     MenuItem navLeftAutoClickUpgrade;
-    MenuItem navLeftResourceGenerationUpgrade;
-    MenuItem navLeftAutoClickUpgradePurchased;
-    MenuItem navLeftResourceGenerationUpgradePurchased;
+    MenuItem navLeftResourceGenerationASUpgrade;
+    MenuItem navLeftTimeWarpASUpgrade;
+    MenuItem navLeftAutoClickASUpgradePurchased;
+    MenuItem navLeftResourceGenerationASUpgradePurchased;
     FloatingActionButton fabAutoTap;
     FloatingActionButton fabIncreaseResourceGeneration;
+    FloatingActionButton fabTimeWarp;
+    FloatingActionButton fabPowerUpAS;
 
     DrawerLayout dLayout;
     List<String> groupList;
@@ -68,21 +73,24 @@ public class MainActivity extends AppCompatActivity
         txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
         txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
         navLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        //navRight = (NavigationView) findViewById(R.id.nav_view_right);
         navLeftNoUpgradesPurchased = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_purchased);
         navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         navLeftAutoClickUpgrade = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade);
-        navLeftAutoClickUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade_purchased);
-        navLeftResourceGenerationUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase);
-        navLeftResourceGenerationUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_purchased);
-        //navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
+        navLeftAutoClickASUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade_purchased);
+        navLeftResourceGenerationASUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase);
+        navLeftResourceGenerationASUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_purchased);
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
+        fabTimeWarp = (FloatingActionButton) findViewById(R.id.fab_action_skill_time_warp);
 
         // load previous game
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gameManager.loadData(sharedPref);
         gameManager.calcTotalResourcesPerSec();
+
+        // load currrentUpgradeState
+        currentUpgradeState = sharedPref.getInt("current_upgrade_visibility_level", 0);
+        displayUpgrades(currentUpgradeState);
 
         // add appropriate resources if applicable
         if (gameManager.getResourcesPerSec() > 0) {
@@ -98,11 +106,8 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        //Initialize Navigation Views
         NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        //NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
         navigationViewLeft.setNavigationItemSelectedListener(this);
-        //navigationViewRight.setNavigationItemSelectedListener(this);
 
         // Initialize game loop
         gameLoop = new Timer();
@@ -116,7 +121,12 @@ public class MainActivity extends AppCompatActivity
                         gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
 
-                        if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()) {
+                        if (gameManager.getTotalResources() >= nextUpgradeDisplay){
+                            currentUpgradeState++;
+                            displayUpgrades(currentUpgradeState);
+                        }
+
+                        /*if (gameManager.getTotalResources() > 9 && !navLeftAutoClickUpgradePurchased.isVisible()) {
                             if (navLeftNoUpgradesAvailable.isVisible()) {
                                 txtGenRate.setText(gameManager.totalGenRateString());
                             }
@@ -133,6 +143,7 @@ public class MainActivity extends AppCompatActivity
                             }
                             navLeftResourceGenerationUpgrade.setVisible(true);
                         }
+                        */
                     }
                 });
             }
@@ -202,7 +213,6 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         bundle = new Bundle();
-        purchaseDialog = new PurchaseDialogFragment();
         upgradeDialog = new UpgradeDialogFragment();
 
         //Currently rudimentary, needs reworking
@@ -215,25 +225,17 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_left_no_upgrades_purchased:
                 Toast.makeText(this, "You clicked bottom item", Toast.LENGTH_SHORT).show();
                 break;
-            /*case R.id.nav_right_no_generators_available:
-                bundle.putString("Title", "Buying Adware");
-                bundle.putString("Cost", Integer.toString(gameManager.coreAdware.getCost()));
-                bundle.putString("Count", Integer.toString(gameManager.coreAdware.getNumOfGenerators()));
-                bundle.putInt("Type", 0);
-                purchaseDialog.setArguments(bundle);
-                purchaseDialog.show(getFragmentManager(), "Adware");
-                break;*/
             case R.id.nav_left_auto_click_upgrade:
                 try {
                     gameManager.subtractResources(10d);
                 } catch (RuntimeException e) {
                     Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
                 }
-                navLeftAutoClickUpgradePurchased.setVisible(true);
+                navLeftAutoClickASUpgradePurchased.setVisible(true);
                 navLeftNoUpgradesPurchased.setVisible(false);
                 navLeftAutoClickUpgrade.setVisible(false);
                 fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
-                if (!navLeftResourceGenerationUpgrade.isVisible()) {
+                if (!navLeftResourceGenerationASUpgrade.isVisible()) {
                     navLeftNoUpgradesAvailable.setVisible(true);
                 }
                 break;
@@ -243,8 +245,8 @@ public class MainActivity extends AppCompatActivity
                 } catch (RuntimeException e) {
                     Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
                 }
-                navLeftResourceGenerationUpgradePurchased.setVisible(true);
-                navLeftResourceGenerationUpgrade.setVisible(false);
+                navLeftResourceGenerationASUpgradePurchased.setVisible(true);
+                navLeftResourceGenerationASUpgrade.setVisible(false);
                 fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
                 if (!navLeftAutoClickUpgrade.isVisible()) {
                     navLeftNoUpgradesAvailable.setVisible(true);
@@ -296,7 +298,7 @@ public class MainActivity extends AppCompatActivity
                                 MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        fabAutoTap.setImageResource(R.drawable.tap);
+                                        fabAutoTap.setImageResource(R.drawable.auto_tap);
                                         txtAutoTap.setVisibility(TextView.GONE);
                                         fabAutoTap.setEnabled(true);
                                         fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
@@ -325,7 +327,7 @@ public class MainActivity extends AppCompatActivity
         }, 0, 1000);
     }
 
-    public void fabResourceGenerationIncrease(View view) {
+    public void fabResourceGenerationIncreaseOnClick(View view) {
         increaseResourceGenerationCooldown = 11;
         fabIncreaseResourceGeneration.setImageResource(android.R.color.transparent);
         fabIncreaseResourceGeneration.setEnabled(false);
@@ -340,7 +342,7 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
+                            fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
                         }
                     });
                     fabIncreaseResourceGenerationActiveTimer.cancel();
@@ -353,10 +355,10 @@ public class MainActivity extends AppCompatActivity
                                 MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        fabIncreaseResourceGeneration.setImageResource(android.R.drawable.ic_dialog_alert);
+                                        fabIncreaseResourceGeneration.setImageResource(android.R.drawable.ic_input_add);
                                         txtIncreaseResourceGeneration.setVisibility(TextView.GONE);
                                         fabIncreaseResourceGeneration.setEnabled(true);
-                                        fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_light)));
+                                        fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
                                     }
                                 });
                                 fabIncreaseResourceGenerationCooldownTimer.cancel();
@@ -380,5 +382,42 @@ public class MainActivity extends AppCompatActivity
                 increaseResourceGenerationCooldown--;
             }
         }, 0, 1000);
+    }
+
+    private void displayUpgrades(int upgradeLevel){
+        // start from highest to lowest and go through entire list displaying anything lower
+        // note: will need to check if certain upgrades are purchased
+        switch (upgradeLevel){
+            case 3:
+                if (gameManager.timeWarpPurchased()){
+                    navLeftTimeWarpASUpgrade.setVisible(true);
+                }
+            case 2:
+                if (gameManager.increaseResourceGenerationPurchased()){
+                    navLeftResourceGenerationASUpgrade.setVisible(true);
+                }
+            case 1:
+                if (gameManager.autoTapPurchased()) {
+                    navLeftAutoClickUpgrade.setVisible(true);
+                }
+        }
+
+        // set the amount of resources for next upgrade
+        switch (upgradeLevel){
+            case 0:
+                nextUpgradeDisplay = 10d;
+                break;
+            case 1:
+                nextUpgradeDisplay = 20d;
+                break;
+            case 2:
+                nextUpgradeDisplay = 30d;
+                break;
+            default:
+                Toast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void fabTimeWarpOnClick(View view) {
     }
 }
