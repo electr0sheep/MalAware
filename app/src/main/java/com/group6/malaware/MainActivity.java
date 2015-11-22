@@ -348,6 +348,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fabResourceGenerationIncreaseOnClick(View view) {
+        gameManager.toggleIncreaseGen(true);
         increaseResourceGenerationCooldown = 11;
         fabIncreaseResourceGeneration.setImageResource(android.R.color.transparent);
         fabIncreaseResourceGeneration.setEnabled(false);
@@ -358,6 +359,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (increaseResourceGenerationCooldown == 1) {
+                    gameManager.toggleIncreaseGen(false);
                     increaseResourceGenerationCooldown = 62;
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
