@@ -231,7 +231,7 @@ public class GameManager {
     }
 
     public String totalGenRateString() {
-        return Double.toString(getResourcesPerSec()) + " Viruses Per Second";
+        return "Viruses Per Second: " + Double.toString(getResourcesPerSec());
     }
 
     public double getTotalResources() {

@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
+
+    <include layout="@layout/main_header"
+        android:layout_height="80dp"
+        android:layout_width="fill_parent"
+        android:id="@+id/include" />
 
     <ImageView
         android:layout_width="75dp"
@@ -19,20 +21,24 @@
         android:src="@drawable/ic_malware"
         />
     <TextView
-        android:layout_toEndOf="@+id/img_resources"
         android:id="@+id/txt_resource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:text="ERROR"
-        android:textSize="50sp" />
+        android:textColor="@color/textColor"
+        android:textSize="50sp"
+        android:layout_alignTop="@+id/include"
+        android:layout_toEndOf="@+id/img_resources" />
     <TextView
         android:id="@+id/txt_totalGenRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
         android:text="Viruses Per Second"
         android:textSize="10sp"
-        android:layout_below="@+id/img_resources"
-        android:layout_alignEnd="@+id/img_terminal" />
+        android:layout_alignBottom="@+id/include"
+        android:layout_toEndOf="@+id/img_resources" />
     <ImageView
         android:layout_width="250dp"
         android:layout_height="250dp"
