@@ -42,7 +42,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Vector<Button> btn_timesTen = new Vector<Button>(SIZE);
     private Vector<Button> btn_timesTwoFive = new Vector<Button>(SIZE);
 
-    ExpandableListView expListView;
+    private ExpandableListView expListView;
 
 
     public ExpandableListAdapter(Activity context, List<String> generatorList, Map<String, List<String>> generatorCollections) {
@@ -78,11 +78,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.child_item, null);
         }
 
-        TextView tmp_genNum = (TextView) convertView.findViewById(R.id.txt_genNum);
         TextView tmp_genRate = (TextView) convertView.findViewById(R.id.txt_genRate);
         TextView tmp_genCost = (TextView) convertView.findViewById(R.id.txt_genCost);
 
-        tmp_genNum.setText("# of Generators: " + callingActivity.gameManager.getNumOfGenerators(groupPosition));
         tmp_genRate.setText("Generation Rate:  " + callingActivity.gameManager.getGenRate(groupPosition));
         tmp_genCost.setText("Cost Per Generator:  " + callingActivity.gameManager.getCostOfGenerators(groupPosition));
 
@@ -118,7 +116,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         Log.i("Info", "addingPosition: " + groupPosition);
 
-        tView_genNum.add(groupPosition, tmp_genNum);
+        //tView_genNum.add(groupPosition, tmp_genNum);
         tView_genRate.add(groupPosition, tmp_genRate);
         tView_genCost.add(groupPosition, tmp_genCost);
 
@@ -154,6 +152,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView item = (TextView) convertView.findViewById(R.id.generatorGroups);
         item.setTypeface(null, Typeface.BOLD);
         item.setText(generatorName);
+        item.setTextSize(15);
+
+        TextView tmp_genNum = (TextView) convertView.findViewById(R.id.txt_genNum);
+        tView_genNum.add(groupPosition, tmp_genNum);
         return convertView;
     }
 
@@ -167,7 +169,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public void updateGroup(int groupPosition) {
         Log.i("Info", "Update Position: " + groupPosition);
-        tView_genNum.get(groupPosition).setText("# of Generators: " + callingActivity.gameManager.getNumOfGenerators(groupPosition));
+        tView_genNum.get(groupPosition).setText("" + callingActivity.gameManager.getNumOfGenerators(groupPosition));
         tView_genRate.get(groupPosition).setText("Generation Rate:  " + callingActivity.gameManager.getGenRate(groupPosition));
         tView_genCost.get(groupPosition).setText("Cost Per Generator:  " + callingActivity.gameManager.getCostOfGenerators(groupPosition));
     }
