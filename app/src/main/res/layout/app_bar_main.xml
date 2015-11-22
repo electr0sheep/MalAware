@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/plus"
+                android:src="@drawable/ic_add_white_48dp"
                 android:visibility="gone"
                 android:onClick="fabResourceGenerationIncreaseOnClick"
                 android:layout_toRightOf="@+id/fab_action_skill_auto_tap"/>

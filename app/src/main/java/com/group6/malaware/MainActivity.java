@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity
     public SharedPreferences sharedPref;
     public Timer gameLoop;
     private Bundle bundle;                                              //Bundle used to pass data between dialogs
-    private DialogFragment purchaseDialog;
     private DialogFragment upgradeDialog;
     private double nextUpgradeDisplay;
     private int currentUpgradeState;
