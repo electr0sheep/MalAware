@@ -4,35 +4,19 @@
     <group>
         <item
             android:id="@+id/nav_left_no_upgrades_available"
-            android:title="No Upgrades Available"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:title="No Upgrades Available" />
         <item
-            android:id="@+id/nav_left_auto_click_upgrade"
+            android:id="@+id/nav_left_auto_click_action_skill_upgrade"
             android:title="Auto Click"
-            android:visible="false"/>
+            android:visible="false" />
         <item
-            android:id="@+id/nav_left_resource_generation_increase"
+            android:id="@+id/nav_left_resource_generation_increase_action_skill_upgrade"
             android:title="Increase Resource Generation"
-            android:visible="false"/>
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_left_time_warp_action_skill_upgrade"
+            android:title="Time Warp"
+            android:visible="false" />
     </group>
-
-    <item android:title="Purchased">
-        <menu>
-            <item
-                android:id="@+id/nav_left_no_upgrades_purchased"
-                android:title="No Upgrades Purchased"
-                android:enabled="false"/>
-            <item
-                android:id="@+id/nav_left_auto_click_upgrade_purchased"
-                android:title="Auto Click"
-                android:visible="false"
-                android:enabled="false"/>
-            <item
-                android:id="@+id/nav_left_resource_generation_increase_purchased"
-                android:title="Increase Resource Generation"
-                android:visible="false"
-                android:enabled="false"/>
-        </menu>
-    </item>
-
 </menu>

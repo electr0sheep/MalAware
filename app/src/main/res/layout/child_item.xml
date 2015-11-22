@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/expandableListChild">
 
     <TextView
         android:id="@+id/txt_genNum"

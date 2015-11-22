@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_map"
                 android:layout_alignParentStart="true"
                 android:visibility="gone"/>
             <TextView
@@ -39,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_info"
                 android:visibility="gone"
                 android:layout_toRightOf="@+id/fab"/>
             <TextView
@@ -61,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/tap"
+                android:src="@drawable/auto_tap"
                 android:visibility="gone"
                 android:onClick="fabAutoTapOnClick"
                 android:layout_alignParentStart="true"
@@ -86,9 +84,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_alert"
+                android:src="@android:drawable/ic_input_add"
                 android:visibility="gone"
-                android:onClick="fabResourceGenerationIncrease"
+                android:onClick="fabResourceGenerationIncreaseOnClick"
                 android:layout_toRightOf="@+id/fab_action_skill_auto_tap"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -106,19 +104,20 @@
                 android:gravity="center"
                 android:includeFontPadding="false"/>
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab1"
+                android:id="@+id/fab_action_skill_time_warp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_email"
+                android:src="@drawable/time_warp"
                 android:visibility="gone"
+                android:onClick="fabTimeWarpOnClick"
                 android:layout_toRightOf="@id/fab_action_skill_increase_generation"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/fab1"
-                android:layout_alignBaseline="@+id/fab1"
-                android:id="@+id/txt_fab1"
+                android:layout_alignStart="@+id/fab_action_skill_time_warp"
+                android:layout_alignBaseline="@+id/fab_action_skill_time_warp"
+                android:id="@+id/txt_fab_action_skill_time_warp"
                 android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
