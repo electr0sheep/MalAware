@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,24 +19,37 @@ public class UpgradeDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final String upgradeName = getArguments().getString("Title");
         callingActivity = (MainActivity) getActivity();
-        final CharSequence count = getArguments().getString("Count");
         final CharSequence description = getArguments().getString("Description");
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getArguments().getString("Title"));
+        builder.setTitle(upgradeName);
         builder.setMessage(description)
                 .setPositiveButton("Buy", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        callingActivity.fragmentResult = true;
-                        //callingActivity.gameManager.attemptBuy(getArguments().getInt("Type"), 25);
+                        try {
+                            switch (upgradeName) {
+                                case "Auto Tap":
+                                    callingActivity.gameManager.attemptUpgradeAutoTap();
+                                    callingActivity.fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
+                                    break;
+                                case "Increase Resource Generation":
+                                    callingActivity.gameManager.attemptUpgradeResourceGeneration();
+                                    callingActivity.fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
+                                    break;
+                            }
+                        } catch (RuntimeException e){
+                            callingActivity.myToast.cancel();
+                            callingActivity.myToast = Toast.makeText(callingActivity, "Not enough resources", Toast.LENGTH_SHORT);
+                            callingActivity.myToast.show();
+                        }
                     }
                 })
                 .setNegativeButton("Don't Buy", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        callingActivity.fragmentResult = false;
-                        //callingActivity.gameManager.attemptBuy(getArguments().getInt("Type"), 10);
+                        // do nothing
                     }
                 });
         // Create the AlertDialog object and return it

@@ -48,36 +48,36 @@ public class GameManager {
         return ASpowerUpNext > 0;
     }
 
-    public boolean attemptUpgradeAutoTap(){
+    // if there are not enough resources, subtractResources will throw an exception
+    //  and exit the function
+    public void attemptUpgradeAutoTap(){
         switch(ASautoTapUpgradeLevel){
             case 0:
-                if (totalResources >= 10d){
-                    subtractResources(10d);
-                    ASautoTapUpgradeLevel++;
-                    return true;
-                }
-                return false;
+                subtractResources(10d);
+                break;
             case 1:
-                if (totalResources >= 50d){
-                    subtractResources(50d);
-                    ASautoTapUpgradeLevel++;
-                    return true;
-                }
-                return false;
+                subtractResources(50d);
+                break;
             case 2:
-                if (totalResources >= 200d){
-                    subtractResources(200d);
-                    ASautoTapUpgradeLevel++;
-                    return true;
-                }
-                return false;
-            default:
-                return false;
+                subtractResources(200d);
+                break;
         }
+        ASautoTapUpgradeLevel++;
     }
 
-    public boolean attemptUpgradeResourceGeneration(){
-        return false;
+    public void attemptUpgradeResourceGeneration(){
+        switch(ASincreaseResourceGeneration){
+            case 0:
+                subtractResources(20d);
+                break;
+            case 1:
+                subtractResources(50d);
+                break;
+            case 2:
+                subtractResources(200d);
+                break;
+        }
+        ASincreaseResourceGeneration++;
     }
 
     public void addGenerator(int type, int amount) {

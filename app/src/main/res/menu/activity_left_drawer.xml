@@ -8,7 +8,7 @@
             android:title="No Upgrades Available" />
         <item
             android:id="@+id/nav_left_auto_click_action_skill_upgrade"
-            android:title="Auto Click"
+            android:title="Auto Tap"
             android:visible="false" />
         <item
             android:id="@+id/nav_left_resource_generation_increase_action_skill_upgrade"

@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
     private double nextUpgradeDisplay;
     private int currentUpgradeState;
     public Toast myToast;
-    public boolean fragmentResult;
 
     // View variables
     TextView txtResources;
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity
         fabTimeWarp = (FloatingActionButton) findViewById(R.id.fab_action_skill_time_warp);
         // this is the toast
         myToast = new Toast(this);
-        fragmentResult = false;
 
         // load previous game
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -197,72 +195,39 @@ public class MainActivity extends AppCompatActivity
         bundle = new Bundle();
         upgradeDialog = new UpgradeDialogFragment();
 
-        //Currently rudimentary, needs reworking
-        switch (id) {
-            case R.id.nav_left_auto_click_action_skill_upgrade:
-                // check to see if this is the first time they are buying this
-                //  if so, display a message box to describe what they are buying
-                if (!gameManager.autoTapPurchased()){
-                    bundle.putString("Title", "Auto Tap");
-                    bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal and resources will be continously added to your resource pool");
-                    upgradeDialog.setArguments(bundle);
-                    upgradeDialog.show(getFragmentManager(), "Blah");
-                    // if the user wanted to purchase
-                    if (fragmentResult){
-                        try {
-                            gameManager.subtractResources(10d);
-                            fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
-                            if (!gameManager.attemptUpgradeAutoTap()){
-                                myToast.cancel();
-                                myToast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (RuntimeException e) {
-                            myToast.cancel();
-                            myToast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
-                        }
-                        fragmentResult = false;
+        try {
+            switch (id) {
+                case R.id.nav_left_auto_click_action_skill_upgrade:
+                    // check to see if this is the first time they are buying this
+                    //  if so, display a message box to describe what they are buying
+                    if (!gameManager.autoTapPurchased()) {
+                        bundle.putString("Title", "Auto Tap");
+                        bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal and resources will be continously added to your resource pool");
+                        upgradeDialog.setArguments(bundle);
+                        upgradeDialog.show(getFragmentManager(), "Blah");
+                    } else {
+                        gameManager.attemptUpgradeAutoTap();
                     }
-                } else {
-                    try {
-                        gameManager.subtractResources(10d);
-                        // increase effectiveness
-                    } catch (RuntimeException e) {
-                        myToast.cancel();
-                        myToast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_left_resource_generation_increase_action_skill_upgrade:
+                    // check to see if this is the first time they are buying this
+                    //  if so, display a message box to describe what they are buying
+                    if (!gameManager.increaseResourceGenerationPurchased()) {
+                        bundle.putString("Title", "Increase Resource Generation");
+                        bundle.putString("Description", "This action skill will increase the amount of resources you passively generate for a short time");
+                        upgradeDialog.setArguments(bundle);
+                        upgradeDialog.show(getFragmentManager(), "Blah");
+                    } else {
+                        gameManager.attemptUpgradeResourceGeneration();
                     }
-                }
-                break;
-            case R.id.nav_left_resource_generation_increase_action_skill_upgrade:
-                // check to see if this is the first time they are buying this
-                //  if so, display a message box to describe what they are buying
-                if (!gameManager.autoTapPurchased()){
-                    bundle.putString("Title", "Increase Resource Generation");
-                    bundle.putString("Description", "This action skill will increase the amount of resources you passively generate for a short time");
-                    upgradeDialog.setArguments(bundle);
-                    upgradeDialog.show(getFragmentManager(), "Blah");
-                    // if the user wanted to purchase
-                    if (fragmentResult){
-                        try {
-                            gameManager.subtractResources(10d);
-                            fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
-                        } catch (RuntimeException e) {
-                            myToast.cancel();
-                            myToast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
-                        }
-                        fragmentResult = false;
-                    }
-                } else {
-                    try {
-                        gameManager.subtractResources(10d);
-                        // increase effictiveness
-                    } catch (RuntimeException e) {
-                        myToast.cancel();
-                        myToast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-            default:
-                throw new RuntimeException("How did you even do this?");
+                    break;
+                default:
+                    throw new RuntimeException("How did you even do this?");
+            }
+        } catch (RuntimeException e){
+            myToast.cancel();
+            myToast = Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT);
+            myToast.show();
         }
 
         return true;
