@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity
                                 MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        fabIncreaseResourceGeneration.setImageResource(android.R.drawable.ic_input_add);
+                                        fabIncreaseResourceGeneration.setImageResource(R.drawable.plus);
                                         txtIncreaseResourceGeneration.setVisibility(TextView.GONE);
                                         fabIncreaseResourceGeneration.setEnabled(true);
                                         fabIncreaseResourceGeneration.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
