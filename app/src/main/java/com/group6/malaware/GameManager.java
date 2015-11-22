@@ -32,20 +32,52 @@ public class GameManager {
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
 
-    public boolean autoTapPurchased(){
+    public boolean autoTapPurchased() {
         return ASautoTapUpgradeLevel > 0;
     }
 
-    public boolean increaseResourceGenerationPurchased(){
+    public boolean increaseResourceGenerationPurchased() {
         return ASincreaseResourceGeneration > 0;
     }
 
-    public boolean timeWarpPurchased(){
+    public boolean timeWarpPurchased() {
         return AStimeWarp > 0;
     }
 
-    public boolean powerUpNextASPurchased(){
+    public boolean powerUpNextASPurchased() {
         return ASpowerUpNext > 0;
+    }
+
+    public boolean attemptUpgradeAutoTap(){
+        switch(ASautoTapUpgradeLevel){
+            case 0:
+                if (totalResources >= 10d){
+                    subtractResources(10d);
+                    ASautoTapUpgradeLevel++;
+                    return true;
+                }
+                return false;
+            case 1:
+                if (totalResources >= 50d){
+                    subtractResources(50d);
+                    ASautoTapUpgradeLevel++;
+                    return true;
+                }
+                return false;
+            case 2:
+                if (totalResources >= 200d){
+                    subtractResources(200d);
+                    ASautoTapUpgradeLevel++;
+                    return true;
+                }
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public boolean attemptUpgradeResourceGeneration(){
+        return false;
     }
 
     public void addGenerator(int type, int amount) {
@@ -83,7 +115,7 @@ public class GameManager {
     }
 
     public void subtractResources(double amount) {
-        if (amount > totalResources){
+        if (amount > totalResources) {
             throw new RuntimeException("GameManager.subtractResources cannot subtract more resources than available");
         } else {
             totalResources -= amount;
@@ -160,8 +192,7 @@ public class GameManager {
         }
     }
 
-    public int getCostOfGenerators(int type)
-    {
+    public int getCostOfGenerators(int type) {
         switch (type) {
             case ADWARE:
                 return coreAdware.getCost();
@@ -180,8 +211,7 @@ public class GameManager {
         }
     }
 
-    public double getGenRate(int type)
-    {
+    public double getGenRate(int type) {
         switch (type) {
             case ADWARE:
                 return coreAdware.calcVirusGenPerSec();
@@ -200,24 +230,24 @@ public class GameManager {
         }
     }
 
-    public double getTotalGenRate()
-    {
-        totalGenRate = coreAdware.calcVirusGenPerSec()+
-                coreMalware.calcVirusGenPerSec()+
-                coreWorm.calcVirusGenPerSec()+
-                coreTrojan.calcVirusGenPerSec()+
-                coreRootkit.calcVirusGenPerSec()+
+    public double getTotalGenRate() {
+        totalGenRate = coreAdware.calcVirusGenPerSec() +
+                coreMalware.calcVirusGenPerSec() +
+                coreWorm.calcVirusGenPerSec() +
+                coreTrojan.calcVirusGenPerSec() +
+                coreRootkit.calcVirusGenPerSec() +
                 coreHijacker.calcVirusGenPerSec();
 
         return totalGenRate;
     }
 
-    public String totalGenRateString()
-    {
+    public String totalGenRateString() {
         return Double.toString(getTotalGenRate()) + " Viruses Per Second";
     }
 
-    public double getTotalResources() {return totalResources;}
+    public double getTotalResources() {
+        return totalResources;
+    }
 
     public void calcTotalResourcesPerSec() {
         resourcesPerSec = (coreAdware.calcVirusGenPerSec() +
@@ -315,7 +345,7 @@ public class GameManager {
         editor.apply();
     }
 
-    public void resetData(SharedPreferences sharedPref){
+    public void resetData(SharedPreferences sharedPref) {
         // set up editor
         SharedPreferences.Editor editor = sharedPref.edit();
 
