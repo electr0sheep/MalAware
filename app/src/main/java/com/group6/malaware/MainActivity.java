@@ -60,6 +60,12 @@ public class MainActivity extends AppCompatActivity
     MenuItem navLeftAutoClickASUpgrade;
     MenuItem navLeftResourceGenerationASUpgrade;
     MenuItem navLeftTimeWarpASUpgrade;
+    MenuItem navLeftAdware;
+    MenuItem navLeftMalware;
+    MenuItem navLeftWorm;
+    MenuItem navLeftTrojan;
+    MenuItem navLeftRootkit;
+    MenuItem navLeftHijacker;
 
     // floating action buttons
     FloatingActionButton fabAutoTap;
@@ -88,15 +94,22 @@ public class MainActivity extends AppCompatActivity
         // this is the menu
         //navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
         navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        navLeftNoUpgradesAvailable = navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
+        //navLeftNoUpgradesAvailable = navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
 
         // these are the items in the menu
-        navLeftNoUpgradesAvailable = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
+        //navLeftNoUpgradesAvailable = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         navLeftAutoClickASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_auto_click_action_skill_upgrade);
         navLeftResourceGenerationASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_action_skill_upgrade);
         navLeftTimeWarpASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_time_warp_action_skill_upgrade);
+        navLeftAdware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_adware);
+        navLeftMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_malware);
+        navLeftWorm = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_worm);
+        navLeftTrojan = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_trojan);
+        navLeftRootkit = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_rootkit);
+        navLeftHijacker = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_hijacker);
+
         // these are the floating action buttons
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
@@ -140,11 +153,13 @@ public class MainActivity extends AppCompatActivity
                     public void run() {
                         gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
-
+                        txtGenRate.setText(gameManager.totalGenRateString());
+                        /*
                         if (gameManager.getTotalResources() >= nextUpgradeDisplay){
                             currentUpgradeState++;
                             displayUpgrades(currentUpgradeState);
                         }
+                        */
                     }
                 });
             }
@@ -446,6 +461,7 @@ public class MainActivity extends AppCompatActivity
         }, 0, 1000);
     }
 
+    /*
     private void displayUpgrades(int upgradeLevel){
         switch (upgradeLevel){
             case 5:
@@ -479,6 +495,7 @@ public class MainActivity extends AppCompatActivity
                 //myToast.show();
         }
     }
+    */
 
     private void displayUpgradesOnLoad(int upgradeLevel){
         // start from highest to lowest and go through entire list displaying anything lower

@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group>
-        <item
-            android:id="@+id/nav_left_no_upgrades_available"
-            android:enabled="false"
-            android:title="No Upgrades Available" />
-        <item
-            android:id="@+id/nav_left_auto_click_action_skill_upgrade"
-            android:title="Auto Tap"
-            android:visible="false" />
-        <item
-            android:id="@+id/nav_left_resource_generation_increase_action_skill_upgrade"
-            android:title="Increase Resource Generation"
-            android:visible="false" />
-        <item
-            android:id="@+id/nav_left_time_warp_action_skill_upgrade"
-            android:title="Time Warp"
-            android:visible="false" />
-    </group>
+
+
+    <item android:title="Action Skills">
+        <menu>
+            <item
+                android:id="@+id/nav_left_auto_click_action_skill_upgrade"
+                android:title="   Auto Tap" />
+            <item
+                android:id="@+id/nav_left_resource_generation_increase_action_skill_upgrade"
+                android:title="   Increase Resource Generation" />
+            <item
+                android:id="@+id/nav_left_time_warp_action_skill_upgrade"
+                android:title="   Time Warp" />
+        </menu>
+    </item>
+
+    <item android:title="Generator Upgrades">
+        <menu>
+            <item
+                android:id="@+id/nav_left_adware"
+                android:title="   Adware" />
+            <item
+                android:id="@+id/nav_left_malware"
+                android:title="   Malware" />
+            <item
+                android:id="@+id/nav_left_worm"
+                android:title="   Worm" />
+            <item
+                android:id="@+id/nav_left_trojan"
+                android:title="   Trojan" />
+            <item
+                android:id="@+id/nav_left_rootkit"
+                android:title="   Rootkit" />
+            <item
+                android:id="@+id/nav_left_hijacker"
+                android:title="   Hijacker" />
+        </menu>
+    </item>
 </menu>

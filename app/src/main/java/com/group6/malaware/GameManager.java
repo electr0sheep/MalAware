@@ -10,8 +10,9 @@ import java.text.DecimalFormat;
  * Has most of the game's logic and functional methods
  */
 public class GameManager {
-    private double totalResources = 0;
-    private double resourcesPerSec = 0;
+    private double totalResources = 0d;
+    private double resourcesPerSec = 0d;
+    private double modifier = 1d;
     Generator coreAdware = new Generator(10, 1.0);
     Generator coreMalware = new Generator(10, 1.0);
     Generator coreWorm = new Generator(10, 1.0);
@@ -21,7 +22,6 @@ public class GameManager {
     int ASautoTapUpgradeLevel;
     int ASincreaseResourceGeneration;
     int AStimeWarp;
-    int ASpowerUpNext;
 
     // Generator constants
     public static final int ADWARE = 0;
@@ -30,6 +30,15 @@ public class GameManager {
     public static final int TROJAN = 3;
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
+
+    public void toggleIncreaseGen(boolean active){
+        if (active) {
+            modifier += modifier * ASincreaseResourceGeneration;
+        } else {
+            modifier = 1;
+        }
+        calcTotalResourcesPerSec();
+    }
 
    //Redundant with attemptBuy?
     public boolean autoTapPurchased() {
@@ -42,10 +51,6 @@ public class GameManager {
 
     public boolean timeWarpPurchased() {
         return AStimeWarp > 0;
-    }
-
-    public boolean powerUpNextASPurchased() {
-        return ASpowerUpNext > 0;
     }
 
     // if there are not enough resources, subtractResources will throw an exception
@@ -246,7 +251,7 @@ public class GameManager {
     }
 
     public String totalGenRateString() {
-        return "Viruses Per Second: " + Double.toString(getResourcesPerSec());
+        return "Viruses Per Second: " + convertNumToString(getResourcesPerSec());
     }
 
     public double getTotalResources() {
@@ -259,7 +264,8 @@ public class GameManager {
                 coreWorm.calcVirusGenPerSec() +
                 coreTrojan.calcVirusGenPerSec() +
                 coreRootkit.calcVirusGenPerSec() +
-                coreHijacker.calcVirusGenPerSec());
+                coreHijacker.calcVirusGenPerSec())
+                * modifier;
     }
 
     public double getResourcesPerSec() {
@@ -332,7 +338,6 @@ public class GameManager {
         editor.putInt("AS_auto_click_upgrade_level", ASautoTapUpgradeLevel);
         editor.putInt("AS_increase_resource_generation_upgrade_level", ASincreaseResourceGeneration);
         editor.putInt("AS_time_warp_upgrade_level", AStimeWarp);
-        editor.putInt("AS_power_up_next_AS_upgrade_level", ASpowerUpNext);
 
         // store data for upgrade levels of generators
         editor = putDouble(editor, "malware_upgrade_level", coreMalware.getUpgradeLevel());
@@ -403,7 +408,6 @@ public class GameManager {
             ASautoTapUpgradeLevel = sharedPref.getInt("AS_auto_click_upgrade_level", 0);
             ASincreaseResourceGeneration = sharedPref.getInt("AS_increase_resource_generation_upgrade_level", 0);
             AStimeWarp = sharedPref.getInt("AS_time_warp_upgrade_level", 0);
-            ASpowerUpNext = sharedPref.getInt("AS_power_up_next_AS_upgrade_level", 0);
 
             // load upgrade levels for generators
             coreMalware.setUpgradeLevel(getDouble(sharedPref, "malware_upgrade_level", 0));
