@@ -27,8 +27,14 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final int FPS = 30;                                          //FPS constant
+
+    // these are only here because they are the only way we
+    //  know how to use an int variable within a TimerTask
     private int autoTapCooldown = 0;
     private int increaseResourceGenerationCooldown = 0;
+    private int timeWarpCooldown = 0;
+
+
     public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
     public Timer gameLoop;
@@ -39,15 +45,23 @@ public class MainActivity extends AppCompatActivity
     public Toast myToast;
 
     // View variables
+    // text views up top
     TextView txtResources;
     TextView txtGenRate;
+
+    // text views over fabs
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
     NavigationView navigationViewLeft;
+    TextView txtTimeWarp;
+
+    // menu items
     MenuItem navLeftNoUpgradesAvailable;
     MenuItem navLeftAutoClickASUpgrade;
     MenuItem navLeftResourceGenerationASUpgrade;
     MenuItem navLeftTimeWarpASUpgrade;
+
+    // floating action buttons
     FloatingActionButton fabAutoTap;
     FloatingActionButton fabIncreaseResourceGeneration;
     FloatingActionButton fabTimeWarp;
@@ -70,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         // these text views are for the cooldown of the floating action buttons
         txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
         txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
+        txtTimeWarp = (TextView) findViewById(R.id.txt_fab_action_skill_time_warp);
         // this is the menu
         //navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
         navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
@@ -144,7 +159,6 @@ public class MainActivity extends AppCompatActivity
 
         View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right, null);
         expListView.addHeaderView(header);
-
     }
 
     private void createExpList() {
@@ -217,6 +231,16 @@ public class MainActivity extends AppCompatActivity
                         gameManager.attemptUpgradeResourceGeneration();
                     }
                     break;
+                case R.id.nav_left_time_warp_action_skill_upgrade:
+                    if (!gameManager.timeWarpPurchased()) {
+                        bundle.putString("Title", "Time Warp");
+                        bundle.putString("Description", "This action skill will skip ahead in time and provide resources equal to the time skipped");
+                        upgradeDialog.setArguments(bundle);
+                        upgradeDialog.show(getFragmentManager(), "Blah");
+                    } else {
+                        gameManager.attemptUpgradeTimeWarp();
+                    }
+                    break;
                 default:
                     throw new RuntimeException("How did you even do this?");
             }
@@ -271,8 +295,8 @@ public class MainActivity extends AppCompatActivity
                     });
                     fabAutoTapActiveTimer.cancel();
                     // begin cooldown timer
-                    final Timer fabAutoTapCooldownTimer = new Timer();
-                    fabAutoTapCooldownTimer.scheduleAtFixedRate(new TimerTask() {
+                    final Timer fabautoTapCooldownTimer = new Timer();
+                    fabautoTapCooldownTimer.scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
                             if (autoTapCooldown == 1) {
@@ -285,7 +309,7 @@ public class MainActivity extends AppCompatActivity
                                         fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
                                     }
                                 });
-                                fabAutoTapCooldownTimer.cancel();
+                                fabautoTapCooldownTimer.cancel();
                             }
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -365,16 +389,75 @@ public class MainActivity extends AppCompatActivity
         }, 0, 1000);
     }
 
+    public void fabTimeWarpOnClick(View view) {
+        timeWarpCooldown = 11;
+        fabTimeWarp.setImageResource(android.R.color.transparent);
+        fabTimeWarp.setEnabled(false);
+        txtTimeWarp.setVisibility(TextView.VISIBLE);
+        final Timer fabTimeWarpActiveTimer = new Timer();
+        // begin active timer
+        fabTimeWarpActiveTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (timeWarpCooldown == 1) {
+                    timeWarpCooldown = 62;
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fabTimeWarp.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
+                        }
+                    });
+                    fabTimeWarpActiveTimer.cancel();
+                    // begin cooldown timer
+                    final Timer fabTimeWarpCooldownTimer = new Timer();
+                    fabTimeWarpCooldownTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (timeWarpCooldown == 1) {
+                                MainActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        fabTimeWarp.setImageResource(R.drawable.time_warp);
+                                        txtTimeWarp.setVisibility(TextView.GONE);
+                                        fabTimeWarp.setEnabled(true);
+                                        fabTimeWarp.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
+                                    }
+                                });
+                                fabTimeWarpCooldownTimer.cancel();
+                            }
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtTimeWarp.setText(Integer.toString(timeWarpCooldown));
+                                }
+                            });
+                            timeWarpCooldown--;
+                        }
+                    }, 0, 1000);
+                }
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtTimeWarp.setText(Integer.toString(timeWarpCooldown));
+                    }
+                });
+                timeWarpCooldown--;
+            }
+        }, 0, 1000);
+    }
+
     private void displayUpgrades(int upgradeLevel){
         switch (upgradeLevel){
             case 5:
-                myToast.cancel();
-                myToast.makeText(this, "You unlocked something", Toast.LENGTH_SHORT).show();
+                //myToast.cancel();
+                //myToast = Toast.makeText(this, "You unlocked something", Toast.LENGTH_SHORT);
+                //myToast.show();
                 nextUpgradeDisplay = 60d;
                 break;
             case 4:
-                myToast.cancel();
-                myToast.makeText(this, "You unlocked something", Toast.LENGTH_SHORT).show();
+                //myToast.cancel();
+                //myToast = Toast.makeText(this, "You unlocked something", Toast.LENGTH_SHORT);
+                //myToast.show();
                 nextUpgradeDisplay = 50d;
                 break;
             case 3:
@@ -391,8 +474,9 @@ public class MainActivity extends AppCompatActivity
                 nextUpgradeDisplay = 20d;
                 break;
             default:
-                myToast.cancel();
-                myToast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT).show();
+                //myToast.cancel();
+                //myToast = Toast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT);
+                //myToast.show();
         }
     }
 
@@ -420,11 +504,9 @@ public class MainActivity extends AppCompatActivity
                 nextUpgradeDisplay = 30d;
                 break;
             default:
-                myToast.cancel();
-                myToast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT).show();
+                //myToast.cancel();
+                //myToast = Toast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT);
+                //myToast.show();
         }
-    }
-
-    public void fabTimeWarpOnClick(View view) {
     }
 }

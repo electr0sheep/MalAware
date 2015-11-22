@@ -39,6 +39,9 @@ public class UpgradeDialogFragment extends DialogFragment {
                                     callingActivity.gameManager.attemptUpgradeResourceGeneration();
                                     callingActivity.fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
                                     break;
+                                case "Time Warp":
+                                    callingActivity.gameManager.attemptUpgradeTimeWarp();
+                                    callingActivity.fabTimeWarp.setVisibility(FloatingActionButton.VISIBLE);
                             }
                         } catch (RuntimeException e){
                             callingActivity.myToast.cancel();

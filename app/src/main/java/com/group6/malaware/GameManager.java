@@ -80,6 +80,21 @@ public class GameManager {
         ASincreaseResourceGeneration++;
     }
 
+    public void attemptUpgradeTimeWarp(){
+        switch(AStimeWarp){
+            case 0:
+                subtractResources(30d);
+                break;
+            case 1:
+                subtractResources(50d);
+                break;
+            case 2:
+                subtractResources(200d);
+                break;
+        }
+        AStimeWarp++;
+    }
+
     public void addGenerator(int type, int amount) {
         if (amount < 0) {
             throw new RuntimeException("GameManager.addGenerator cannot add negative generators");
