@@ -14,7 +14,6 @@ import java.text.DecimalFormat;
 public class GameManager {
     private double totalResources = 0;
     private double resourcesPerSec = 0;
-    private double totalGenRate = 0.0;
     Generator coreAdware = new Generator(10, 1.0);
     Generator coreMalware = new Generator(10, 1.0);
     Generator coreWorm = new Generator(10, 1.0);
@@ -30,6 +29,7 @@ public class GameManager {
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
 
+    //Redundant with attemptBuy?
     public void addGenerator(int type, int amount) {
         if (amount < 0) {
             throw new RuntimeException("GameManager.addGenerator cannot add negative generators");
@@ -182,21 +182,9 @@ public class GameManager {
         }
     }
 
-    public double getTotalGenRate()
-    {
-        totalGenRate = coreAdware.calcVirusGenPerSec()+
-                coreMalware.calcVirusGenPerSec()+
-                coreWorm.calcVirusGenPerSec()+
-                coreTrojan.calcVirusGenPerSec()+
-                coreRootkit.calcVirusGenPerSec()+
-                coreHijacker.calcVirusGenPerSec();
-
-        return totalGenRate;
-    }
-
     public String totalGenRateString()
     {
-        return Double.toString(getTotalGenRate()) + " Viruses Per Second";
+        return Double.toString(getResourcesPerSec()) + " Viruses Per Second";
     }
 
     public double getTotalResources() {return totalResources;}

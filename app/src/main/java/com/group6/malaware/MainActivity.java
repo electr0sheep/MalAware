@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     TextView txtGenRate;
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
+    DrawerLayout drawer;
     NavigationView navLeft;
     MenuItem navLeftNoUpgradesPurchased;
     MenuItem navLeftNoUpgradesAvailable;
@@ -68,16 +70,15 @@ public class MainActivity extends AppCompatActivity
         txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
         txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
         navLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        //navRight = (NavigationView) findViewById(R.id.nav_view_right);
         navLeftNoUpgradesPurchased = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_purchased);
         navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         navLeftAutoClickUpgrade = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade);
         navLeftAutoClickUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_auto_click_upgrade_purchased);
         navLeftResourceGenerationUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase);
         navLeftResourceGenerationUpgradePurchased = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_purchased);
-        //navRightNoGeneratorsAvailable = navRight.getMenu().findItem(R.id.nav_right_no_generators_available);
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // load previous game
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -100,9 +101,7 @@ public class MainActivity extends AppCompatActivity
 
         //Initialize Navigation Views
         NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        //NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
         navigationViewLeft.setNavigationItemSelectedListener(this);
-        //navigationViewRight.setNavigationItemSelectedListener(this);
 
         // Initialize game loop
         gameLoop = new Timer();
@@ -139,8 +138,7 @@ public class MainActivity extends AppCompatActivity
         }, 0, 1000 / FPS);
 
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        createGroupList();
-        createCollection();
+        createExpList();
 
         expListView = (ExpandableListView) findViewById(R.id.right_drawer);
         final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, childCollection);
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void createGroupList() {
+    private void createExpList() {
         groupList = new ArrayList<String>();
         groupList.add("Adware");
         groupList.add("Malware");
@@ -159,34 +157,25 @@ public class MainActivity extends AppCompatActivity
         groupList.add("Trojan");
         groupList.add("Rootkit");
         groupList.add("Hijacker");
-    }
 
-
-    //This definitely needs to go. Rework into working shape
-    private void createCollection() {
-        // Dummy data
         String[] models = {"Something"};
-
         childCollection = new LinkedHashMap<String, List<String>>();
 
-        for (String child : groupList) {
-
+            for (String child : groupList) {
                 loadChild(models);
-
-            childCollection.put(child, childList);
+                childCollection.put(child, childList);
         }
     }
 
     private void loadChild(String[] models) {
         childList = new ArrayList<String>();
-        for (String model : models)
-            childList.add(model);
-    }
 
+        for (String model : models)
+                childList.add(model);
+        }
     @Override
     public void onBackPressed() {
         //Closes the drawer when the Android back button is pressed
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (drawer.isDrawerOpen(GravityCompat.END)) {
@@ -265,8 +254,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void imgTerminalOnClick(View view) {
+        //Click listener for the Terminal image
         gameManager.addResources(1d);
-    }                 //Click listener for the Terminal image
+    }
+
+    public void drawerBtnLeftOnClick(View view)
+    {
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void drawerBtnRightOnClick(View view)
+    {
+        drawer.openDrawer(GravityCompat.END);
+    }
 
     public void fabAutoTapOnClick(View view) {
         autoTapCooldown = 11;

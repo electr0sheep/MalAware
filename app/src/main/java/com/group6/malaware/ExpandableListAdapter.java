@@ -72,7 +72,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        //Log.i("Info", "gPosition: " + groupPosition);
 
         if (convertView == null) {
             Log.i("Info", "ConvertView is null");

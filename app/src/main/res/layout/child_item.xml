@@ -43,22 +43,28 @@
             android:id="@+id/btn_x1"
             android:layout_width="65dp"
             android:layout_height="35dp"
+            android:textColor="@color/textColor"
             android:textSize="10sp"
-            android:text="x1" />
+            android:text="x1"
+            android:backgroundTint="@color/colorAccent"/>
 
         <Button
             android:id="@+id/btn_x10"
             android:layout_width="65dp"
             android:layout_height="35dp"
+            android:textColor="@color/textColor"
             android:textSize="10sp"
-            android:text="x10" />
+            android:text="x10"
+            android:backgroundTint="@color/colorAccent"/>
 
         <Button
             android:id="@+id/btn_x25"
             android:layout_width="65dp"
             android:layout_height="35dp"
+            android:textColor="@color/textColor"
             android:textSize="10sp"
             android:text="x25"
+            android:backgroundTint="@color/colorAccent"
             />
 
     </LinearLayout>

@@ -40,4 +40,28 @@
         android:id="@+id/img_terminal"
         android:src="@drawable/terminal"
         android:onClick="imgTerminalOnClick"/>
+
+    <ImageButton
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/btn_drawer_left"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_arrow_forward_white_18dp"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="drawerBtnLeftOnClick"/>
+
+    <ImageButton
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/btn_drawer_right"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_arrow_back_white_18dp"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="drawerBtnRightOnClick"/>
 </RelativeLayout>
