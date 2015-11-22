@@ -12,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +44,7 @@ public class MainActivity extends AppCompatActivity
     TextView txtGenRate;
     TextView txtAutoTap;
     TextView txtIncreaseResourceGeneration;
-    DrawerLayout drawer;
-    NavigationView navLeft;
+    NavigationView navigationViewLeft;
     MenuItem navLeftNoUpgradesAvailable;
     MenuItem navLeftAutoClickASUpgrade;
     MenuItem navLeftResourceGenerationASUpgrade;
@@ -56,11 +54,11 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fabTimeWarp;
     FloatingActionButton fabPowerUpAS;
 
-    DrawerLayout dLayout;
-    List<String> groupList;
-    List<String> childList;
-    Map<String, List<String>> childCollection;
-    ExpandableListView expListView;
+    private DrawerLayout dLayout;
+    private List<String> groupList;
+    private List<String> childList;
+    private Map<String, List<String>> childCollection;
+    public ExpandableListView expListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +72,17 @@ public class MainActivity extends AppCompatActivity
         txtAutoTap = (TextView) findViewById(R.id.txt_action_skill_auto_tap);
         txtIncreaseResourceGeneration = (TextView) findViewById(R.id.txt_action_skill_increase_generation);
         // this is the menu
-        navLeft = (NavigationView) findViewById(R.id.nav_view_left);
-        navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
+        //navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
+        navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
+        navLeftNoUpgradesAvailable = navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // these are the items in the menu
-        navLeftNoUpgradesAvailable = navLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
-        navLeftAutoClickASUpgrade = navLeft.getMenu().findItem(R.id.nav_left_auto_click_action_skill_upgrade);
-        navLeftResourceGenerationASUpgrade = navLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_action_skill_upgrade);
-        navLeftTimeWarpASUpgrade = navLeft.getMenu().findItem(R.id.nav_left_time_warp_action_skill_upgrade);
+        navLeftNoUpgradesAvailable = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
+        navLeftAutoClickASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_auto_click_action_skill_upgrade);
+        navLeftResourceGenerationASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_action_skill_upgrade);
+        navLeftTimeWarpASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_time_warp_action_skill_upgrade);
         // these are the floating action buttons
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
@@ -115,7 +113,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
         navigationViewLeft.setNavigationItemSelectedListener(this);
 
         // Initialize game loop
@@ -178,10 +175,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         //Closes the drawer when the Android back button is pressed
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
-            drawer.closeDrawer(GravityCompat.END);
+        if (dLayout.isDrawerOpen(GravityCompat.START)) {
+            dLayout.closeDrawer(GravityCompat.START);
+        } else if (dLayout.isDrawerOpen(GravityCompat.END)) {
+            dLayout.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
         }
@@ -247,12 +244,12 @@ public class MainActivity extends AppCompatActivity
 
     public void drawerBtnLeftOnClick(View view)
     {
-        drawer.openDrawer(GravityCompat.START);
+        dLayout.openDrawer(GravityCompat.START);
     }
 
     public void drawerBtnRightOnClick(View view)
     {
-        drawer.openDrawer(GravityCompat.END);
+        dLayout.openDrawer(GravityCompat.END);
     }
 
     public void fabAutoTapOnClick(View view) {
