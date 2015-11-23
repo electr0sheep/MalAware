@@ -155,6 +155,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         item.setTextSize(15);
 
         TextView tmp_genNum = (TextView) convertView.findViewById(R.id.txt_genNum);
+        tmp_genNum.setText("" + callingActivity.gameManager.getNumOfGenerators(groupPosition));
         tView_genNum.add(groupPosition, tmp_genNum);
         return convertView;
     }
