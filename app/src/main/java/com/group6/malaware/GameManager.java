@@ -19,7 +19,7 @@ public class GameManager {
     Generator coreTrojan = new Generator(8, 250, 50, 1.2);
     Generator coreRootkit = new Generator(15, 400, 100, 1.2);
     Generator coreHijacker = new Generator(50, 800, 300, 1.2);
-    int ASautoTapUpgradeLevel;
+    int ASautoTapUpgradeLevel = 1;
     int ASincreaseResourceGenerationUpgradeLevel;
     int AStimeWarpUpgradeLevel;
 
@@ -38,6 +38,15 @@ public class GameManager {
             modifier = 1;
         }
         calcTotalResourcesPerSec();
+    }
+
+    public void toggleAutoTap(boolean active){
+        if (active){
+            calcTotalResourcesPerSec();
+            resourcesPerSec += ASautoTapUpgradeLevel;
+        } else {
+            calcTotalResourcesPerSec();
+        }
     }
 
    //Redundant with attemptBuy?

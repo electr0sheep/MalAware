@@ -286,12 +286,14 @@ public class MainActivity extends AppCompatActivity
         fabAutoTap.setImageResource(android.R.color.transparent);
         fabAutoTap.setEnabled(false);
         txtAutoTap.setVisibility(TextView.VISIBLE);
+        gameManager.toggleAutoTap(true);
         final Timer fabAutoTapActiveTimer = new Timer();
         // begin active timer
         fabAutoTapActiveTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (autoTapCooldown == 1) {
+                    gameManager.toggleAutoTap(false);
                     autoTapCooldown = 62;
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
