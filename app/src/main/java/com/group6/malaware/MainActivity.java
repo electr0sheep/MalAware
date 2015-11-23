@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity
     public Timer gameLoop;
     private Bundle bundle;                                              //Bundle used to pass data between dialogs
     private DialogFragment upgradeDialog;
-    private double nextUpgradeDisplay;
-    private int currentUpgradeState;
     public Toast myToast;
 
     // View variables
@@ -122,9 +120,8 @@ public class MainActivity extends AppCompatActivity
         gameManager.loadData(sharedPref);
         gameManager.calcTotalResourcesPerSec();
 
-        // load currrentUpgradeState
-        currentUpgradeState = sharedPref.getInt("current_upgrade_visibility_level", 0);
-        displayUpgradesOnLoad(currentUpgradeState);
+        // display applicable fabs
+        displayFABsOnLoad();
 
         // add appropriate resources if applicable
         if (gameManager.getResourcesPerSec() > 0) {
@@ -154,12 +151,6 @@ public class MainActivity extends AppCompatActivity
                         gameManager.addResources(gameManager.getTotalResourcesPerFrame(FPS));
                         txtResources.setText(gameManager.getResourcesString());
                         txtGenRate.setText(gameManager.totalGenRateString());
-                        /*
-                        if (gameManager.getTotalResources() >= nextUpgradeDisplay){
-                            currentUpgradeState++;
-                            displayUpgrades(currentUpgradeState);
-                        }
-                        */
                     }
                 });
             }
@@ -463,69 +454,17 @@ public class MainActivity extends AppCompatActivity
         }, 0, 1000);
     }
 
-    /*
-    private void displayUpgrades(int upgradeLevel){
-        switch (upgradeLevel){
-            case 5:
-                //myToast.cancel();
-                //myToast = Toast.makeText(this, "You unlocked something", Toast.LENGTH_SHORT);
-                //myToast.show();
-                nextUpgradeDisplay = 60d;
-                break;
-            case 4:
-                //myToast.cancel();
-                //myToast = Toast.makeText(this, "You unlocked something", Toast.LENGTH_SHORT);
-                //myToast.show();
-                nextUpgradeDisplay = 50d;
-                break;
-            case 3:
-                navLeftTimeWarpASUpgrade.setVisible(true);
-                nextUpgradeDisplay = 40d;
-                break;
-            case 2:
-                navLeftResourceGenerationASUpgrade.setVisible(true);
-                nextUpgradeDisplay = 30d;
-                break;
-            case 1:
-                navLeftAutoClickASUpgrade.setVisible(true);
-                navLeftNoUpgradesAvailable.setVisible(false);
-                nextUpgradeDisplay = 20d;
-                break;
-            default:
-                //myToast.cancel();
-                //myToast = Toast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT);
-                //myToast.show();
-        }
-    }
-    */
-
-    private void displayUpgradesOnLoad(int upgradeLevel){
-        // start from highest to lowest and go through entire list displaying anything lower
-        switch (upgradeLevel){
-            case 3:
-                navLeftTimeWarpASUpgrade.setVisible(true);
-            case 2:
-                navLeftResourceGenerationASUpgrade.setVisible(true);
-            case 1:
-                navLeftNoUpgradesAvailable.setVisible(false);
-                navLeftAutoClickASUpgrade.setVisible(true);
+    private void displayFABsOnLoad(){
+        if (gameManager.autoTapPurchased()){
+            fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
         }
 
-        // set the amount of resources for next upgrade
-        switch (upgradeLevel){
-            case 0:
-                nextUpgradeDisplay = 10d;
-                break;
-            case 1:
-                nextUpgradeDisplay = 20d;
-                break;
-            case 2:
-                nextUpgradeDisplay = 30d;
-                break;
-            default:
-                //myToast.cancel();
-                //myToast = Toast.makeText(this, "WARNING: upgrade level has gone beyond table", Toast.LENGTH_SHORT);
-                //myToast.show();
+        if (gameManager.increaseResourceGenerationPurchased()){
+            fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
+        }
+
+        if (gameManager.timeWarpPurchased()){
+            fabTimeWarp.setVisibility(FloatingActionButton.VISIBLE);
         }
     }
 }

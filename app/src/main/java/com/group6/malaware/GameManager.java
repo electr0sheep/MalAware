@@ -20,8 +20,8 @@ public class GameManager {
     Generator coreRootkit = new Generator(10, 1.0);
     Generator coreHijacker = new Generator(10, 1.0);
     int ASautoTapUpgradeLevel;
-    int ASincreaseResourceGeneration;
-    int AStimeWarp;
+    int ASincreaseResourceGenerationUpgradeLevel;
+    int AStimeWarpUpgradeLevel;
 
     // Generator constants
     public static final int ADWARE = 0;
@@ -33,7 +33,7 @@ public class GameManager {
 
     public void toggleIncreaseGen(boolean active){
         if (active) {
-            modifier += modifier * ASincreaseResourceGeneration;
+            modifier += modifier * ASincreaseResourceGenerationUpgradeLevel;
         } else {
             modifier = 1;
         }
@@ -46,11 +46,11 @@ public class GameManager {
     }
 
     public boolean increaseResourceGenerationPurchased() {
-        return ASincreaseResourceGeneration > 0;
+        return ASincreaseResourceGenerationUpgradeLevel > 0;
     }
 
     public boolean timeWarpPurchased() {
-        return AStimeWarp > 0;
+        return AStimeWarpUpgradeLevel > 0;
     }
 
     // if there are not enough resources, subtractResources will throw an exception
@@ -71,7 +71,7 @@ public class GameManager {
     }
 
     public void attemptUpgradeResourceGeneration(){
-        switch(ASincreaseResourceGeneration){
+        switch(ASincreaseResourceGenerationUpgradeLevel){
             case 0:
                 subtractResources(20d);
                 break;
@@ -82,11 +82,11 @@ public class GameManager {
                 subtractResources(200d);
                 break;
         }
-        ASincreaseResourceGeneration++;
+        ASincreaseResourceGenerationUpgradeLevel++;
     }
 
     public void attemptUpgradeTimeWarp(){
-        switch(AStimeWarp){
+        switch(AStimeWarpUpgradeLevel){
             case 0:
                 subtractResources(30d);
                 break;
@@ -97,7 +97,7 @@ public class GameManager {
                 subtractResources(200d);
                 break;
         }
-        AStimeWarp++;
+        AStimeWarpUpgradeLevel++;
     }
 
     public void addGenerator(int type, int amount) {
@@ -148,6 +148,7 @@ public class GameManager {
                 if ((amount * coreAdware.getCost()) <= totalResources) {
                     totalResources -= (amount * coreAdware.getCost());
                     coreAdware.addVirus(amount);
+                    int blah = coreAdware.getNumOfGenerators();
                     break;
                 } else
                     return false;
@@ -336,8 +337,8 @@ public class GameManager {
 
         // store data for upgrade levels for action skills
         editor.putInt("AS_auto_click_upgrade_level", ASautoTapUpgradeLevel);
-        editor.putInt("AS_increase_resource_generation_upgrade_level", ASincreaseResourceGeneration);
-        editor.putInt("AS_time_warp_upgrade_level", AStimeWarp);
+        editor.putInt("AS_increase_resource_generation_upgrade_level", ASincreaseResourceGenerationUpgradeLevel);
+        editor.putInt("AS_time_warp_upgrade_level", AStimeWarpUpgradeLevel);
 
         // store data for upgrade levels of generators
         editor = putDouble(editor, "malware_upgrade_level", coreMalware.getUpgradeLevel());
@@ -406,16 +407,16 @@ public class GameManager {
 
             // load upgrade levels for action skills
             ASautoTapUpgradeLevel = sharedPref.getInt("AS_auto_click_upgrade_level", 0);
-            ASincreaseResourceGeneration = sharedPref.getInt("AS_increase_resource_generation_upgrade_level", 0);
-            AStimeWarp = sharedPref.getInt("AS_time_warp_upgrade_level", 0);
+            ASincreaseResourceGenerationUpgradeLevel = sharedPref.getInt("AS_increase_resource_generation_upgrade_level", 0);
+            AStimeWarpUpgradeLevel = sharedPref.getInt("AS_time_warp_upgrade_level", 0);
 
             // load upgrade levels for generators
-            coreMalware.setUpgradeLevel(getDouble(sharedPref, "malware_upgrade_level", 0));
-            coreWorm.setUpgradeLevel(getDouble(sharedPref, "worm_upgrade_level", 0));
-            coreAdware.setUpgradeLevel(getDouble(sharedPref, "adware_upgrade_level", 0));
-            coreRootkit.setUpgradeLevel(getDouble(sharedPref, "rootkit_upgrade_level", 0));
-            coreTrojan.setUpgradeLevel(getDouble(sharedPref, "trojan_upgrade_level", 0));
-            coreHijacker.setUpgradeLevel(getDouble(sharedPref, "hijacker_upgrade_level", 0));
+            coreMalware.setUpgradeLevel(getDouble(sharedPref, "malware_upgrade_level", 1d));
+            coreWorm.setUpgradeLevel(getDouble(sharedPref, "worm_upgrade_level", 1d));
+            coreAdware.setUpgradeLevel(getDouble(sharedPref, "adware_upgrade_level", 1d));
+            coreRootkit.setUpgradeLevel(getDouble(sharedPref, "rootkit_upgrade_level", 1d));
+            coreTrojan.setUpgradeLevel(getDouble(sharedPref, "trojan_upgrade_level", 1d));
+            coreHijacker.setUpgradeLevel(getDouble(sharedPref, "hijacker_upgrade_level", 1d));
         }
     }
 

@@ -38,6 +38,7 @@ public class Generator {
         upgradeLevel = level;
     }
 
+    // this function needs to be reworked
     public double getCostOfUpgrade(){
         return (upgradeLevel - .5) * 1000;
     }
@@ -47,6 +48,9 @@ public class Generator {
     }
 
     public double calcVirusGenPerSec() {
+        double blah = genRate;
+        double blah2 = numOfGenerators;
+        double blah3 = upgradeLevel;
         return genRate * numOfGenerators * upgradeLevel;
     }
 }
