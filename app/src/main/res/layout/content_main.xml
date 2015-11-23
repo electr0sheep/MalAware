@@ -45,7 +45,7 @@
         android:layout_centerInParent="true"
         android:id="@+id/img_terminal"
         android:src="@drawable/terminal"
-        android:onClick="imgTerminalOnClick"/>
+        android:onClick="imgTerminalOnClick" />
 
     <ImageButton
         style="?android:attr/buttonStyleSmall"

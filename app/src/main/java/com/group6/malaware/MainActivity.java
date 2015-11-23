@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity
     private int increaseResourceGenerationCooldown = 0;
     private int timeWarpCooldown = 0;
 
-
     public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
     public Timer gameLoop;
@@ -218,11 +217,12 @@ public class MainActivity extends AppCompatActivity
                     //  if so, display a message box to describe what they are buying
                     if (!gameManager.autoTapPurchased()) {
                         bundle.putString("Title", "Auto Tap");
-                        bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal and resources will be continously added to your resource pool");
+                        bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal " +
+                                                        "and resources will be continously added to your resource pool");
                         upgradeDialog.setArguments(bundle);
                         upgradeDialog.show(getFragmentManager(), "Blah");
                     } else {
-                        gameManager.attemptUpgradeAutoTap();
+                        gameManager.attemptUpgrade(0);
                     }
                     break;
                 case R.id.nav_left_resource_generation_increase_action_skill_upgrade:
@@ -230,21 +230,23 @@ public class MainActivity extends AppCompatActivity
                     //  if so, display a message box to describe what they are buying
                     if (!gameManager.increaseResourceGenerationPurchased()) {
                         bundle.putString("Title", "Increase Resource Generation");
-                        bundle.putString("Description", "This action skill will increase the amount of resources you passively generate for a short time");
+                        bundle.putString("Description", "This action skill will increase the amount of resources " +
+                                                        "you passively generate for a short time");
                         upgradeDialog.setArguments(bundle);
                         upgradeDialog.show(getFragmentManager(), "Blah");
                     } else {
-                        gameManager.attemptUpgradeResourceGeneration();
+                        gameManager.attemptUpgrade(1);
                     }
                     break;
                 case R.id.nav_left_time_warp_action_skill_upgrade:
                     if (!gameManager.timeWarpPurchased()) {
                         bundle.putString("Title", "Time Warp");
-                        bundle.putString("Description", "This action skill will skip ahead in time and provide resources equal to the time skipped");
+                        bundle.putString("Description", "This action skill will skip ahead in time and " +
+                                                        "provide resources equal to the time skipped");
                         upgradeDialog.setArguments(bundle);
                         upgradeDialog.show(getFragmentManager(), "Blah");
                     } else {
-                        gameManager.attemptUpgradeTimeWarp();
+                        gameManager.attemptUpgrade(2);
                     }
                     break;
                 default:
@@ -323,6 +325,7 @@ public class MainActivity extends AppCompatActivity
                                     txtAutoTap.setText(Integer.toString(autoTapCooldown));
                                 }
                             });
+
                             autoTapCooldown--;
                         }
                     }, 0, 1000);
@@ -334,6 +337,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
                 autoTapCooldown--;
+                gameManager.addResources(1d);
             }
         }, 0, 1000);
     }
