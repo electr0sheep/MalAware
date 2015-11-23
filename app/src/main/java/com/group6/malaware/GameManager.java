@@ -61,6 +61,20 @@ public class GameManager {
         return AStimeWarpUpgradeLevel > 0;
     }
 
+    public int getUpgradeCost(int upgradeType)
+    {
+        switch(upgradeType)
+        {
+            case AUTO_TAP:
+                return autoTapCost;
+            case RESOURCE_GEN_INCREASE:
+                return resGenCost;
+            case TIME_WARP:
+                return timeWarpCost;
+        }
+        return 0;
+    }
+
     // if there are not enough resources, subtractResources will throw an exception
     //  and exit the function
     public void attemptUpgrade(int upgradeType){

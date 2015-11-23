@@ -213,41 +213,28 @@ public class MainActivity extends AppCompatActivity
         try {
             switch (id) {
                 case R.id.nav_left_auto_click_action_skill_upgrade:
-                    // check to see if this is the first time they are buying this
-                    //  if so, display a message box to describe what they are buying
-                    if (!gameManager.autoTapPurchased()) {
-                        bundle.putString("Title", "Auto Tap");
-                        bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal " +
-                                                        "and resources will be continously added to your resource pool");
-                        upgradeDialog.setArguments(bundle);
-                        upgradeDialog.show(getFragmentManager(), "Blah");
-                    } else {
-                        gameManager.attemptUpgrade(0);
-                    }
+                    bundle.putString("Title", "Auto Tap");
+                    bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal " +
+                            "and resources will be continously added to your resource pool\n\n" +
+                            "Cost: " + gameManager.getUpgradeCost(0));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_resource_generation_increase_action_skill_upgrade:
-                    // check to see if this is the first time they are buying this
-                    //  if so, display a message box to describe what they are buying
-                    if (!gameManager.increaseResourceGenerationPurchased()) {
-                        bundle.putString("Title", "Increase Resource Generation");
-                        bundle.putString("Description", "This action skill will increase the amount of resources " +
-                                                        "you passively generate for a short time");
-                        upgradeDialog.setArguments(bundle);
-                        upgradeDialog.show(getFragmentManager(), "Blah");
-                    } else {
-                        gameManager.attemptUpgrade(1);
-                    }
+                    bundle.putString("Title", "Increase Resource Generation");
+                    bundle.putString("Description", "This action skill will increase the amount of resources " +
+                            "you passively generate for a short time\n\n" +
+                            "Cost: "+ gameManager.getUpgradeCost(1));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_time_warp_action_skill_upgrade:
-                    if (!gameManager.timeWarpPurchased()) {
-                        bundle.putString("Title", "Time Warp");
-                        bundle.putString("Description", "This action skill will skip ahead in time and " +
-                                                        "provide resources equal to the time skipped");
-                        upgradeDialog.setArguments(bundle);
-                        upgradeDialog.show(getFragmentManager(), "Blah");
-                    } else {
-                        gameManager.attemptUpgrade(2);
-                    }
+                    bundle.putString("Title", "Time Warp");
+                    bundle.putString("Description", "This action skill will skip ahead in time and " +
+                            "provide resources equal to the time skipped\n\n" +
+                            "Cost: " + gameManager.getUpgradeCost(2));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 default:
                     throw new RuntimeException("How did you even do this?");
