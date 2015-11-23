@@ -282,7 +282,7 @@ public class GameManager {
     }
 
     public String convertNumToString(double number) {
-        DecimalFormat df = new DecimalFormat("###.00");
+        DecimalFormat df; // = new DecimalFormat("###.000");
         String text = "";
         int thousandsModifier = 0;
 
@@ -296,7 +296,14 @@ public class GameManager {
             thousandsModifier--;
         }
 
-        text = df.format(number).replaceAll(".00", "");
+        if (thousandsModifier > 0){
+            df = new DecimalFormat("###.000");
+        } else {
+            df = new DecimalFormat("###");
+        }
+
+        text = df.format(number);
+        //text = df.format(number).replaceAll("###....", "");
 
         switch (thousandsModifier) {
             case 0:
