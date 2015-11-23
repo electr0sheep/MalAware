@@ -217,7 +217,8 @@ public class MainActivity extends AppCompatActivity
                     bundle.putString("Title", "Auto Tap");
                     bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal " +
                             "and resources will be continously added to your resource pool\n\n" +
-                            "Cost: " + gameManager.getUpgradeCost(0));
+                            "Cost: " + gameManager.getUpgradeCost(0) +
+                            "\t\tLevel: " + gameManager.getUpgradeLevel(0));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
@@ -225,7 +226,8 @@ public class MainActivity extends AppCompatActivity
                     bundle.putString("Title", "Increase Resource Generation");
                     bundle.putString("Description", "This action skill will increase the amount of resources " +
                             "you passively generate for a short time\n\n" +
-                            "Cost: "+ gameManager.getUpgradeCost(1));
+                            "Cost: "+ gameManager.getUpgradeCost(1) +
+                            "\t\tLevel: " + gameManager.getUpgradeLevel(1));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
@@ -233,7 +235,8 @@ public class MainActivity extends AppCompatActivity
                     bundle.putString("Title", "Time Warp");
                     bundle.putString("Description", "This action skill will skip ahead in time and " +
                             "provide resources equal to the time skipped\n\n" +
-                            "Cost: " + gameManager.getUpgradeCost(2));
+                            "Cost: " + gameManager.getUpgradeCost(2) +
+                            "\t\tLevel: " + gameManager.getUpgradeLevel(2));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;

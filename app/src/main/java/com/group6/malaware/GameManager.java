@@ -84,6 +84,20 @@ public class GameManager {
         return 0;
     }
 
+    public int getUpgradeLevel(int upgradeType)
+    {
+        switch(upgradeType)
+        {
+            case AUTO_TAP:
+                return ASautoTapUpgradeLevel;
+            case RESOURCE_GEN_INCREASE:
+                return ASincreaseResourceGenerationUpgradeLevel;
+            case TIME_WARP:
+                return AStimeWarpUpgradeLevel;
+        }
+        return 0;
+    }
+
     // if there are not enough resources, subtractResources will throw an exception
     //  and exit the function
     public void attemptUpgrade(int upgradeType){

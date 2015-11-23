@@ -17,10 +17,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -92,7 +89,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         tmpButton_x1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Info", "Add to Group Position: " + groupPosition);
                 callingActivity.gameManager.attemptBuy(groupPosition, 1);
                 updateGroup(groupPosition);
             }
@@ -114,9 +110,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        Log.i("Info", "addingPosition: " + groupPosition);
-
-        //tView_genNum.add(groupPosition, tmp_genNum);
         tView_genRate.add(groupPosition, tmp_genRate);
         tView_genCost.add(groupPosition, tmp_genCost);
 
@@ -169,7 +162,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public void updateGroup(int groupPosition) {
-        Log.i("Info", "Update Position: " + groupPosition);
         tView_genNum.get(groupPosition).setText("" + callingActivity.gameManager.getNumOfGenerators(groupPosition));
         tView_genRate.get(groupPosition).setText("Generation Rate:  " + callingActivity.gameManager.getGenRate(groupPosition));
         tView_genCost.get(groupPosition).setText("Cost Per Generator:  " + callingActivity.gameManager.getCostOfGenerators(groupPosition));

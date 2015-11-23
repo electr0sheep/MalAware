@@ -47,7 +47,7 @@
             android:textColor="@color/textColor"
             android:textSize="10sp"
             android:text="x1"
-            android:backgroundTint="@color/colorAccent"/>
+            android:backgroundTint="@color/colorPrimary"/>
 
         <Button
             android:id="@+id/btn_x10"
@@ -56,7 +56,7 @@
             android:textColor="@color/textColor"
             android:textSize="10sp"
             android:text="x10"
-            android:backgroundTint="@color/colorAccent"/>
+            android:backgroundTint="@color/colorPrimary"/>
 
         <Button
             android:id="@+id/btn_x25"
@@ -65,7 +65,7 @@
             android:textColor="@color/textColor"
             android:textSize="10sp"
             android:text="x25"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             />
 
     </LinearLayout>
