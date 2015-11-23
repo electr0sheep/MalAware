@@ -27,12 +27,17 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final int FPS = 30;                                          //FPS constant
+    public final int AUTO_TAP_ACTIVE_CD = 10;                           //auto tap active period
+    public final int AUTO_TAP_CD = 60;                                  //auto tap cd period
+    public final int INCREASE_RESOURCE_GEN_CD = 60;                     //increase resource gen period
+    public final int TIME_WARP_CD = 60;                                 //time warp action skill cd
 
     // these are only here because they are the only way we
     //  know how to use an int variable within a TimerTask
     private int autoTapCooldown = 0;
     private int increaseResourceGenerationCooldown = 0;
     private int timeWarpCooldown = 0;
+    private double inactiveResources;
 
     public GameManager gameManager = new GameManager();
     public SharedPreferences sharedPref;
@@ -123,17 +128,13 @@ public class MainActivity extends AppCompatActivity
         displayFABsOnLoad();
 
         // add appropriate resources if applicable
-        if (gameManager.getResourcesPerSec() > 0) {
-            double passiveResources = (System.currentTimeMillis()
-                    - gameManager.getStoredTime(sharedPref))    // milliseconds that have elapsed
-                    / 1000                                      // number of milliseconds per sec
-                    * gameManager.getResourcesPerSec();   // number of resources per sec
-            gameManager.addResources(passiveResources);         // add that amount to resource pool
-            // only show this number if it is significant
-            if (passiveResources > 1) {
-                Toast.makeText(this, "You have generated " + gameManager.convertNumToString(passiveResources)
-                        + " resources while you were away!", Toast.LENGTH_SHORT).show();
-            }
+        inactiveResources = addResourcesForTime(System.currentTimeMillis()
+                - gameManager.getStoredTime(sharedPref));
+
+        // display this number, if it is significant
+        if (inactiveResources > 1) {
+            Toast.makeText(this, "You have generated " + gameManager.convertNumToString(inactiveResources)
+                    + " resources while you were away!", Toast.LENGTH_SHORT).show();
         }
 
         navigationViewLeft.setNavigationItemSelectedListener(this);
@@ -391,56 +392,37 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fabTimeWarpOnClick(View view) {
-        timeWarpCooldown = 11;
+        double amountOfResources = addResourcesForTime(300000);
+        gameManager.addResources(amountOfResources); // add resources for 5 minutes
+        if (amountOfResources >= 1d) {
+            myToast = Toast.makeText(this, "You gained " + amountOfResources + " resources", Toast.LENGTH_SHORT);
+            myToast.show();
+        }
+        timeWarpCooldown = 61;
         fabTimeWarp.setImageResource(android.R.color.transparent);
         fabTimeWarp.setEnabled(false);
+        fabTimeWarp.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
         txtTimeWarp.setVisibility(TextView.VISIBLE);
-        final Timer fabTimeWarpActiveTimer = new Timer();
+        final Timer fabTimeWarpTimer = new Timer();
         // begin active timer
-        fabTimeWarpActiveTimer.scheduleAtFixedRate(new TimerTask() {
+        fabTimeWarpTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (timeWarpCooldown == 1) {
-                    timeWarpCooldown = 62;
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            fabTimeWarp.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
+                            fabTimeWarp.setImageResource(R.drawable.time_warp);
+                            txtTimeWarp.setVisibility(TextView.GONE);
+                            fabTimeWarp.setEnabled(true);
+                            fabTimeWarp.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
                         }
                     });
-                    fabTimeWarpActiveTimer.cancel();
-                    // begin cooldown timer
-                    final Timer fabTimeWarpCooldownTimer = new Timer();
-                    fabTimeWarpCooldownTimer.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (timeWarpCooldown == 1) {
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        fabTimeWarp.setImageResource(R.drawable.time_warp);
-                                        txtTimeWarp.setVisibility(TextView.GONE);
-                                        fabTimeWarp.setEnabled(true);
-                                        fabTimeWarp.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
-                                    }
-                                });
-                                fabTimeWarpCooldownTimer.cancel();
-                            }
-                            MainActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    txtTimeWarp.setText(Integer.toString(timeWarpCooldown));
-                                }
-                            });
-                            timeWarpCooldown--;
-                        }
-                    }, 0, 1000);
+                    fabTimeWarpTimer.cancel();
                 }
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        txtTimeWarp.setText(Integer.toString(timeWarpCooldown));
-                    }
+                    public void run() {txtTimeWarp.setText(Integer.toString(timeWarpCooldown));}
                 });
                 timeWarpCooldown--;
             }
@@ -459,5 +441,16 @@ public class MainActivity extends AppCompatActivity
         if (gameManager.timeWarpPurchased()){
             fabTimeWarp.setVisibility(FloatingActionButton.VISIBLE);
         }
+    }
+
+    private double addResourcesForTime(double timeInMillis){
+        double resources = 0;
+        if (gameManager.getResourcesPerSec() > 0) {
+            resources = timeInMillis                        // milliseconds that we want to add for
+                    / 1000                                  // number of milliseconds per sec
+                    * gameManager.getResourcesPerSec();     // number of resources per sec
+            gameManager.addResources(resources);            // add that amount to resource pool
+        }
+        return resources;
     }
 }
