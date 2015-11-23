@@ -20,6 +20,9 @@ public class GameManager {
     Generator coreRootkit = new Generator(15, 400, 100, 1.2);
     Generator coreHijacker = new Generator(50, 800, 300, 1.2);
     int ASautoTapUpgradeLevel = 1;
+    int autoTapCost = 10;
+    int resGenCost = 20;
+    int timeWarpCost = 30;
     int ASincreaseResourceGenerationUpgradeLevel;
     int AStimeWarpUpgradeLevel;
 
@@ -30,6 +33,11 @@ public class GameManager {
     public static final int TROJAN = 3;
     public static final int ROOTKIT = 4;
     public static final int HIJACKER = 5;
+
+    //Upgrade Constants
+    public static final int AUTO_TAP = 0;
+    public static final int RESOURCE_GEN_INCREASE = 1;
+    public static final int TIME_WARP = 2;
 
     public void toggleIncreaseGen(boolean active){
         if (active) {
@@ -62,51 +70,43 @@ public class GameManager {
         return AStimeWarpUpgradeLevel > 0;
     }
 
+    public int getUpgradeCost(int upgradeType)
+    {
+        switch(upgradeType)
+        {
+            case AUTO_TAP:
+                return autoTapCost;
+            case RESOURCE_GEN_INCREASE:
+                return resGenCost;
+            case TIME_WARP:
+                return timeWarpCost;
+        }
+        return 0;
+    }
+
     // if there are not enough resources, subtractResources will throw an exception
     //  and exit the function
-    public void attemptUpgradeAutoTap(){
-        switch(ASautoTapUpgradeLevel){
-            case 0:
-                subtractResources(10d);
+    public void attemptUpgrade(int upgradeType){
+        switch(upgradeType)
+        {
+            case AUTO_TAP:
+                subtractResources(autoTapCost);
+                autoTapCost *= 5;
+                ASautoTapUpgradeLevel++;
                 break;
-            case 1:
-                subtractResources(50d);
+            case RESOURCE_GEN_INCREASE:
+                subtractResources(resGenCost);
+                resGenCost *= 5;
+                ASincreaseResourceGenerationUpgradeLevel++;
                 break;
-            case 2:
-                subtractResources(200d);
+            case TIME_WARP:
+                subtractResources(timeWarpCost);
+                timeWarpCost *= 5;
+                AStimeWarpUpgradeLevel++;
                 break;
-        }
-        ASautoTapUpgradeLevel++;
-    }
-
-    public void attemptUpgradeResourceGeneration(){
-        switch(ASincreaseResourceGenerationUpgradeLevel){
-            case 0:
-                subtractResources(20d);
-                break;
-            case 1:
-                subtractResources(50d);
-                break;
-            case 2:
-                subtractResources(200d);
+            default:
                 break;
         }
-        ASincreaseResourceGenerationUpgradeLevel++;
-    }
-
-    public void attemptUpgradeTimeWarp(){
-        switch(AStimeWarpUpgradeLevel){
-            case 0:
-                subtractResources(30d);
-                break;
-            case 1:
-                subtractResources(50d);
-                break;
-            case 2:
-                subtractResources(200d);
-                break;
-        }
-        AStimeWarpUpgradeLevel++;
     }
 
     public void addGenerator(int type, int amount) {
