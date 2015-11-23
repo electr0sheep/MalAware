@@ -6,14 +6,21 @@ package com.group6.malaware;
  */
 
 public class Generator {
-    private int costOEach = 10;
+    private int baseCost = 0;
+    private int upgradeGain = 0;
+    private double upgradeCostGrowth = 0d;
+    private int totalUpgradeCost = 0;
+
     private int numOfGenerators = 0;
     private double genRate = 1.0;
     private double upgradeLevel = 1.0;
 
-    public Generator(int initialCost, double baseGen) {
-        costOEach = initialCost;
-        genRate = baseGen;
+    public Generator(double baseGenRate, int baseCost, int upgradeGain, double upgradeCostGrowth) {
+        this.baseCost = baseCost;
+        this.upgradeGain = upgradeGain;
+        this.upgradeCostGrowth = upgradeCostGrowth;
+        genRate = baseGenRate;
+        calcCost();
     }
 
     public int getNumOfGenerators() {
@@ -21,13 +28,18 @@ public class Generator {
     }
 
     public int getCost() {
-        return costOEach;
+        return totalUpgradeCost;
+    }
+
+    private void calcCost()
+    {
+        double tmp_term = Math.pow((numOfGenerators * upgradeGain), upgradeCostGrowth);
+        totalUpgradeCost = (baseCost+ ((int) tmp_term));
     }
 
     public void addVirus(int amount) {
-        //Rudimentary method for adding a certain amount of viruses
         numOfGenerators += amount;
-        costOEach += 10 * amount;
+        calcCost();
     }
 
     public double getUpgradeLevel() {

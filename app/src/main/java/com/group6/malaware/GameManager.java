@@ -13,12 +13,12 @@ public class GameManager {
     private double totalResources = 0d;
     private double resourcesPerSec = 0d;
     private double modifier = 1d;
-    Generator coreAdware = new Generator(10, 1.0);
-    Generator coreMalware = new Generator(10, 1.0);
-    Generator coreWorm = new Generator(10, 1.0);
-    Generator coreTrojan = new Generator(10, 1.0);
-    Generator coreRootkit = new Generator(10, 1.0);
-    Generator coreHijacker = new Generator(10, 1.0);
+    Generator coreAdware = new Generator(.5, 7, 3, 1.2);
+    Generator coreMalware = new Generator(1.5, 45, 10, 1.2);
+    Generator coreWorm = new Generator(3, 100, 24, 1.2);
+    Generator coreTrojan = new Generator(8, 250, 50, 1.2);
+    Generator coreRootkit = new Generator(15, 400, 100, 1.2);
+    Generator coreHijacker = new Generator(50, 800, 300, 1.2);
     int ASautoTapUpgradeLevel;
     int ASincreaseResourceGenerationUpgradeLevel;
     int AStimeWarpUpgradeLevel;
@@ -148,7 +148,6 @@ public class GameManager {
                 if ((amount * coreAdware.getCost()) <= totalResources) {
                     totalResources -= (amount * coreAdware.getCost());
                     coreAdware.addVirus(amount);
-                    int blah = coreAdware.getNumOfGenerators();
                     break;
                 } else
                     return false;
@@ -297,7 +296,7 @@ public class GameManager {
         }
 
         if (thousandsModifier > 0){
-            df = new DecimalFormat("###.000");
+            df = new DecimalFormat("###.00");
         } else {
             df = new DecimalFormat("###");
         }
