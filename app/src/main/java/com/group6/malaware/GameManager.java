@@ -279,20 +279,20 @@ public class GameManager {
         }
     }
 
-    public String getGenRateString(int type) {
+    public double getGenRate(int type) {
         switch (type) {
             case ADWARE:
-                return convertNumToString(coreAdware.calcVirusGenPerSec());
+                return coreAdware.calcVirusGenPerSec();
             case MALWARE:
-                return convertNumToString(coreMalware.calcVirusGenPerSec());
+                return coreMalware.calcVirusGenPerSec();
             case WORM:
-                return convertNumToString(coreWorm.calcVirusGenPerSec());
+                return coreWorm.calcVirusGenPerSec();
             case TROJAN:
-                return convertNumToString(coreTrojan.calcVirusGenPerSec());
+                return coreTrojan.calcVirusGenPerSec();
             case ROOTKIT:
-                return convertNumToString(coreRootkit.calcVirusGenPerSec());
+                return coreRootkit.calcVirusGenPerSec();
             case HIJACKER:
-                return convertNumToString(coreHijacker.calcVirusGenPerSec());
+                return coreHijacker.calcVirusGenPerSec();
             default:
                 throw new RuntimeException("GameManager.getNumOfGenerators cannot lookup unknown generator type");
         }
