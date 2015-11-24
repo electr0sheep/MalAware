@@ -70,6 +70,10 @@ public class GameManager {
         return ASincreaseResourceGenerationUpgradeLevel > 0;
     }
 
+    public double resourceGenerationModifier(int upgradeLevel){
+        return .5 + .5 * upgradeLevel;
+    }
+
     public boolean timeWarpPurchased() {
         return AStimeWarpUpgradeLevel > 0;
     }
