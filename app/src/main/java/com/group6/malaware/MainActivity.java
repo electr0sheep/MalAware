@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
     private Map<String, List<String>> childCollection;
     public ExpandableListView expListView;
 
+    final static int PICK_OPTIONS_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -483,17 +485,17 @@ public class MainActivity extends AppCompatActivity
 
     public void onOptionsClick(View view) {
         Intent optionsIntent = new Intent(this, OptionsActivity.class);
-        startActivity(optionsIntent);
+        startActivityForResult(optionsIntent, PICK_OPTIONS_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(data.getExtras().getBoolean("Reset Stats", true))
-        {
-            Log.i("Info", "Reached here");
-            gameManager.resetData(sharedPref);
-        }
+        if(requestCode == PICK_OPTIONS_CODE)
+            if(resultCode == RESULT_OK) {
+                if (data.getExtras().getBoolean("Reset Stats", true)) {
+                    gameManager.resetData(sharedPref);
+                }
+            }
     }
 }

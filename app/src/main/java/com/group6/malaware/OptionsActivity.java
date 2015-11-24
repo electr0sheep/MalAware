@@ -60,7 +60,7 @@ public class OptionsActivity extends AppCompatActivity {
     public void resetStats()
     {
         backIntent.putExtra("Reset Stats", true);
-        setResult(0, backIntent);
+        setResult(Activity.RESULT_OK, backIntent);
         finish();
 
     }

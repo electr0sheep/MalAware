@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:background="@drawable/side_nav_bar"
@@ -16,15 +16,19 @@
         android:layout_height="20dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_settings_white_48dp"
-        android:onClick="onOptionsClick"/>
+        android:onClick="onOptionsClick"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/nav_header_left_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:text="Upgrades"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 
-</LinearLayout>
+</RelativeLayout>
