@@ -249,15 +249,20 @@ public class MainActivity extends AppCompatActivity
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_time_warp_action_skill_upgrade:
-                    if (gameManager.timeWarpPurchased()) {
-                        bundle.putString("Title", "Time Warp");
+                    bundle.putString("Title", "Time Warp");
+                    if (!gameManager.timeWarpPurchased()) {
                         bundle.putString("Description", "This action skill will skip ahead in time and " +
-                                "provide resources equal to the time skipped\n\n" +
-                                "Cost: " + gameManager.getUpgradeCost(2) +
-                                "\t\tLevel: " + gameManager.getUpgradeLevel(2));
-                        upgradeDialog.setArguments(bundle);
-                        upgradeDialog.show(getFragmentManager(), "Blah");
+                                "provide resources equal to 5 minutes worth of time\n\n" +
+                                "Cost: " + gameManager.getUpgradeCost(GameManager.TIME_WARP));
+                    } else {
+                        bundle.putString("Description", "Each upgrade to time warp will provide an additional minute " +
+                                "worth of resources\n\n" +
+                                "Cost: " + gameManager.getUpgradeCost(GameManager.TIME_WARP) +
+                                "\nCurrent time warped ahead: " + gameManager.timeWarpTime(gameManager.getUpgradeLevel(GameManager.TIME_WARP)) + " minutes" +
+                                "\nUpgraded time warped ahead: " + gameManager.timeWarpTime(gameManager.getUpgradeLevel(GameManager.TIME_WARP) + 1) + " minutes");
                     }
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 default:
                     throw new RuntimeException("How did you even do this?");
@@ -412,8 +417,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fabTimeWarpOnClick(View view) {
-        double amountOfResources = addResourcesForTime(300000);
-        gameManager.addResources(amountOfResources); // add resources for 5 minutes
+        // note for below, 60000 is the number of milliseconds in a minute
+        double amountOfResources = addResourcesForTime(gameManager.timeWarpTime(gameManager.getUpgradeLevel(GameManager.TIME_WARP)) * 60000);
         if (amountOfResources >= 1d) {
             myToast = Toast.makeText(this, "You gained " + amountOfResources + " resources", Toast.LENGTH_SHORT);
             myToast.show();

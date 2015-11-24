@@ -78,6 +78,10 @@ public class GameManager {
         return AStimeWarpUpgradeLevel > 0;
     }
 
+    public int timeWarpTime(int upgradeLevel){
+        return 4 + upgradeLevel;
+    }
+
     public int getUpgradeCost(int upgradeType)
     {
         switch(upgradeType)
