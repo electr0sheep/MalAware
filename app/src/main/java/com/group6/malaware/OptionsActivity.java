@@ -51,6 +51,7 @@ public class OptionsActivity extends AppCompatActivity {
                         break;
                     case 1:
                         //start tutorial
+                        startTutorial();
                         break;
                 }
             }
@@ -63,7 +64,13 @@ public class OptionsActivity extends AppCompatActivity {
         backIntent.putExtra("Reset Stats", true);
         setResult(Activity.RESULT_OK, backIntent);
         finish();
+    }
 
+    public void startTutorial()
+    {
+        backIntent.putExtra("Start Tutorial", true);
+        setResult(Activity.RESULT_OK, backIntent);
+        finish();
     }
 
 }

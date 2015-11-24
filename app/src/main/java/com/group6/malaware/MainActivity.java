@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,6 +85,17 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fabTimeWarp;
     FloatingActionButton fabPowerUpAS;
 
+    //tutorial boolean
+    private boolean tutorialActive = false;
+
+    //UI Elements
+    ImageView terminal;
+    ImageButton btn_leftDrawer;
+    ImageButton btn_rightDrawer;
+    TourGuide mTourGuideHandler;
+    private int stepCount = 0;
+
+
     private DrawerLayout dLayout;
     private List<String> groupList;
     private List<String> childList;
@@ -103,6 +122,11 @@ public class MainActivity extends AppCompatActivity
         //navLeftNoUpgradesAvailable = navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
         fabIncreaseResourceGeneration = (FloatingActionButton) findViewById(R.id.fab_action_skill_increase_generation);
+
+        //set UI Elements
+        terminal = (ImageView) findViewById(R.id.img_terminal);
+        btn_leftDrawer = (ImageButton) findViewById(R.id.btn_drawer_left);
+        btn_rightDrawer = (ImageButton) findViewById(R.id.btn_drawer_right);
 
         // these are the items in the menu
         //navLeftNoUpgradesAvailable = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_no_upgrades_available);
@@ -222,14 +246,14 @@ public class MainActivity extends AppCompatActivity
                     bundle.putString("Title", "Auto Tap");
                     if (!gameManager.autoTapPurchased()) {
                         bundle.putString("Description", "Auto tap simulates the terminal being tapped " +
-                                "and resources will be continously added to your resource pool\n\n" +
+                                "and resources will be continuously added to your resource pool\n\n" +
                                 "Cost: " + gameManager.getUpgradeCost(GameManager.AUTO_TAP));
                     } else {
                         bundle.putString("Description", "Each upgrade to auto tap will increase the duration " +
                                 "of auto tap by 5 seconds\n\n" +
                                 "Cost: " + gameManager.getUpgradeCost(GameManager.AUTO_TAP) +
-                                "\nCurrent Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP)) +
-                                "\nUpgraded Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP) + 1));
+                                "\nCurrent Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP)) + " seconds" +
+                                "\nUpgraded Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP) + 1) + " seconds");
                     }
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
@@ -288,14 +312,32 @@ public class MainActivity extends AppCompatActivity
     public void imgTerminalOnClick(View view) {
         //Click listener for the Terminal image
         gameManager.addResources(1d);
+
+        if(tutorialActive)
+        {
+            stepCount = 1;
+            tutorialStep(stepCount);
+        }
     }
 
     public void drawerBtnLeftOnClick(View view) {
         dLayout.openDrawer(GravityCompat.START);
+
+        if(tutorialActive)
+        {
+            stepCount = 3;
+            tutorialStep(stepCount);
+        }
     }
 
     public void drawerBtnRightOnClick(View view) {
         dLayout.openDrawer(GravityCompat.END);
+
+        if(tutorialActive)
+        {
+            stepCount = 2;
+            tutorialStep(stepCount);
+        }
     }
 
     public void fabAutoTapOnClick(View view) {
@@ -494,11 +536,49 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICK_OPTIONS_CODE)
             if(resultCode == RESULT_OK) {
-                if (data.getExtras().getBoolean("Reset Stats", true)) {
+                if (data.getExtras().getBoolean("Reset Stats")) {
                     gameManager.resetData(sharedPref);
                     gameManager.resetLevelInc();
                     gameManager.loadData(sharedPref);
                 }
+                else if(data.getExtras().getBoolean("Start Tutorial"))
+                {
+                    Log.i("Info", "Starting Tutorial");
+                    dLayout.closeDrawer(GravityCompat.START);
+                    tutorialStep(stepCount);
+                }
             }
+    }
+
+    private void tutorialStep(int step)
+    {
+        tutorialActive = true;
+        switch(step)
+        {
+            case 0:
+                mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click);
+                mTourGuideHandler.setPointer(new Pointer())
+                        .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Tap the terminal to generate a resource"))
+                        .setOverlay(new Overlay())
+                        .playOn(terminal);
+                break;
+            case 1:
+                mTourGuideHandler.cleanUp();
+                mTourGuideHandler.setToolTip(new ToolTip().setTitle("Generate Resources").setDescription("Tap this button to open the Generator drawer or swipe left").setGravity(Gravity.TOP | Gravity.LEFT))
+                        .setOverlay(new Overlay())
+                        .playOn(btn_rightDrawer);
+                break;
+            case 2:
+                mTourGuideHandler.cleanUp();
+                mTourGuideHandler.setToolTip(new ToolTip().setTitle("Purchase Action Skills").setDescription("Tap this button to open the Upgrades drawer or swipe right").setGravity(Gravity.TOP | Gravity.RIGHT))
+                        .setOverlay(new Overlay())
+                        .playOn(btn_leftDrawer);
+                break;
+            case 3:
+                mTourGuideHandler.cleanUp();
+                tutorialActive = false;
+                stepCount = 0;
+                break;
+        }
     }
 }
