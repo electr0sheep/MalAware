@@ -3,6 +3,8 @@ package com.group6.malaware;
 import android.content.SharedPreferences;
 
 import java.text.DecimalFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by michaeldegraw on 9/22/15.
@@ -26,6 +28,8 @@ public class GameManager {
     int ASincreaseResourceGenerationUpgradeLevel;
     int AStimeWarpUpgradeLevel;
 
+    AutoTap coreAutoTap;
+
     int resetLevel = 0;
 
     // Generator constants
@@ -40,6 +44,18 @@ public class GameManager {
     public static final int AUTO_TAP = 0;
     public static final int RESOURCE_GEN_INCREASE = 1;
     public static final int TIME_WARP = 2;
+
+    public void tempIncreaseResourcesPerSec(final double amount, int durationInMillis){
+        resourcesPerSec += amount;
+        final Timer tempTimer = new Timer();
+        tempTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                resourcesPerSec -= amount;
+                tempTimer.cancel();
+            }
+        }, durationInMillis, 1);
+    }
 
     public void toggleIncreaseGen(boolean active){
         if (active) {

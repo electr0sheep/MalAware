@@ -147,6 +147,9 @@ public class MainActivity extends AppCompatActivity
         // this is the toast
         myToast = new Toast(this);
 
+        // set up action skills
+        gameManager.coreAutoTap = new AutoTap(MainActivity.this, gameManager, fabAutoTap, txtAutoTap);
+
         // load previous game
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gameManager.loadData(sharedPref);
@@ -244,16 +247,14 @@ public class MainActivity extends AppCompatActivity
             switch (id) {
                 case R.id.nav_left_auto_click_action_skill_upgrade:
                     bundle.putString("Title", "Auto Tap");
-                    if (!gameManager.autoTapPurchased()) {
-                        bundle.putString("Description", "Auto tap simulates the terminal being tapped " +
-                                "and resources will be continuously added to your resource pool\n\n" +
-                                "Cost: " + gameManager.getUpgradeCost(GameManager.AUTO_TAP));
+                    if (!gameManager.coreAutoTap.purchased()) {
+                        bundle.putString("Description", gameManager.coreAutoTap.getPurchaseMessage() + "\n\n" +
+                                "Cost: " + gameManager.coreAutoTap.getUpgradeCost());
                     } else {
-                        bundle.putString("Description", "Each upgrade to auto tap will increase the duration " +
-                                "of auto tap by 5 seconds\n\n" +
-                                "Cost: " + gameManager.getUpgradeCost(GameManager.AUTO_TAP) +
-                                "\nCurrent Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP)) + " seconds" +
-                                "\nUpgraded Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP) + 1) + " seconds");
+                        bundle.putString("Description", gameManager.coreAutoTap.getUpgradeMessage() + "\n\n" +
+                                "Cost: " + gameManager.coreAutoTap.getUpgradeCost() +
+                                "\nCurrent Duration: " + (10 + (5 * (gameManager.coreAutoTap.getUpgradeLevel() - 1))) + " seconds" +
+                                "\nUpgraded Duration: " + (10 + (5 * gameManager.coreAutoTap.getUpgradeLevel())) + " seconds");
                     }
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
@@ -341,64 +342,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fabAutoTapOnClick(View view) {
-        autoTapCooldown = 1 + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP));
-        fabAutoTap.setImageResource(android.R.color.transparent);
-        fabAutoTap.setEnabled(false);
-        txtAutoTap.setVisibility(TextView.VISIBLE);
-        gameManager.toggleAutoTap(true);
-        final Timer fabAutoTapActiveTimer = new Timer();
-        // begin active timer
-        fabAutoTapActiveTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (autoTapCooldown == 1) {
-                    gameManager.toggleAutoTap(false);
-                    autoTapCooldown = 62;
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_red_dark)));
-                        }
-                    });
-                    fabAutoTapActiveTimer.cancel();
-                    // begin cooldown timer
-                    final Timer fabautoTapCooldownTimer = new Timer();
-                    fabautoTapCooldownTimer.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (autoTapCooldown == 1) {
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        fabAutoTap.setImageResource(R.drawable.auto_tap);
-                                        txtAutoTap.setVisibility(TextView.GONE);
-                                        fabAutoTap.setEnabled(true);
-                                        fabAutoTap.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_green_dark)));
-                                    }
-                                });
-                                fabautoTapCooldownTimer.cancel();
-                            }
-                            MainActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    txtAutoTap.setText(Integer.toString(autoTapCooldown));
-                                }
-                            });
-
-                            autoTapCooldown--;
-                        }
-                    }, 0, 1000);
-                }
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtAutoTap.setText(Integer.toString(autoTapCooldown));
-                    }
-                });
-                autoTapCooldown--;
-                gameManager.addResources(1d);
-            }
-        }, 0, 1000);
+        gameManager.coreAutoTap.activate();
     }
 
     public void fabResourceGenerationIncreaseOnClick(View view) {
@@ -501,7 +445,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void displayFABsOnLoad() {
-        if (gameManager.autoTapPurchased()) {
+        if (gameManager.coreAutoTap.purchased()) {
             fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
         }
 
