@@ -26,6 +26,8 @@ public class GameManager {
     int ASincreaseResourceGenerationUpgradeLevel;
     int AStimeWarpUpgradeLevel;
 
+    int resetLevel = 0;
+
     // Generator constants
     public static final int ADWARE = 0;
     public static final int MALWARE = 1;
@@ -56,6 +58,17 @@ public class GameManager {
             calcTotalResourcesPerSec();
         }
     }
+
+    public void resetLevelInc()
+    {
+        resetLevel++;
+    }
+
+    public int getResetLevel()
+    {
+        return  resetLevel;
+    }
+
 
    //Redundant with attemptBuy?
     public boolean autoTapPurchased() {
@@ -294,13 +307,13 @@ public class GameManager {
     }
 
     public void calcTotalResourcesPerSec() {
-        resourcesPerSec = (coreAdware.calcVirusGenPerSec() +
+        resourcesPerSec = ((coreAdware.calcVirusGenPerSec() +
                 coreMalware.calcVirusGenPerSec() +
                 coreWorm.calcVirusGenPerSec() +
                 coreTrojan.calcVirusGenPerSec() +
                 coreRootkit.calcVirusGenPerSec() +
                 coreHijacker.calcVirusGenPerSec())
-                * modifier;
+                * modifier)*(resetLevel+1);
     }
 
     public double getResourcesPerSec() {

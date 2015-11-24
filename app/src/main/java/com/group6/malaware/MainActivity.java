@@ -485,6 +485,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onOptionsClick(View view) {
         Intent optionsIntent = new Intent(this, OptionsActivity.class);
+        optionsIntent.putExtra("Reset Level", gameManager.getResetLevel());
         startActivityForResult(optionsIntent, PICK_OPTIONS_CODE);
     }
 
@@ -495,6 +496,7 @@ public class MainActivity extends AppCompatActivity
             if(resultCode == RESULT_OK) {
                 if (data.getExtras().getBoolean("Reset Stats", true)) {
                     gameManager.resetData(sharedPref);
+                    gameManager.resetLevelInc();
                 }
             }
     }

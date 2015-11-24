@@ -44,7 +44,8 @@ public class OptionsActivity extends AppCompatActivity {
                     case 0:
                         bundle.putString("Title", "Reset Stats");
                         bundle.putString("Description", "This will wipe out all resources generated but " +
-                                "gain a permanent resource generation increase");
+                                "gain a permanent resource generation increase\n\n" +
+                                "Reset Level: " + backIntent.getExtras().getInt("Reset Level"));
                         optionsDialog.setArguments(bundle);
                         optionsDialog.show(getFragmentManager(), "Blah");
                         break;
