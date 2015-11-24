@@ -1,11 +1,13 @@
 package com.group6.malaware;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity
         final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, groupList, childCollection);
         expListView.setAdapter(expListAdapter);
 
-        View header = (View)getLayoutInflater().inflate(R.layout.nav_header_right, null);
+        View header = (View) getLayoutInflater().inflate(R.layout.nav_header_right, null);
         expListView.addHeaderView(header);
     }
 
@@ -179,9 +181,9 @@ public class MainActivity extends AppCompatActivity
         String[] models = {"Something"};
         childCollection = new LinkedHashMap<String, List<String>>();
 
-            for (String child : groupList) {
-                loadChild(models);
-                childCollection.put(child, childList);
+        for (String child : groupList) {
+            loadChild(models);
+            childCollection.put(child, childList);
         }
     }
 
@@ -189,8 +191,9 @@ public class MainActivity extends AppCompatActivity
         childList = new ArrayList<String>();
 
         for (String model : models)
-                childList.add(model);
-        }
+            childList.add(model);
+    }
+
     @Override
     public void onBackPressed() {
         //Closes the drawer when the Android back button is pressed
@@ -226,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                     bundle.putString("Title", "Increase Resource Generation");
                     bundle.putString("Description", "This action skill will increase the amount of resources " +
                             "you passively generate for a short time\n\n" +
-                            "Cost: "+ gameManager.getUpgradeCost(1) +
+                            "Cost: " + gameManager.getUpgradeCost(1) +
                             "\t\tLevel: " + gameManager.getUpgradeLevel(1));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
@@ -243,7 +246,7 @@ public class MainActivity extends AppCompatActivity
                 default:
                     throw new RuntimeException("How did you even do this?");
             }
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             myToast.cancel();
             myToast = Toast.makeText(this, "Not enough resources", Toast.LENGTH_SHORT);
             myToast.show();
@@ -264,13 +267,11 @@ public class MainActivity extends AppCompatActivity
         gameManager.addResources(1d);
     }
 
-    public void drawerBtnLeftOnClick(View view)
-    {
+    public void drawerBtnLeftOnClick(View view) {
         dLayout.openDrawer(GravityCompat.START);
     }
 
-    public void drawerBtnRightOnClick(View view)
-    {
+    public void drawerBtnRightOnClick(View view) {
         dLayout.openDrawer(GravityCompat.END);
     }
 
@@ -425,28 +426,30 @@ public class MainActivity extends AppCompatActivity
                 }
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {txtTimeWarp.setText(Integer.toString(timeWarpCooldown));}
+                    public void run() {
+                        txtTimeWarp.setText(Integer.toString(timeWarpCooldown));
+                    }
                 });
                 timeWarpCooldown--;
             }
         }, 0, 1000);
     }
 
-    private void displayFABsOnLoad(){
-        if (gameManager.autoTapPurchased()){
+    private void displayFABsOnLoad() {
+        if (gameManager.autoTapPurchased()) {
             fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
         }
 
-        if (gameManager.increaseResourceGenerationPurchased()){
+        if (gameManager.increaseResourceGenerationPurchased()) {
             fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
         }
 
-        if (gameManager.timeWarpPurchased()){
+        if (gameManager.timeWarpPurchased()) {
             fabTimeWarp.setVisibility(FloatingActionButton.VISIBLE);
         }
     }
 
-    private double addResourcesForTime(double timeInMillis){
+    private double addResourcesForTime(double timeInMillis) {
         double resources = 0;
         if (gameManager.getResourcesPerSec() > 0) {
             resources = timeInMillis                        // milliseconds that we want to add for
@@ -455,5 +458,21 @@ public class MainActivity extends AppCompatActivity
             gameManager.addResources(resources);            // add that amount to resource pool
         }
         return resources;
+    }
+
+    public void onOptionsClick(View view) {
+        Intent optionsIntent = new Intent(this, OptionsActivity.class);
+        startActivity(optionsIntent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(data.getExtras().getBoolean("Reset Stats", true))
+        {
+            Log.i("Info", "Reached here");
+            gameManager.resetData(sharedPref);
+        }
     }
 }
