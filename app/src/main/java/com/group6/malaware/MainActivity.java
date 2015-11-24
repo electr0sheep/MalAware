@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity
         navLeftAutoClickASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_auto_click_action_skill_upgrade);
         navLeftResourceGenerationASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_action_skill_upgrade);
         navLeftTimeWarpASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_time_warp_action_skill_upgrade);
-        navLeftAdware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_adware);
+        /*navLeftAdware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_adware);
         navLeftMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_malware);
         navLeftWorm = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_worm);
         navLeftTrojan = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_trojan);
         navLeftRootkit = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_rootkit);
-        navLeftHijacker = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_hijacker);
+        navLeftHijacker = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_hijacker);*/
 
         // these are the floating action buttons
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
@@ -497,6 +497,7 @@ public class MainActivity extends AppCompatActivity
                 if (data.getExtras().getBoolean("Reset Stats", true)) {
                     gameManager.resetData(sharedPref);
                     gameManager.resetLevelInc();
+                    gameManager.loadData(sharedPref);
                 }
             }
     }

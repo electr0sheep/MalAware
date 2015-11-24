@@ -260,20 +260,20 @@ public class GameManager {
         }
     }
 
-    public int getCostOfGenerators(int type) {
+    public String getCostOfGeneratorsString(int type) {
         switch (type) {
             case ADWARE:
-                return coreAdware.getCost();
+                return convertNumToString(coreAdware.getCost());
             case MALWARE:
-                return coreMalware.getCost();
+                return convertNumToString(coreMalware.getCost());
             case WORM:
-                return coreWorm.getCost();
+                return convertNumToString(coreWorm.getCost());
             case TROJAN:
-                return coreTrojan.getCost();
+                return convertNumToString(coreTrojan.getCost());
             case ROOTKIT:
-                return coreRootkit.getCost();
+                return convertNumToString(coreRootkit.getCost());
             case HIJACKER:
-                return coreHijacker.getCost();
+                return convertNumToString(coreHijacker.getCost());
             default:
                 throw new RuntimeException("GameManager.getNumOfGenerators cannot lookup unknown generator type");
         }

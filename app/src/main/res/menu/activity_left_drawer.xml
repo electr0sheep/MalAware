@@ -17,7 +17,7 @@
         </menu>
     </item>
 
-    <item android:title="Generator Upgrades">
+   <!-- <item android:title="Generator Upgrades">
         <menu>
             <item
                 android:id="@+id/nav_left_adware"
@@ -38,5 +38,5 @@
                 android:id="@+id/nav_left_hijacker"
                 android:title="   Hijacker" />
         </menu>
-    </item>
+    </item> -->
 </menu>
