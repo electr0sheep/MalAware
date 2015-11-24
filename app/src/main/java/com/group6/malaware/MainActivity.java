@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity
         // note for below, 60000 is the number of milliseconds in a minute
         double amountOfResources = addResourcesForTime(gameManager.timeWarpTime(gameManager.getUpgradeLevel(GameManager.TIME_WARP)) * 60000);
         if (amountOfResources >= 1d) {
-            myToast = Toast.makeText(this, "You gained " + amountOfResources + " resources", Toast.LENGTH_SHORT);
+            myToast = Toast.makeText(this, "You gained " + gameManager.convertNumToString(amountOfResources) + " resources", Toast.LENGTH_SHORT);
             myToast.show();
         }
         timeWarpCooldown = 61;
