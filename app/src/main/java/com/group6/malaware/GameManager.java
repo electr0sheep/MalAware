@@ -62,6 +62,10 @@ public class GameManager {
         return ASautoTapUpgradeLevel > 0;
     }
 
+    public int autoTapDuration(int upgradeLevel){
+        return 5 + (5 * upgradeLevel);
+    }
+
     public boolean increaseResourceGenerationPurchased() {
         return ASincreaseResourceGenerationUpgradeLevel > 0;
     }
@@ -369,6 +373,12 @@ public class GameManager {
         editor.putInt("AS_increase_resource_generation_upgrade_level", ASincreaseResourceGenerationUpgradeLevel);
         editor.putInt("AS_time_warp_upgrade_level", AStimeWarpUpgradeLevel);
 
+        // store data for the current cost of upgrades
+        // ISN'T THIS REDUNDANT WITH KEEPING TRACK OF THE UPGRADE LEVELS?
+        editor.putInt("AS_auto_tap_upgrade_cost", autoTapCost);
+        editor.putInt("AS_increase_resource_generation_upgrade_cost", resGenCost);
+        editor.putInt("AS_time_warp_upgrade_cost", timeWarpCost);
+
         // store data for upgrade levels of generators
         editor = putDouble(editor, "malware_upgrade_level", coreMalware.getUpgradeLevel());
         editor = putDouble(editor, "worm_upgrade_level", coreWorm.getUpgradeLevel());
@@ -404,7 +414,9 @@ public class GameManager {
         editor.putInt("AS_auto_click_upgrade_level", 0);
         editor.putInt("AS_increase_resource_generation_upgrade_level", 0);
         editor.putInt("AS_time_warp_upgrade_level", 0);
-        editor.putInt("AS_power_up_next_AS_upgrade_level", 0);
+        editor.putInt("AS_auto_tap_upgrade_cost", 0);
+        editor.putInt("AS_increase_resource_generation_upgrade_cost", 0);
+        editor.putInt("AS_time_warp_upgrade_cost", 0);
         editor = putDouble(editor, "malware_upgrade_level", 0);
         editor = putDouble(editor, "worm_upgrade_level", 0);
         editor = putDouble(editor, "adware_upgrade_level", 0);
@@ -438,6 +450,11 @@ public class GameManager {
             ASautoTapUpgradeLevel = sharedPref.getInt("AS_auto_click_upgrade_level", 0);
             ASincreaseResourceGenerationUpgradeLevel = sharedPref.getInt("AS_increase_resource_generation_upgrade_level", 0);
             AStimeWarpUpgradeLevel = sharedPref.getInt("AS_time_warp_upgrade_level", 0);
+
+            // load upgrade costs for action skills
+            autoTapCost = sharedPref.getInt("AS_auto_tap_upgrade_cost", 10);
+            resGenCost = sharedPref.getInt("AS_increase_resource_generation_upgrade_cost", 20);
+            timeWarpCost = sharedPref.getInt("AS_time_warp_upgrade_cost", 30);
 
             // load upgrade levels for generators
             coreMalware.setUpgradeLevel(getDouble(sharedPref, "malware_upgrade_level", 1d));

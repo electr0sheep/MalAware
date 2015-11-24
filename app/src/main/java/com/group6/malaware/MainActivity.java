@@ -218,30 +218,41 @@ public class MainActivity extends AppCompatActivity
             switch (id) {
                 case R.id.nav_left_auto_click_action_skill_upgrade:
                     bundle.putString("Title", "Auto Tap");
-                    bundle.putString("Description", "Auto tap allows you to simply \"hold\" the terminal " +
-                            "and resources will be continously added to your resource pool\n\n" +
-                            "Cost: " + gameManager.getUpgradeCost(0) +
-                            "\t\tLevel: " + gameManager.getUpgradeLevel(0));
+                    if (!gameManager.autoTapPurchased()) {
+                        bundle.putString("Description", "Auto tap simulates the terminal being tapped " +
+                                "and resources will be continously added to your resource pool\n\n" +
+                                "Cost: " + gameManager.getUpgradeCost(0));
+                    } else {
+                        bundle.putString("Description", "Each upgrade to auto tap will increase the duration " +
+                                "of auto tap by 5 seconds\n\n" +
+                                "Cost: " + gameManager.getUpgradeCost(0) +
+                                "\nCurrent Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP)) +
+                                "\nUpgraded Duration: " + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP) + 1));
+                    }
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_resource_generation_increase_action_skill_upgrade:
-                    bundle.putString("Title", "Increase Resource Generation");
-                    bundle.putString("Description", "This action skill will increase the amount of resources " +
-                            "you passively generate for a short time\n\n" +
-                            "Cost: " + gameManager.getUpgradeCost(1) +
-                            "\t\tLevel: " + gameManager.getUpgradeLevel(1));
-                    upgradeDialog.setArguments(bundle);
-                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    if (!gameManager.increaseResourceGenerationPurchased()) {
+                        bundle.putString("Title", "Increase Resource Generation");
+                        bundle.putString("Description", "This action skill will increase the amount of resources " +
+                                "you passively generate for a short time\n\n" +
+                                "Cost: " + gameManager.getUpgradeCost(1) +
+                                "\t\tLevel: " + gameManager.getUpgradeLevel(1));
+                        upgradeDialog.setArguments(bundle);
+                        upgradeDialog.show(getFragmentManager(), "Blah");
+                    }
                     break;
                 case R.id.nav_left_time_warp_action_skill_upgrade:
-                    bundle.putString("Title", "Time Warp");
-                    bundle.putString("Description", "This action skill will skip ahead in time and " +
-                            "provide resources equal to the time skipped\n\n" +
-                            "Cost: " + gameManager.getUpgradeCost(2) +
-                            "\t\tLevel: " + gameManager.getUpgradeLevel(2));
-                    upgradeDialog.setArguments(bundle);
-                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    if (gameManager.timeWarpPurchased()) {
+                        bundle.putString("Title", "Time Warp");
+                        bundle.putString("Description", "This action skill will skip ahead in time and " +
+                                "provide resources equal to the time skipped\n\n" +
+                                "Cost: " + gameManager.getUpgradeCost(2) +
+                                "\t\tLevel: " + gameManager.getUpgradeLevel(2));
+                        upgradeDialog.setArguments(bundle);
+                        upgradeDialog.show(getFragmentManager(), "Blah");
+                    }
                     break;
                 default:
                     throw new RuntimeException("How did you even do this?");
@@ -276,7 +287,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fabAutoTapOnClick(View view) {
-        autoTapCooldown = 11;
+        autoTapCooldown = 1 + gameManager.autoTapDuration(gameManager.getUpgradeLevel(GameManager.AUTO_TAP));
         fabAutoTap.setImageResource(android.R.color.transparent);
         fabAutoTap.setEnabled(false);
         txtAutoTap.setVisibility(TextView.VISIBLE);
