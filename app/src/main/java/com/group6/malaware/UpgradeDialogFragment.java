@@ -31,15 +31,15 @@ public class UpgradeDialogFragment extends DialogFragment {
                         try {
                             switch (upgradeName) {
                                 case "Auto Tap":
-                                    callingActivity.gameManager.attemptUpgrade(0);
+                                    callingActivity.gameManager.coreAutoTap.upgrade();
                                     callingActivity.fabAutoTap.setVisibility(FloatingActionButton.VISIBLE);
                                     break;
                                 case "Increase Resource Generation":
-                                    callingActivity.gameManager.attemptUpgrade(1);
+                                    callingActivity.gameManager.coreIncreaseResource.upgrade();
                                     callingActivity.fabIncreaseResourceGeneration.setVisibility(FloatingActionButton.VISIBLE);
                                     break;
                                 case "Time Warp":
-                                    callingActivity.gameManager.attemptUpgrade(2);
+                                    callingActivity.gameManager.coreTimeWarp.upgrade();
                                     callingActivity.fabTimeWarp.setVisibility(FloatingActionButton.VISIBLE);
                             }
                         } catch (RuntimeException e){
