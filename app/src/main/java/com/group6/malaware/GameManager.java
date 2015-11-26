@@ -7,33 +7,34 @@ import java.text.DecimalFormat;
 /**
  * Created by michaeldegraw on 9/22/15.
  * Edited by Michael DeGraw and Cyril Mathew on 11/4/2015.
+ * Edited by Adrian Palmerola 11/25/15
  * Has most of the game's logic and functional methods
  */
 public class GameManager {
     private double totalResources = 0d;
     private double resourcesPerSec = 0d;
     private double modifier = 1d;
-    Generator coreAdware = new Generator(.5, 7, 3, 1.2);
-    Generator coreMalware = new Generator(1.5, 46, 10, 1.2);
-    Generator coreWorm = new Generator(3, 100, 24, 1.2);
-    Generator coreTrojan = new Generator(8, 249, 50, 1.2);
-    Generator coreRootkit = new Generator(15, 394, 100, 1.2);
-    Generator coreHijacker = new Generator(50, 790, 300, 1.2);
-    Generator coreBootInfector = new Generator(80, 1601, 400, 1.2);
-    Generator corePolymorphicMalware = new Generator(150, 3021, 700, 1.2);
-    Generator coreFourKMalware = new Generator(250, 2979, 800, 1.25);
-    Generator coreCodeRedMalware = new Generator(400, 4318, 1300, 1.25);
-    Generator coreRegrowingVirus = new Generator(700, 6646, 2000, 1.25);
-    Generator coreBotNet = new Generator(1000, 10000, 3500, 1.25);
-    Generator coreZombieVirus = new Generator(1500, 15000, 5000, 1.25);
-    Generator coreSundayVirus = new Generator(2000, 20815, 6000, 1.25);
-    Generator coreAllPurposeWorm = new Generator(3000, 27243, 8500, 1.25);
-    Generator coreZmistVirus = new Generator(5000, 33310, 15000, 1.25);
-    Generator coreMilitaryMalware = new Generator(7000, 27844, 13000, 1.3);
-    Generator coreSuperTrojan = new Generator(10000, 33228, 20000, 1.3);
-    Generator coreTyrannicalAdware = new Generator(13500, 41247, 28000, 1.3);
-    Generator coreRansomVirus = new Generator(16000, 25800, 14000, 1.4);
-    Generator coreILOVEUVirus = new Generator(20000, 31677, 17000, 1.4);
+    Generator coreAdware = new Generator(.5, 7, 3, 1.2, 25);
+    Generator coreMalware = new Generator(1.5, 46, 10, 1.2, 15);
+    Generator coreWorm = new Generator(3, 100, 24, 1.2, 10);
+    Generator coreTrojan = new Generator(8, 249, 50, 1.2, 5);
+    Generator coreRootkit = new Generator(15, 394, 100, 1.2, 3);
+    Generator coreHijacker = new Generator(50, 790, 300, 1.2, 1);
+    Generator coreBootInfector = new Generator(80, 1601, 400, 1.2, 1);
+    Generator corePolymorphicMalware = new Generator(150, 3021, 700, 1.2, 1);
+    Generator coreFourKMalware = new Generator(250, 2979, 800, 1.25,.7);
+    Generator coreCodeRedMalware = new Generator(400, 4318, 1300, 1.25, .7);
+    Generator coreRegrowingVirus = new Generator(700, 6646, 2000, 1.25, .7);
+    Generator coreBotNet = new Generator(1000, 10000, 3500, 1.25, .5);
+    Generator coreZombieVirus = new Generator(1500, 15000, 5000, 1.25, .4);
+    Generator coreSundayVirus = new Generator(2000, 20815, 6000, 1.25, .3);
+    Generator coreAllPurposeWorm = new Generator(3000, 27243, 8500, 1.25, .25);
+    Generator coreZmistVirus = new Generator(5000, 33310, 15000, 1.25, .25);
+    Generator coreMilitaryMalware = new Generator(7000, 27844, 13000, 1.3, .25);
+    Generator coreSuperTrojan = new Generator(10000, 33228, 20000, 1.3, .25);
+    Generator coreTyrannicalAdware = new Generator(13500, 41247, 28000, 1.3, .25);
+    Generator coreRansomVirus = new Generator(16000, 25800, 14000, 1.4, .25);
+    Generator coreILOVEUVirus = new Generator(20000, 31677, 17000, 1.4, .25);
     int ASautoTapUpgradeLevel = 1;
     int autoTapCost = 10;
     int resGenCost = 20;
@@ -172,6 +173,96 @@ public class GameManager {
                 subtractResources(timeWarpCost);
                 timeWarpCost *= 5;
                 AStimeWarpUpgradeLevel++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    //Attempts to upgrade the modifier for generators
+    public void attemptUpgradeGenerator(int upgradeType)
+    {
+        switch(upgradeType)
+        {
+            case ADWARE:
+                subtractResources(coreAdware.getCostOfUpgradeModifier());
+                coreAdware.upgrade();
+                break;
+            case MALWARE:
+                subtractResources(coreMalware.getCostOfUpgradeModifier());
+                coreMalware.upgrade();
+                break;
+            case WORM:
+                subtractResources(coreWorm.getCostOfUpgradeModifier());
+                coreWorm.upgrade();
+                break;
+            case TROJAN:
+                subtractResources(coreTrojan.getCostOfUpgradeModifier());
+                coreTrojan.upgrade();
+                break;
+            case HIJACKER:
+                subtractResources(coreHijacker.getCostOfUpgradeModifier());
+                coreHijacker.upgrade();
+                break;
+            case BOOTINFECTOR:
+                subtractResources(coreBootInfector.getCostOfUpgradeModifier());
+                coreBootInfector.upgrade();
+                break;
+            case POLYMORPHICMALWARE:
+                subtractResources(corePolymorphicMalware.getCostOfUpgradeModifier());
+                corePolymorphicMalware.upgrade();
+                break;
+            case FOURKMALWARE:
+                subtractResources(coreFourKMalware.getCostOfUpgradeModifier());
+                coreFourKMalware.upgrade();
+                break;
+            case CODEREDMALWARE:
+                subtractResources(coreCodeRedMalware.getCostOfUpgradeModifier());
+                coreCodeRedMalware.upgrade();
+                break;
+            case REGROWINGVIRUS:
+                subtractResources(coreRegrowingVirus.getCostOfUpgradeModifier());
+                coreRegrowingVirus.upgrade();
+                break;
+            case BOTNET:
+                subtractResources(coreBotNet.getCostOfUpgradeModifier());
+                coreBotNet.upgrade();
+                break;
+            case ZOMBIEVIRUS:
+                subtractResources(coreZombieVirus.getCostOfUpgradeModifier());
+                coreZombieVirus.upgrade();
+                break;
+            case SUNDAYVIRUS:
+                subtractResources(coreSundayVirus.getCostOfUpgradeModifier());
+                coreSundayVirus.upgrade();
+                break;
+            case ALLPURPOSEWORM:
+                subtractResources(coreAllPurposeWorm.getCostOfUpgradeModifier());
+                coreAllPurposeWorm.upgrade();
+                break;
+            case ZMISTVIRUS:
+                subtractResources(coreZmistVirus.getCostOfUpgradeModifier());
+                coreZmistVirus.upgrade();
+                break;
+            case MILITARYMALWARE:
+                subtractResources(coreMilitaryMalware.getCostOfUpgradeModifier());
+                coreMilitaryMalware.upgrade();
+                break;
+            case SUPERTROJAN:
+                subtractResources(coreSuperTrojan.getCostOfUpgradeModifier());
+                coreSuperTrojan.upgrade();
+                break;
+            case TYRANNICALADWARE:
+                subtractResources(coreTyrannicalAdware.getCostOfUpgradeModifier());
+                coreTyrannicalAdware.upgrade();
+                break;
+            case RANSOMVIRUS:
+                subtractResources(coreRansomVirus.getCostOfUpgradeModifier());
+                coreRansomVirus.upgrade();
+                break;
+            case ILOVEUVIRUS:
+                subtractResources(coreILOVEUVirus.getCostOfUpgradeModifier());
+                coreILOVEUVirus.upgrade();
                 break;
             default:
                 break;

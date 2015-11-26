@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity
     MenuItem navLeftBootInfector;
     MenuItem navLeftPolymorphicMalware;
     MenuItem navLeftFourKMalware;
+    MenuItem navLeftCodeRedMalware;
     MenuItem navLeftRegrowingVirus;
     MenuItem navLeftBotNet;
     MenuItem navLeftZombieVirus;
@@ -149,12 +150,28 @@ public class MainActivity extends AppCompatActivity
         navLeftAutoClickASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_auto_click_action_skill_upgrade);
         navLeftResourceGenerationASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_resource_generation_increase_action_skill_upgrade);
         navLeftTimeWarpASUpgrade = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_time_warp_action_skill_upgrade);
-        /*navLeftAdware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_adware);
+        navLeftAdware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_adware);
         navLeftMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_malware);
         navLeftWorm = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_worm);
         navLeftTrojan = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_trojan);
         navLeftRootkit = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_rootkit);
-        navLeftHijacker = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_hijacker);*/
+        navLeftHijacker = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_hijacker);
+        navLeftBootInfector = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_boot_infector);
+        navLeftPolymorphicMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_polymorphic_malware);
+        navLeftFourKMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_fourk_malware);
+        navLeftCodeRedMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_code_red_malware);
+        navLeftRegrowingVirus = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_regrowing_virus);
+        navLeftBotNet = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_bot_net);
+        navLeftZombieVirus = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_zombie_virus);
+        navLeftSundayVirus = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_sunday_virus);
+        navLeftAllPurposeWorm = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_all_purpose_worm);
+        navLeftZmistVirus = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_zmist_virus);
+        navLeftMilitaryMalware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_military_malware);
+        navLeftSuperTrojan = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_super_trojan);
+        navLeftTyrannicalAdware = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_tyrannical_adware);
+        navLeftRansomVirus = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_ransom_virus);
+        navLeftILOVEUVirus = this.navigationViewLeft.getMenu().findItem(R.id.nav_left_iloveu_virus);
+
 
         // these are the floating action buttons
         fabAutoTap = (FloatingActionButton) findViewById(R.id.fab_action_skill_auto_tap);
@@ -322,6 +339,195 @@ public class MainActivity extends AppCompatActivity
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
+                case R.id.nav_left_adware:
+                    bundle.putString("Title", "Adware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 2500% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreAdware.getModifierLevel() * 25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreAdware.getModifierLevel()+1)*25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreAdware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_malware:
+                    bundle.putString("Title", "Malware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 1500% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreMalware.getModifierLevel() * 15) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreMalware.getModifierLevel()+1)*15) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreMalware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_worm:
+                    bundle.putString("Title", "Worm");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 1000% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreWorm.getModifierLevel() * 10) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreWorm.getModifierLevel()+1)*10) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreWorm.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_trojan:
+                    bundle.putString("Title", "Trojan");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 500% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreTrojan.getModifierLevel() * 5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreTrojan.getModifierLevel()+1)*5) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreTrojan.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_rootkit:
+                    bundle.putString("Title", "Rootkit");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 300% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRootkit.getModifierLevel() * 3) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRootkit.getModifierLevel()+1)*3) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreRootkit.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_hijacker:
+                    bundle.putString("Title", "Hijacker");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreHijacker.getModifierLevel()) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreHijacker.getModifierLevel()+1)) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreHijacker.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_boot_infector:
+                    bundle.putString("Title", "Boot Infector");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreBootInfector.getModifierLevel()) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreBootInfector.getModifierLevel()+1)) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreBootInfector.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_polymorphic_malware:
+                    bundle.putString("Title", "Polymorphic Malware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.corePolymorphicMalware.getModifierLevel()) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.corePolymorphicMalware.getModifierLevel()+1)) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.corePolymorphicMalware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_fourk_malware:
+                    bundle.putString("Title", "4K Malware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 70% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreFourKMalware.getModifierLevel() * .70) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreFourKMalware.getModifierLevel()+1)*.70) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreFourKMalware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_code_red_malware:
+                    bundle.putString("Title", "Code Red Malware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 70% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreCodeRedMalware.getModifierLevel() * .70) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreCodeRedMalware.getModifierLevel()+1)*.70) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreCodeRedMalware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_regrowing_virus:
+                    bundle.putString("Title", "Regrowing Virus");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 70% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRegrowingVirus.getModifierLevel() * .70) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRegrowingVirus.getModifierLevel()+1)*.70) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreRegrowingVirus.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_bot_net:
+                    bundle.putString("Title", "Bot Net");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 50% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreBotNet.getModifierLevel() * .50) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreBotNet.getModifierLevel()+1)*.50) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreBotNet.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_zombie_virus:
+                    bundle.putString("Title", "Zombie Virus");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 40% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreZombieVirus.getModifierLevel() * .40) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreZombieVirus.getModifierLevel()+1)*.40) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreZombieVirus.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_sunday_virus:
+                    bundle.putString("Title", "Sunday Virus");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreSundayVirus.getModifierLevel() * .30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreSundayVirus.getModifierLevel()+1)*.30) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreSundayVirus.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_all_purpose_worm:
+                    bundle.putString("Title", "All-Purpose Worm");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreAllPurposeWorm.getModifierLevel() * .30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreAllPurposeWorm.getModifierLevel()+1)*.30) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreAllPurposeWorm.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_zmist_virus:
+                    bundle.putString("Title", "Zmist Virus");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreZmistVirus.getModifierLevel()*.25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreZmistVirus.getModifierLevel()+1)*.25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreZmistVirus.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_military_malware:
+                    bundle.putString("Title", "Military Malware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreMilitaryMalware.getModifierLevel()*.25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreMilitaryMalware.getModifierLevel()+1)*.25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreMilitaryMalware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_super_trojan:
+                    bundle.putString("Title", "Super Trojan");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreSuperTrojan.getModifierLevel()*.25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreSuperTrojan.getModifierLevel()+1)*.25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreSuperTrojan.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_tyrannical_adware:
+                    bundle.putString("Title", "Tyrannical Adware");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreTyrannicalAdware.getModifierLevel()*.25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreTyrannicalAdware.getModifierLevel()+1)*.25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreTyrannicalAdware.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_ransom_virus:
+                    bundle.putString("Title", "Ransom Virus");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRansomVirus.getModifierLevel()*.25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRansomVirus.getModifierLevel()+1)*.25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreRansomVirus.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
+                case R.id.nav_left_iloveu_virus:
+                    bundle.putString("Title", "ILOVEU Virus");
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreILOVEUVirus.getModifierLevel()*.25) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreILOVEUVirus.getModifierLevel()+1)*.25) +
+                            "\nCost: " + gameManager.convertNumToString(gameManager.coreILOVEUVirus.getCostOfUpgradeModifier()));
+                    upgradeDialog.setArguments(bundle);
+                    upgradeDialog.show(getFragmentManager(), "Blah");
+                    break;
                 default:
                     throw new RuntimeException("How did you even do this?");
             }
@@ -398,8 +604,7 @@ public class MainActivity extends AppCompatActivity
                     fabautoTapCooldownTimer.scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
-                            if (autoTapCooldown == 1) {
-                                MainActivity.this.runOnUiThread(new Runnable() {
+                            if (autoTapCooldown == 1) {MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         fabAutoTap.setImageResource(R.drawable.auto_tap);

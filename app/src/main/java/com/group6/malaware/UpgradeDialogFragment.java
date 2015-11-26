@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 /**
  * Created by Cyril Mathew on 11/4/15.
+ * Edited by Adrian Palmerola 11/26/15
  */
 public class UpgradeDialogFragment extends DialogFragment {
     MainActivity callingActivity;
@@ -41,6 +42,70 @@ public class UpgradeDialogFragment extends DialogFragment {
                                 case "Time Warp":
                                     callingActivity.gameManager.attemptUpgrade(2);
                                     callingActivity.fabTimeWarp.setVisibility(FloatingActionButton.VISIBLE);
+                                    break;
+                                case "Adware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(0);
+                                    break;
+                                case "Malware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(1);
+                                    break;
+                                case "Worm":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(2);
+                                    break;
+                                case "Trojan":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(3);
+                                    break;
+                                case "Rootkit":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(4);
+                                    break;
+                                case "Hijacker":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(5);
+                                    break;
+                                case "Boot Infector":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(6);
+                                    break;
+                                case "Polymorphic Malware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(7);
+                                    break;
+                                case "4K Malware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(8);
+                                    break;
+                                case "Code Red Malware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(9);
+                                    break;
+                                case "Regrowing Virus":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(10);
+                                    break;
+                                case "Bot Net":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(11);
+                                    break;
+                                case "Zombie Virus":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(12);
+                                    break;
+                                case "Sunday Virus":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(13);
+                                    break;
+                                case "All-Purpose Worm":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(14);
+                                    break;
+                                case "Zmist Virus":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(15);
+                                    break;
+                                case "Military Malware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(16);
+                                    break;
+                                case "Super Trojan":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(17);
+                                    break;
+                                case "Tyrannical Adware":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(18);
+                                    break;
+                                case "Ransom Virus":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(19);
+                                    break;
+                                case "ILOVEU Virus":
+                                    callingActivity.gameManager.attemptUpgradeGenerator(20);
+                                    break;
                             }
                         } catch (RuntimeException e){
                             callingActivity.myToast.cancel();
