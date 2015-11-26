@@ -6,14 +6,14 @@ package com.group6.malaware;
  */
 
 public class Generator {
-    private int baseCost = 0;
-    private int upgradeGain = 0;
-    private double upgradeCostGrowth = 0d;
+    private int baseCost;
+    private int upgradeGain;
+    private double upgradeCostGrowth;
     private int totalUpgradeCost = 0;
 
     private int numOfGenerators = 0;
-    private double genRate = 1.0;
-    private double upgradeLevel = 1.0;
+    private double genRate;
+    private double upgradeLevel = 1d;
 
     public Generator(double baseGenRate, int baseCost, int upgradeGain, double upgradeCostGrowth) {
         this.baseCost = baseCost;
@@ -21,6 +21,12 @@ public class Generator {
         this.upgradeCostGrowth = upgradeCostGrowth;
         genRate = baseGenRate;
         calcCost();
+    }
+
+    public void reset(){
+        numOfGenerators = 0;
+        totalUpgradeCost = 0;
+        upgradeLevel = 1d;
     }
 
     public int getNumOfGenerators() {
