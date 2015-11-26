@@ -33,8 +33,11 @@ public class Generator {
 
     private void calcCost()
     {
-        double tmp_term = Math.pow((numOfGenerators * upgradeGain), upgradeCostGrowth);
-        totalUpgradeCost = (baseCost+ ((int) tmp_term));
+        // double tmp_term = Math.pow((numOfGenerators * upgradeGain), upgradeCostGrowth);
+        //  totalUpgradeCost = (baseCost+ ((int) tmp_term));
+        // Corrected formula
+        double tmp_term = Math.pow((baseCost+(numOfGenerators * upgradeGain)), upgradeCostGrowth);
+        totalUpgradeCost = (int)tmp_term;
     }
 
     public void addVirus(int amount) {

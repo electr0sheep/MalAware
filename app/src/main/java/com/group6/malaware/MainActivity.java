@@ -78,6 +78,22 @@ public class MainActivity extends AppCompatActivity
     MenuItem navLeftTrojan;
     MenuItem navLeftRootkit;
     MenuItem navLeftHijacker;
+    MenuItem navLeftBootInfector;
+    MenuItem navLeftPolymorphicMalware;
+    MenuItem navLeftFourKMalware;
+    MenuItem navLeftRegrowingVirus;
+    MenuItem navLeftBotNet;
+    MenuItem navLeftZombieVirus;
+    MenuItem navLeftSundayVirus;
+    MenuItem navLeftAllPurposeWorm;
+    MenuItem navLeftZmistVirus;
+    MenuItem navLeftMilitaryMalware;
+    MenuItem navLeftSuperTrojan;
+    MenuItem navLeftTyrannicalAdware;
+    MenuItem navLeftRansomVirus;
+    MenuItem navLeftILOVEUVirus;
+
+
 
     // floating action buttons
     FloatingActionButton fabAutoTap;
@@ -203,6 +219,22 @@ public class MainActivity extends AppCompatActivity
         groupList.add("Trojan");
         groupList.add("Rootkit");
         groupList.add("Hijacker");
+        groupList.add("Boot Infector");
+        groupList.add("Polymorphic Malware");
+        groupList.add("4K Malware");
+        groupList.add("Code Red Malware");
+        groupList.add("Regrowing Virus");
+        groupList.add("Bot Net");
+        groupList.add("Zombie Virus");
+        groupList.add("Sunday Virus");
+        groupList.add("All-Purpose Worm");
+        groupList.add("Zmist Virus");
+        groupList.add("Military Malware");
+        groupList.add("Super Trojan");
+        groupList.add("Tyrannical Adware");
+        groupList.add("Ransom Virus");
+        groupList.add("ILOVEU Virus");
+
 
         String[] models = {"Something"};
         childCollection = new LinkedHashMap<String, List<String>>();
