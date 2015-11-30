@@ -339,20 +339,20 @@ public class MainActivity extends AppCompatActivity
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
-                case R.id.nav_left_adware:
+				case R.id.nav_left_adware:
                     bundle.putString("Title", "Adware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 2500% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreAdware.getModifierLevel() * 25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreAdware.getModifierLevel()+1)*25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 1750% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreAdware.getModifierLevel() * 17.5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreAdware.getModifierLevel()+1)*17.5) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreAdware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_malware:
                     bundle.putString("Title", "Malware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 1500% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreMalware.getModifierLevel() * 15) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreMalware.getModifierLevel()+1)*15) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 1250% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreMalware.getModifierLevel() * 12.5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreMalware.getModifierLevel()+1)*12.5) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreMalware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
@@ -368,162 +368,162 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.nav_left_trojan:
                     bundle.putString("Title", "Trojan");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 500% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreTrojan.getModifierLevel() * 5) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreTrojan.getModifierLevel()+1)*5) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 750% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreTrojan.getModifierLevel() * 7.5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreTrojan.getModifierLevel()+1)*7.5) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreTrojan.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_rootkit:
                     bundle.putString("Title", "Rootkit");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 300% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRootkit.getModifierLevel() * 3) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRootkit.getModifierLevel()+1)*3) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 500% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRootkit.getModifierLevel() * 5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRootkit.getModifierLevel()+1)*5) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreRootkit.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_hijacker:
                     bundle.putString("Title", "Hijacker");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreHijacker.getModifierLevel()) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreHijacker.getModifierLevel()+1)) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 300% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreHijacker.getModifierLevel()*3) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreHijacker.getModifierLevel()+1)*3) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreHijacker.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_boot_infector:
                     bundle.putString("Title", "Boot Infector");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreBootInfector.getModifierLevel()) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreBootInfector.getModifierLevel()+1)) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 200% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreBootInfector.getModifierLevel()*2) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreBootInfector.getModifierLevel()+1)*2) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreBootInfector.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_polymorphic_malware:
                     bundle.putString("Title", "Polymorphic Malware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.corePolymorphicMalware.getModifierLevel()) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.corePolymorphicMalware.getModifierLevel()+1)) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 200% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.corePolymorphicMalware.getModifierLevel()*2) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.corePolymorphicMalware.getModifierLevel()+1)*2) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.corePolymorphicMalware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_fourk_malware:
                     bundle.putString("Title", "4K Malware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 70% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreFourKMalware.getModifierLevel() * .70) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreFourKMalware.getModifierLevel()+1)*.70) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreFourKMalware.getModifierLevel()) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreFourKMalware.getModifierLevel()+1)) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreFourKMalware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_code_red_malware:
                     bundle.putString("Title", "Code Red Malware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 70% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreCodeRedMalware.getModifierLevel() * .70) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreCodeRedMalware.getModifierLevel()+1)*.70) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreCodeRedMalware.getModifierLevel()) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreCodeRedMalware.getModifierLevel()+1)) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreCodeRedMalware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_regrowing_virus:
                     bundle.putString("Title", "Regrowing Virus");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 70% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRegrowingVirus.getModifierLevel() * .70) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRegrowingVirus.getModifierLevel()+1)*.70) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 100% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRegrowingVirus.getModifierLevel()) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRegrowingVirus.getModifierLevel()+1)) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreRegrowingVirus.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_bot_net:
                     bundle.putString("Title", "Bot Net");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 50% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreBotNet.getModifierLevel() * .50) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreBotNet.getModifierLevel()+1)*.50) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 75% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreBotNet.getModifierLevel() * .75) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreBotNet.getModifierLevel()+1)*.75) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreBotNet.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_zombie_virus:
                     bundle.putString("Title", "Zombie Virus");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 40% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreZombieVirus.getModifierLevel() * .40) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreZombieVirus.getModifierLevel()+1)*.40) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 50% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreZombieVirus.getModifierLevel() * .5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreZombieVirus.getModifierLevel()+1)*.5) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreZombieVirus.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_sunday_virus:
                     bundle.putString("Title", "Sunday Virus");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreSundayVirus.getModifierLevel() * .30) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreSundayVirus.getModifierLevel()+1)*.30) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 50% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreSundayVirus.getModifierLevel() * .5) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreSundayVirus.getModifierLevel()+1)*.5) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreSundayVirus.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_all_purpose_worm:
                     bundle.putString("Title", "All-Purpose Worm");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreAllPurposeWorm.getModifierLevel() * .30) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreAllPurposeWorm.getModifierLevel()+1)*.30) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 40% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreAllPurposeWorm.getModifierLevel() * .40) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreAllPurposeWorm.getModifierLevel()+1)*.40) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreAllPurposeWorm.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_zmist_virus:
                     bundle.putString("Title", "Zmist Virus");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreZmistVirus.getModifierLevel()*.25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreZmistVirus.getModifierLevel()+1)*.25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 40% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreZmistVirus.getModifierLevel()*.4) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreZmistVirus.getModifierLevel()+1)*.4) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreZmistVirus.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_military_malware:
                     bundle.putString("Title", "Military Malware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreMilitaryMalware.getModifierLevel()*.25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreMilitaryMalware.getModifierLevel()+1)*.25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreMilitaryMalware.getModifierLevel()*.30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreMilitaryMalware.getModifierLevel()+1)*.30) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreMilitaryMalware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_super_trojan:
                     bundle.putString("Title", "Super Trojan");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreSuperTrojan.getModifierLevel()*.25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreSuperTrojan.getModifierLevel()+1)*.25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreSuperTrojan.getModifierLevel()*.30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreSuperTrojan.getModifierLevel()+1)*.30) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreSuperTrojan.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_tyrannical_adware:
                     bundle.putString("Title", "Tyrannical Adware");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreTyrannicalAdware.getModifierLevel()*.25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreTyrannicalAdware.getModifierLevel()+1)*.25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreTyrannicalAdware.getModifierLevel()*.30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreTyrannicalAdware.getModifierLevel()+1)*.30) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreTyrannicalAdware.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_ransom_virus:
                     bundle.putString("Title", "Ransom Virus");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRansomVirus.getModifierLevel()*.25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRansomVirus.getModifierLevel()+1)*.25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreRansomVirus.getModifierLevel()*.30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreRansomVirus.getModifierLevel()+1)*.30) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreRansomVirus.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");
                     break;
                 case R.id.nav_left_iloveu_virus:
                     bundle.putString("Title", "ILOVEU Virus");
-                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 25% per upgrade." +
-                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreILOVEUVirus.getModifierLevel()*.25) +
-                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreILOVEUVirus.getModifierLevel()+1)*.25) +
+                    bundle.putString("Description", "Improves the rate at which this generator produces viruses by 30% per upgrade." +
+                            "\n\nCurrent Bonus Multiplier: " + (gameManager.coreILOVEUVirus.getModifierLevel()*.30) +
+                            "\nUpgraded Bonus Multiplier : " +((gameManager.coreILOVEUVirus.getModifierLevel()+1)*.30) +
                             "\nCost: " + gameManager.convertNumToString(gameManager.coreILOVEUVirus.getCostOfUpgradeModifier()));
                     upgradeDialog.setArguments(bundle);
                     upgradeDialog.show(getFragmentManager(), "Blah");

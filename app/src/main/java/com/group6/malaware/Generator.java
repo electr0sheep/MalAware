@@ -11,8 +11,8 @@ public class Generator {
     private int baseCost = 0;
     private int upgradeGain = 0;
     private double upgradeCostGrowth = 0d;
-    private int totalUpgradeCost = 0;
-    private int modifierUpgradeCost = 0;
+    private double totalUpgradeCost = 0;
+    private double modifierUpgradeCost = 0;
 
     private int numOfGenerators = 0;
     private double genRate = 1.0;
@@ -28,7 +28,7 @@ public class Generator {
         genRate = baseGenRate;
         //Create the base cost to upgrade the modifier
         double temp = Math.pow((this.baseCost+this.upgradeGain), this.upgradeCostGrowth);
-        modifierUpgradeCost = (int)(2000000+(this.genRate*800)+temp-(this.upgradeLevelBonus*25000));
+        modifierUpgradeCost = (int)(2000000+(this.genRate*1000)+temp-(this.upgradeLevelBonus*40000));
         calcCost();
     }
 
@@ -36,7 +36,7 @@ public class Generator {
         return numOfGenerators;
     }
 
-    public int getCost() {
+    public double getCost() {
         return totalUpgradeCost;
     }
 
@@ -77,7 +77,7 @@ public class Generator {
 
     public void upgrade(){
         upgradeLevel += upgradeLevelBonus;
-        modifierUpgradeCost*=(1.10+(.01*upgradeModLevel));
+        modifierUpgradeCost*=(1.40+(.12*upgradeModLevel));
         upgradeModLevel += 1;
     }
 
