@@ -17,7 +17,7 @@
         </menu>
     </item>
 
-   <!-- <item android:title="Generator Upgrades">
+   <item android:title="Generator Upgrades">
         <menu>
             <item
                 android:id="@+id/nav_left_adware"
@@ -37,6 +37,52 @@
             <item
                 android:id="@+id/nav_left_hijacker"
                 android:title="   Hijacker" />
+            <item
+                android:id="@+id/nav_left_boot_infector"
+                android:title="   Boot Infector" />
+            <item
+                android:id="@+id/nav_left_polymorphic_malware"
+                android:title="   Polymorphic Malware" />
+            <item
+                android:id="@+id/nav_left_fourk_malware"
+                android:title="   4K Malware" />
+            <item
+                android:id="@+id/nav_left_code_red_malware"
+                android:title="   Code Red Malware" />
+            <item
+                android:id="@+id/nav_left_regrowing_virus"
+                android:title="   Regrowing Virus" />
+            <item
+                android:id="@+id/nav_left_bot_net"
+                android:title="   Bot Net" />
+            <item
+                android:id="@+id/nav_left_zombie_virus"
+                android:title="   Zombie Virus" />
+            <item
+                android:id="@+id/nav_left_sunday_virus"
+                android:title="   Sunday Virus" />
+            <item
+                android:id="@+id/nav_left_all_purpose_worm"
+                android:title="   All-Purpose Worm" />
+            <item
+                android:id="@+id/nav_left_zmist_virus"
+                android:title="   Zmist Virus" />
+            <item
+                android:id="@+id/nav_left_military_malware"
+                android:title="   Military Malware" />
+            <item
+                android:id="@+id/nav_left_super_trojan"
+                android:title="   Super Trojan" />
+            <item
+                android:id="@+id/nav_left_tyrannical_adware"
+                android:title="   Tyrannical Adware" />
+            <item
+                android:id="@+id/nav_left_ransom_virus"
+                android:title="   Ransom Virus" />
+            <item
+                android:id="@+id/nav_left_iloveu_virus"
+                android:title="   ILOVEU Virus" />
+
         </menu>
     </item> -->
 </menu>

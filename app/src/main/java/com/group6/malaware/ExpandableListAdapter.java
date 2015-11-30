@@ -28,7 +28,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private MainActivity callingActivity;
     private Map<String, List<String>> childCollections;
     private List<String> generatorList;
-    private final short SIZE = 6;
+    private final short SIZE = 21;
     private int lastExpandedGroupPosition = -1;
 
     private Vector<TextView> tView_genNum = new Vector<TextView>(SIZE);
