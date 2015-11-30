@@ -1,7 +1,7 @@
 # MalAware
 App for Software Engineering
 
-##How download and use the project files
+##How to download and use the project files
 Download the repo and open/run it using [Android Studio](http://developer.android.com/tools)
 
 ##How to play the game
