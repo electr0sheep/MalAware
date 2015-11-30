@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity
                                 "worth of resources\n\n" +
                                 "Cost: " + gameManager.coreTimeWarp.getUpgradeCost() +
                                 "\nCurrent time warped ahead: " + (4 + gameManager.coreTimeWarp.getUpgradeLevel()) + " minutes" +
-                                "\nUpgraded time warped ahead: " + ( 5 + gameManager.coreTimeWarp.getUpgradeLevel()) + " minutes");
+                                "\nUpgraded time warped ahead: " + (5 + gameManager.coreTimeWarp.getUpgradeLevel()) + " minutes");
                     }
                     break;
                 default:
@@ -307,8 +307,7 @@ public class MainActivity extends AppCompatActivity
         //Click listener for the Terminal image
         gameManager.addResources(1d);
 
-        if(tutorialActive)
-        {
+        if (tutorialActive) {
             stepCount = 1;
             tutorialStep(stepCount);
         }
@@ -317,8 +316,7 @@ public class MainActivity extends AppCompatActivity
     public void drawerBtnLeftOnClick(View view) {
         dLayout.openDrawer(GravityCompat.START);
 
-        if(tutorialActive)
-        {
+        if (tutorialActive) {
             stepCount = 3;
             tutorialStep(stepCount);
         }
@@ -327,8 +325,7 @@ public class MainActivity extends AppCompatActivity
     public void drawerBtnRightOnClick(View view) {
         dLayout.openDrawer(GravityCompat.END);
 
-        if(tutorialActive)
-        {
+        if (tutorialActive) {
             stepCount = 2;
             tutorialStep(stepCount);
         }
@@ -380,14 +377,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_OPTIONS_CODE)
-            if(resultCode == RESULT_OK) {
+        if (requestCode == PICK_OPTIONS_CODE)
+            if (resultCode == RESULT_OK) {
                 if (data.getExtras().getBoolean("Reset Stats")) {
                     gameManager.resetData();
                     gameManager.resetLevelInc();
-                }
-                else if(data.getExtras().getBoolean("Start Tutorial"))
-                {
+                } else if (data.getExtras().getBoolean("Start Tutorial")) {
                     Log.i("Info", "Starting Tutorial");
                     dLayout.closeDrawer(GravityCompat.START);
                     tutorialStep(stepCount);
@@ -395,11 +390,9 @@ public class MainActivity extends AppCompatActivity
             }
     }
 
-    private void tutorialStep(int step)
-    {
+    private void tutorialStep(int step) {
         tutorialActive = true;
-        switch(step)
-        {
+        switch (step) {
             case 0:
                 mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click);
                 mTourGuideHandler.setPointer(new Pointer())

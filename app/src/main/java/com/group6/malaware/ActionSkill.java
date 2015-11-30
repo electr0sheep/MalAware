@@ -41,6 +41,7 @@ public abstract class ActionSkill {
     protected int cooldown;                       // the cooldown of the skill
     protected int upgradeLevel;                   // tracks how many times the skill has been upgraded
     protected double cost;                        // how much the skill costs
+    protected boolean actionSkillActive;          // boolean that keeps track of which Timer object is active
 
     protected ActionSkill(MainActivity activity, GameManager manager, SharedPreferences sharedPref, FloatingActionButton actionButton, TextView txt, String name, String purchaseMessage, String upgradeMessage, int duration, int cooldown, double cost){
         this.activity = activity;
@@ -55,12 +56,31 @@ public abstract class ActionSkill {
         this.cooldown = cooldown;
         this.cost = cost;
         this.upgradeLevel = sharedPref.getInt(name, 0);
-        this.upgradeLevel = this.upgradeLevel;
+        this.actionSkillActive = false;
+
+        int cooldownProgress = sharedPref.getInt(name + "_cooldown", 0);
+        // check to see if cooldown was in progress
+        if (cooldownProgress != 0){
+            if (cooldownProgress < 0){
+                activateActionButtonCD(0, -cooldownProgress);
+            } else {
+                activateActionButtonCD(cooldownProgress, cooldown);
+            }
+        }
     }
 
     protected void end(){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(name, upgradeLevel);
+
+        // determine state of cooldown and store it
+        // count should be 0 if there is no cooldown in progress
+        if (actionSkillActive || count == 0) {
+            editor.putInt(name + "_cooldown", count);
+        } else {
+            editor.putInt(name + "_cooldown", -count);
+        }
+
         editor.apply();
     }
 
@@ -68,6 +88,7 @@ public abstract class ActionSkill {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.remove(getName());
+        editor.apply();
         upgradeLevel = 0;
     }
 
@@ -77,6 +98,7 @@ public abstract class ActionSkill {
     }
 
     private void activateActionButtonCD(final int duration, final int cooldown){
+        actionSkillActive = true;
         count = (1 + duration);
         actionButton.setImageResource(android.R.color.transparent);
         actionButton.setEnabled(false);
@@ -87,6 +109,7 @@ public abstract class ActionSkill {
             @Override
             public void run() {
                 if (count == 1) {
+                    actionSkillActive = false;
                     count = cooldown + 2;
                     activity.runOnUiThread(new Runnable() {
                         @Override
