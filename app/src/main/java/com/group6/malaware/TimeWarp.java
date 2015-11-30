@@ -14,8 +14,8 @@ import java.util.TimerTask;
  * Created by michaeldegraw on 11/24/15.
  */
 public class TimeWarp extends ActionSkill {
-    public TimeWarp(MainActivity activity, GameManager manager, SharedPreferences sharedPref, FloatingActionButton actionButton, TextView txt) {
-        super(activity, manager, sharedPref, actionButton, txt, "Time Warp",
+    public TimeWarp(MainActivity activity, GameManager manager, SharedPreferences sharedPref, FloatingActionButton actionButton, int icon, TextView txt) {
+        super(activity, manager, sharedPref, actionButton, icon, txt, "Time Warp",
                 "This action skill will skip ahead in time and provide resources equal to 5 minutes worth of time",
                 "Each upgrade to time warp will provide an additional minute worth of resources", 0, 60, 30d);
     }

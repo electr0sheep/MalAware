@@ -32,6 +32,7 @@ public abstract class ActionSkill {
     protected GameManager manager;                // associated GameManager controller object
     protected SharedPreferences sharedPref;       // associated SharedPreferences object
     protected FloatingActionButton actionButton;  // the floating action button associated with this action skill
+    protected int icon;                           // the icon for the action skill
     protected TextView txt;                       // the text view associated with this cd
     protected String name;                        // name of the action skill i.e. "Auto Tap"
     protected String purchaseMessage;             // purchase message i.e. "This upgrade does this and that
@@ -43,11 +44,12 @@ public abstract class ActionSkill {
     protected double cost;                        // how much the skill costs
     protected boolean actionSkillActive;          // boolean that keeps track of which Timer object is active
 
-    protected ActionSkill(MainActivity activity, GameManager manager, SharedPreferences sharedPref, FloatingActionButton actionButton, TextView txt, String name, String purchaseMessage, String upgradeMessage, int duration, int cooldown, double cost){
+    protected ActionSkill(MainActivity activity, GameManager manager, SharedPreferences sharedPref, FloatingActionButton actionButton, int icon, TextView txt, String name, String purchaseMessage, String upgradeMessage, int duration, int cooldown, double cost){
         this.activity = activity;
         this.manager = manager;
         this.sharedPref = sharedPref;
         this.actionButton = actionButton;
+        this.icon = icon;
         this.txt = txt;
         this.name = name;
         this.purchaseMessage = purchaseMessage;
@@ -126,7 +128,7 @@ public abstract class ActionSkill {
                                 activity.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        actionButton.setImageResource(R.drawable.auto_tap);
+                                        actionButton.setImageResource(icon);
                                         txt.setVisibility(TextView.GONE);
                                         actionButton.setEnabled(true);
                                         actionButton.setBackgroundTintList(ColorStateList.valueOf(activity.getResources().getColor(android.R.color.holo_green_dark)));

@@ -151,9 +151,9 @@ public class MainActivity extends AppCompatActivity
         myToast = new Toast(this);
 
         // set up action skills
-        gameManager.coreAutoTap = new AutoTap(MainActivity.this, gameManager, sharedPref, fabAutoTap, txtAutoTap);
-        gameManager.coreIncreaseResource = new IncreaseResource(MainActivity.this, gameManager, sharedPref, fabIncreaseResourceGeneration, txtIncreaseResourceGeneration);
-        gameManager.coreTimeWarp = new TimeWarp(MainActivity.this, gameManager, sharedPref, fabTimeWarp, txtTimeWarp);
+        gameManager.coreAutoTap = new AutoTap(MainActivity.this, gameManager, sharedPref, fabAutoTap, R.drawable.auto_tap, txtAutoTap);
+        gameManager.coreIncreaseResource = new IncreaseResource(MainActivity.this, gameManager, sharedPref, fabIncreaseResourceGeneration, R.drawable.plus, txtIncreaseResourceGeneration);
+        gameManager.coreTimeWarp = new TimeWarp(MainActivity.this, gameManager, sharedPref, fabTimeWarp, R.drawable.time_warp, txtTimeWarp);
 
         // display applicable fabs
         displayFABsOnLoad();
