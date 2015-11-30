@@ -26,13 +26,27 @@ public class Generator {
         this.upgradeCostGrowth = upgradeCostGrowth;
         this.upgradeLevelBonus = upgradeLevelBonus;
         genRate = baseGenRate;
-        //Create the base cost to upgrade the modifier
-        double temp = Math.pow((this.baseCost+this.upgradeGain), this.upgradeCostGrowth);
-        modifierUpgradeCost = (int)(2000000+(this.genRate*1000)+temp-(this.upgradeLevelBonus*40000));
+        defaultMods();
         calcCost();
     }
-
+    public void defaultMods()
+    {
+        upgradeModLevel = 0;
+        double temp = Math.pow((baseCost+upgradeGain), upgradeCostGrowth);
+        modifierUpgradeCost = (int)(2000000+(genRate*1000)+temp-(upgradeLevelBonus*40000));
+    }
+    public void reloadMods()
+    {
+        defaultMods();
+        double temp = (upgradeLevel) - 1.0;
+        for (;temp>0;temp-=upgradeLevelBonus)
+        {
+            upgrade();
+            upgradeLevel-=upgradeLevelBonus;
+        }
+    }
     public void reset(){
+        defaultMods();
         numOfGenerators = 0;
         totalUpgradeCost = 0;
         upgradeLevel = 1d;

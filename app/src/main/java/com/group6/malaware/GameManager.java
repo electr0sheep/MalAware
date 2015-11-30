@@ -760,8 +760,21 @@ public class GameManager {
         coreRootkit.reset();
         coreTrojan.reset();
         coreHijacker.reset();
-
-        // ADRIAN PUT ALL THE VIRUS RESETS HERE
+        coreBootInfector.reset();
+        corePolymorphicMalware.reset();
+        coreFourKMalware.reset();
+        coreCodeRedMalware.reset();
+        coreRegrowingVirus.reset();
+        coreBotNet.reset();
+        coreZombieVirus.reset();
+        coreSundayVirus.reset();
+        coreAllPurposeWorm.reset();
+        coreZmistVirus.reset();
+        coreMilitaryMalware.reset();
+        coreSuperTrojan.reset();
+        coreTyrannicalAdware.reset();
+        coreRansomVirus.reset();
+        coreILOVEUVirus.reset();
 
         // reset upgrades
         coreAutoTap.reset();
@@ -828,6 +841,28 @@ public class GameManager {
             coreTyrannicalAdware.setUpgradeLevel(getDouble(sharedPref, "tyrannicaladware_upgrade_level", 1d));
             coreRansomVirus.setUpgradeLevel(getDouble(sharedPref, "ransomvirus_upgrade_level", 1d));
             coreILOVEUVirus.setUpgradeLevel(getDouble(sharedPref, "iloveuvirus_upgrade_level", 1d));
+
+            coreMalware.reloadMods();
+            coreWorm.reloadMods();
+            coreAdware.reloadMods();
+            coreRootkit.reloadMods();
+            coreTrojan.reloadMods();
+            coreHijacker.reloadMods();
+            coreBootInfector.reloadMods();
+            corePolymorphicMalware.reloadMods();
+            coreFourKMalware.reloadMods();
+            coreCodeRedMalware.reloadMods();
+            coreRegrowingVirus.reloadMods();
+            coreBotNet.reloadMods();
+            coreZombieVirus.reloadMods();
+            coreSundayVirus.reloadMods();
+            coreAllPurposeWorm.reloadMods();
+            coreZmistVirus.reloadMods();
+            coreMilitaryMalware.reloadMods();
+            coreSuperTrojan.reloadMods();
+            coreTyrannicalAdware.reloadMods();
+            coreRansomVirus.reloadMods();
+            coreILOVEUVirus.reloadMods();
         }
     }
 
