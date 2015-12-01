@@ -66,7 +66,10 @@ public class Generator {
         //  totalUpgradeCost = (baseCost+ ((int) tmp_term));
         // Corrected formula
         double tmp_term = Math.pow((baseCost+(numOfGenerators * upgradeGain)), upgradeCostGrowth);
-        totalUpgradeCost = (int)tmp_term;
+        // tmp_DReturn makes players use other generators due to cost increase for owning multiple generators
+        // Slows the player down for balancing reasons. Has little impact on better generators.
+        double tmp_DReturn = Math.pow(numOfGenerators, 1.4);
+        totalUpgradeCost = (int)tmp_term + tmp_DReturn;
     }
 
     public void addVirus(int amount) {
@@ -97,7 +100,7 @@ public class Generator {
 
     public void upgrade(){
         upgradeLevel += upgradeLevelBonus;
-        modifierUpgradeCost*=(1.40+(.12*upgradeModLevel));
+        modifierUpgradeCost=(modifierUpgradeCost+3750000)*(1.20+(.10*upgradeModLevel));
         upgradeModLevel += 1;
     }
 
