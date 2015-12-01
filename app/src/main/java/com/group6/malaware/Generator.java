@@ -99,8 +99,9 @@ public class Generator {
     }
 
     public void upgrade(){
+        double temp = 3750000;
         upgradeLevel += upgradeLevelBonus;
-        modifierUpgradeCost=(modifierUpgradeCost+3750000)*(1.20+(.10*upgradeModLevel));
+        modifierUpgradeCost=((modifierUpgradeCost+temp)*(1.20+(.10*upgradeModLevel)));
         upgradeModLevel += 1;
     }
 
