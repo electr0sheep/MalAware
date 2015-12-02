@@ -10,4 +10,4 @@ Download the repo and open/run it using [Android Studio](http://developer.androi
 - Press tutorial to get a feel for the gaem
 
 ##Current version broke Action Skills
-If you are curious as to what they are supposed to do, you can download from the commit "Fixed action skill icon bug"
+If you are curious as to what they are supposed to do, you can download from the commit [Fixed action skill icon bug](https://github.com/mkdegraw/MalAware/commit/a1e9516e1c9933fdacbf3d93d6007e2b878aa002)
