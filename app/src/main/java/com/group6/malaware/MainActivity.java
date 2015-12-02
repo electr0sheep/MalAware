@@ -237,6 +237,7 @@ public class MainActivity extends AppCompatActivity
         gameManager.end();
     }
 
+	//Creates the list of generators for the UI
     private void createExpList() {
         groupList = new ArrayList<String>();
         groupList.add("Adware");
@@ -297,7 +298,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         bundle = new Bundle();
         upgradeDialog = new UpgradeDialogFragment();
-
+	// This try statement checks to see what the user selected from the list of upgrades
+	//  then displays information about the upgrade and cost
         try {
             switch (id) {
                 case R.id.nav_left_auto_click_action_skill_upgrade:
