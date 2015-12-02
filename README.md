@@ -5,4 +5,9 @@ App for Software Engineering
 Download the repo and open/run it using [Android Studio](http://developer.android.com/tools)
 
 ##How to play the game
-Follow the in-app tutorial to get a feel for how to play
+- Press the green arrow button in the lower left corner of the screen
+- Press the gear icon on the top right of the menu that will appear
+- Press tutorial to get a feel for the gaem
+
+##Current version broke Action Skills
+If you are curious as to what they are supposed to do, you can download from the commit "Fixed action skill icon bug"
