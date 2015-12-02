@@ -17,6 +17,12 @@ public class GameManager {
     private double resourcesPerSec = 0d;
     private double modifier = 1d;
     private double tempResourceIncrease = 0d;
+    
+    /*
+        This is where the generators classes are first created.
+            Each is loaded in with their values which includes:
+            Generation Rate, Base Cost, Base Gain, Growth, and upgradeLevelBonus
+    */
     Generator coreAdware = new Generator(.5, 7, 4, 1.2, 17.5);
     Generator coreMalware = new Generator(1.5, 46, 11, 1.2, 12.5);
     Generator coreWorm = new Generator(3, 100, 26, 1.2, 10);
@@ -287,7 +293,8 @@ public class GameManager {
             totalResources -= amount;
         }
     }
-
+    
+    // Attempt to buy a specific amount of generators
     public boolean attemptBuy(int type, int amount) {
         switch (type) {
             case ADWARE:
@@ -635,7 +642,8 @@ public class GameManager {
     public String getResourcesString() {
         return convertNumToString(totalResources);
     }
-
+    
+    //Converts the total number of resources into a new format that is easier to read for the player
     public String convertNumToString(double number) {
         DecimalFormat df; // = new DecimalFormat("###.000");
         String text = "";
@@ -681,7 +689,8 @@ public class GameManager {
 
         return text;
     }
-
+    
+    // Stores information so that the player can pick up where they left off if the app shuts down
     private void storeData() {
         // set up editor
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -749,7 +758,8 @@ public class GameManager {
         // apply changes
         editor.apply();
     }
-
+    
+    // Completely resets everything for every generator and sets the players resources to zero
     public void resetData() {
         // reset resources
         totalResources = 0;
@@ -783,7 +793,8 @@ public class GameManager {
 
         calcTotalResourcesPerSec();
     }
-
+    
+    // Loads a players saved information so that they can pick up where they left off
     private void loadData() {
         if (sharedPref == null) {
             throw new RuntimeException("Attempted to load resources from a null SharedPreferences pointer");
