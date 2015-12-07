@@ -109,9 +109,7 @@ public class MainActivity extends AppCompatActivity
     ImageButton btn_leftDrawer;
     ImageButton btn_rightDrawer;
     TourGuide mTourGuideHandler;
-    private int stepCount = 0;
-
-
+    private int stepCount = 0;      //State information variable to allow for traversal through tutorial
     private DrawerLayout dLayout;
     private List<String> groupList;
     private List<String> childList;
@@ -587,6 +585,11 @@ public class MainActivity extends AppCompatActivity
                 }
             }
     }
+
+    /*
+        Tutorial Overlay was found at: https://github.com/worker8/TourGuide
+        Edited and setup by: Cyril Mathew
+     */
 
     private void tutorialStep(int step) {
         tutorialActive = true;
